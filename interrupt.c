@@ -73,6 +73,23 @@ void setTrapHandler(int vector, void (*handler)(), int maxAccessibleFromPL)
   idt[vector].highOffset      = highWord((DWord)handler);
 }
 
+void clk_handler(void);
+
+void clk_routine(void){
+	zeos_show_clock();
+}
+
+void kbd_handler(void);
+
+void kbd_routine(void){
+	//print lletra 
+	char c = inb(0x60);
+	char mob = (c & 0x80) >> 7;
+	if(mob == 0) {
+		c = c & 0x7F;  
+		printc(char_map[c]);
+	}
+}
 
 void setIdt()
 {
@@ -83,6 +100,9 @@ void setIdt()
   set_handlers();
 
   /* ADD INITIALIZATION CODE FOR INTERRUPT VECTOR */
+	
+  setInterruptHandler (32, clk_handler, 0);
+  setInterruptHandler (33, kbd_handler, 0);
 
   set_idt_reg(&idtR);
 }

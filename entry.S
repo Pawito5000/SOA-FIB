@@ -51,3 +51,33 @@
       movl %edx, %ds;           \
       movl %edx, %es
 
+#define EOI \
+      movb $0x20, %al; \
+      outb %al, $0x20; 
+
+#define RESTORE_ALL \
+      popl %edx; \
+      popl %ecx; \  
+      popl %ebx; \
+      popl %esi; \
+      popl %edi; \
+      popl %ebp; \
+      popl %eax; \
+      popl %ds; \
+      popl %es; \
+      popl %fs; \
+      popl %gs; \
+
+ENTRY(clk_handler)
+	SAVE_ALL
+	call clk_routine
+	EOI 
+	RESTORE_ALL
+	iret
+
+ENTRY(kbd_handler)
+	SAVE_ALL
+	call kbd_routine
+	EOI
+	RESTORE_ALL
+	iret
