@@ -81,3 +81,7 @@ ENTRY(kbd_handler)
 	EOI
 	RESTORE_ALL
 	iret
+
+ENTRY(pf_handler)
+	call pf_routine
+	

@@ -73,6 +73,39 @@ void setTrapHandler(int vector, void (*handler)(), int maxAccessibleFromPL)
   idt[vector].highOffset      = highWord((DWord)handler);
 }
 
+
+char *long_to_char(unsigned long num, char* buff)
+{
+  int i = 0;
+  if (num == 0) {
+	buff[i++] = '0';
+	buff[i] = '\0';
+	return buff;
+  }
+
+  while (num != 0) {
+	int res = num % 16;
+	if (res < 10)
+ 		buff[i++] = res + '0';
+	else
+ 		buff[i++] = res - 10 + 'A';
+	num = num/16;
+  }
+
+  buff[i] = '\0';
+ 
+  // reverse the char*
+  int start = 0;
+  int end = i-1;
+  while (start < end) {
+	char tmp = buff[start];
+	buff[start] = buff[end];
+	buff[end] = tmp;
+	start++; end--;
+  }
+  return buff;
+}
+
 void clk_handler(void);
 
 void clk_routine(void){
@@ -91,6 +124,17 @@ void kbd_routine(void){
 	}
 }
 
+void pf_handler(void);
+
+void pf_routine(unsigned int error, unsigned int EIP){
+	char buff[21];
+	long_to_char(EIP,buff);
+	printk("\nProcess generates a PAGE FAULT exception at EIP: 0x");
+	printk(buff);
+	
+	while(1);
+}
+
 void setIdt()
 {
   /* Program interrups/exception service routines */
@@ -100,7 +144,7 @@ void setIdt()
   set_handlers();
 
   /* ADD INITIALIZATION CODE FOR INTERRUPT VECTOR */
-	
+  setInterruptHandler (14, pf_handler, 0);	
   setInterruptHandler (32, clk_handler, 0);
   setInterruptHandler (33, kbd_handler, 0);
 
