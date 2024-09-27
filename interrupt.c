@@ -148,6 +148,11 @@ void setIdt()
   setInterruptHandler (32, clk_handler, 0);
   setInterruptHandler (33, kbd_handler, 0);
 
+  writeMSR(KERNEL_CS, 0x174);
+  writeMSR(INITIAL_CS, 0x175);
+  writeMSR(syscall_handler,0x176);
+
+
   set_idt_reg(&idtR);
 }
 
