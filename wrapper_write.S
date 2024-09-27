@@ -18,10 +18,12 @@ ENTRY(write)
 	SYSENTER
 
 retorn:
+	pop retorn
 	pop %edx
 	pop %ecx
-	pop %eax
 
 	movl %ebp, %esp
 	pop %ebp
+	
+
 	ret
