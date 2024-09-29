@@ -55,3 +55,7 @@ int sys_write(int fd, char *buffer, int size){
 	
 
 }
+
+int gettime(){
+	return zeos_tick;
+}

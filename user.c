@@ -4,6 +4,8 @@ char buff[24];
 
 int pid;
 
+int zeos_tick;
+
 int addASM(int, int);
 
 int __attribute__ ((__section__(".text.main")))
@@ -15,6 +17,8 @@ int __attribute__ ((__section__(".text.main")))
    //// int res = addASM(0x42, 0x666);
   //char* p = 0;
   //*p = 'x';
+  
+	zeos_tick = 0;
 	while(1) { }
 }
 

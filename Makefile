@@ -27,6 +27,7 @@ SYSOBJ = \
 	entry.o \
 	suma.o \
 	msr_setup.o \
+	wrapper.o \
 	sys_call_table.o \
 	io.o \
 	sched.o \
@@ -71,6 +72,9 @@ suma.s: suma.S $(INCLUDEDIR)/asm.h $(INCLUDEDIR)/segment.h
 	$(CPP) $(ASMFLAGS) -o $@ $<
 
 msr_setup.s: msr_setup.S $(INCLUDEDIR)/asm.h $(INCLUDEDIR)/segment.h
+	$(CPP) $(ASMFLAGS) -o $@ $<
+	
+wrapper.s: wrapper.S $(INCLUDEDIR)/asm.h $(INCLUDEDIR)/segment.h
 	$(CPP) $(ASMFLAGS) -o $@ $<
 
 sys_call_table.s: sys_call_table.S $(INCLUDEDIR)/asm.h $(INCLUDEDIR)/segment.h

@@ -108,7 +108,10 @@ char *long_to_char(unsigned long num, char* buff)
 
 void clk_handler(void);
 
+extern int zeos_tick;
+
 void clk_routine(void){
+	++zeos_tick;
 	zeos_show_clock();
 }
 
