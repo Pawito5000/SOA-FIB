@@ -3,10 +3,27 @@
  */
 
 #include <libc.h>
-
+#include <errno.h>
 #include <types.h>
 
 int errno;
+
+void perror(){
+	char buff[25];
+	switch(errno):
+	case ENOSYS:
+		buff = "Function not implemented";
+		write(2, buff, strlen(buff));
+		brake;
+	case EBADF:
+		buff = "Bad file number";
+		write()
+		brake(2, buff, strlen(buff));
+	case EACCES:
+                buff = "Permission denied";
+                write()
+                brake(2, buff, strlen(buff));
+}
 
 void itoa(int a, char *b)
 {

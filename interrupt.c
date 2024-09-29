@@ -135,6 +135,8 @@ void pf_routine(unsigned int error, unsigned int EIP){
 	while(1);
 }
 
+void syscall_handler(void);
+
 void setIdt()
 {
   /* Program interrups/exception service routines */
@@ -149,7 +151,7 @@ void setIdt()
   setInterruptHandler (33, kbd_handler, 0);
 
   writeMSR(KERNEL_CS, 0x174);
-  writeMSR(INITIAL_CS, 0x175);
+  writeMSR(INITIAL_ESP, 0x175);
   writeMSR(syscall_handler,0x176);
 
 

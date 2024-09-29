@@ -13,8 +13,8 @@ int __attribute__ ((__section__(".text.main")))
      /* __asm__ __volatile__ ("mov %0, %%cr3"::"r" (0) ); */
 
    //// int res = addASM(0x42, 0x666);
-  char* p = 0;
-  *p = 'x';
+  //char* p = 0;
+  //*p = 'x';
 	while(1) { }
 }
 

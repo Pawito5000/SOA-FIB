@@ -85,7 +85,7 @@ ENTRY(kbd_handler)
 ENTRY(pf_handler)
 	call pf_routine
 
-ENTRY(syscall_handler_sysenter)
+ENTRY(syscall_handler)
 	push $__USER_DS
 	push %ebp
 	pushfl

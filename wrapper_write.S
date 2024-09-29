@@ -13,17 +13,28 @@ ENTRY(write)
 	push %ecx
 	push %edx
 	
-	push retorn	
+	push $retorn	
+
+	#dynamic link??
+	push %ebp
+	movl %esp, %ebp
 
 	SYSENTER
 
 retorn:
-	pop retorn
+	pop %ebp
+
+	addl $4, %esp
 	pop %edx
 	pop %ecx
 
+	cmpl $0, %eax
+	jge fin
+	negl %eax
+	movl %eax, errno
+	movl $-1, %eax
+fin:
 	movl %ebp, %esp
-	pop %ebp
-	
+        pop %ebp
 
 	ret
