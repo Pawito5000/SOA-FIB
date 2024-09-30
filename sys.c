@@ -52,9 +52,13 @@ void sys_exit()
 
 int sys_write(int fd, char *buffer, int size){
 	int check = check_fd(fd, ESCRIPTURA);
+	if(check != 0) return check;
+	if(buffer == NULL) return -EFAULT;
+	if(size < 0) return -EINVAL;
 	char buff[512];
+
 	if(check == 0 && buffer != NULL && size > 0){
-		//buff = copy_from_user(fd, buffer, size);
+		copy_from_user(0, buffer, size);
 		sys_write_console(buff, size);
 		return size;			
 	} else if(check == 0){

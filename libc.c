@@ -10,19 +10,24 @@ int errno;
 
 void perror(){
 	char buff[25];
-	switch(errno):
+	switch(errno){
 	case ENOSYS:
 		buff = "Function not implemented";
 		write(2, buff, strlen(buff));
-		brake;
+		break;
 	case EBADF:
 		buff = "Bad file number";
-		write()
-		brake(2, buff, strlen(buff));
+		write(2, buff, strlen(buff));
+		break;
 	case EACCES:
                 buff = "Permission denied";
-                write()
-                brake(2, buff, strlen(buff));
+                write(2, buff, strlen(buff));
+		break;
+	default:
+		itoa(errno, buff);
+		write(2, "Error given", 12);
+		break;
+	}
 }
 
 void itoa(int a, char *b)
