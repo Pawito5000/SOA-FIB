@@ -19,6 +19,9 @@ int __attribute__ ((__section__(".text.main")))
   //*p = 'x';
   
 	//zeos_tick = 0;
+	//gettime();
+	write(1, "funciona", 8);
+	
 	while(1) { }
 }
 

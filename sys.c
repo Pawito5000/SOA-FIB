@@ -52,7 +52,7 @@ void sys_exit()
 
 int sys_write(int fd, char *buffer, int size){
 	int check = check_fd(fd, ESCRIPTURA);
-	if(check != 0) return check;
+	if(check < 0) return check;
 	if(buffer == NULL) return -EFAULT;
 	if(size < 0) return -EINVAL;
 	char buff[512];

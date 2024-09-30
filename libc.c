@@ -12,20 +12,18 @@ void perror(){
 	char buff[25];
 	switch(errno){
 	case ENOSYS:
-		buff = "Function not implemented";
-		write(2, buff, strlen(buff));
+		write(1, "Function not implemented", 25);
 		break;
 	case EBADF:
-		buff = "Bad file number";
-		write(2, buff, strlen(buff));
+		write(1, "Bad file number", 25);
 		break;
 	case EACCES:
-                buff = "Permission denied";
-                write(2, buff, strlen(buff));
+                write(1, "Permission denied", 25);
 		break;
 	default:
 		itoa(errno, buff);
-		write(2, "Error given", 12);
+		write(1, "Error given", 12);
+		write(1, buff, strlen(buff));
 		break;
 	}
 }

@@ -27,7 +27,6 @@ SYSOBJ = \
 	entry.o \
 	suma.o \
 	msr_setup.o \
-	wrapper.o \
 	sys_call_table.o \
 	io.o \
 	sched.o \
@@ -44,6 +43,7 @@ LIBZEOS = -L . -l zeos
 USROBJ = \
 	libc.o \
 	suma.o \
+	wrapper.o
 	# libjp.a \
 
 all:zeos.bin

@@ -12,7 +12,7 @@ extern int errno;
 
 int write(int fd, char *buffer, int size);
 
-int perror();
+void perror();
 
 void itoa(int a, char *b);
 
