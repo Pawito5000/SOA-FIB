@@ -12,6 +12,8 @@
 Gate idt[IDT_ENTRIES];
 Register    idtR;
 
+	
+
 char char_map[] =
 {
   '\0','\0','1','2','3','4','5','6',
@@ -108,7 +110,7 @@ char *long_to_char(unsigned long num, char* buff)
 
 void clk_handler(void);
 
-extern int zeos_tick;
+int zeos_tick = 0;
 
 void clk_routine(void){
 	++zeos_tick;
@@ -153,7 +155,7 @@ void setIdt()
   setInterruptHandler (32, clk_handler, 0);
   setInterruptHandler (33, kbd_handler, 0);
 
-  writeMSR(KERNEL_CS, 0x174);
+  writeMSR(__KERNEL_CS, 0x174);
   writeMSR(INITIAL_ESP, 0x175);
   writeMSR(syscall_handler,0x176);
 

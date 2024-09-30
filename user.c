@@ -18,7 +18,7 @@ int __attribute__ ((__section__(".text.main")))
   //char* p = 0;
   //*p = 'x';
   
-	zeos_tick = 0;
+	//zeos_tick = 0;
 	while(1) { }
 }
 

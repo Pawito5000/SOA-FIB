@@ -1,5 +1,5 @@
-#ifndef _ASM_GENERIC_ERRNO_BASE_H
-#define _ASM_GENERIC_ERRNO_BASE_H
+#ifndef _ERRNO_H
+#define _ERRNO_H
 
 #define	EPERM		 1	/* Operation not permitted */
 #define	ENOENT		 2	/* No such file or directory */

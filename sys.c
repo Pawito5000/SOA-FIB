@@ -13,8 +13,12 @@
 
 #include <sched.h>
 
+#include <errno.h>
+
 #define LECTURA 0
 #define ESCRIPTURA 1
+
+extern int zeos_tick;
 
 int check_fd(int fd, int permissions)
 {
@@ -48,14 +52,18 @@ void sys_exit()
 
 int sys_write(int fd, char *buffer, int size){
 	int check = check_fd(fd, ESCRIPTURA);
-
-	if(check == 0 && buffer != NULL and size > 0){
-			
-	}
+	char buff[512];
+	if(check == 0 && buffer != NULL && size > 0){
+		//buff = copy_from_user(fd, buffer, size);
+		sys_write_console(buff, size);
+		return size;			
+	} else if(check == 0){
+		return -22;
+	} else return check;
 	
 
 }
 
-int gettime(){
+int sys_gettime(){
 	return zeos_tick;
 }
