@@ -70,8 +70,8 @@
 
 ENTRY(clk_handler)
 	SAVE_ALL
-	call clk_routine
-	EOI 
+	EOI
+	call clk_routine 
 	RESTORE_ALL
 	iret
 
