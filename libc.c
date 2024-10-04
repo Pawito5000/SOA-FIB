@@ -11,6 +11,12 @@ int errno;
 void perror(){
 	char buff[25];
 	switch(errno){
+	case EFAULT:
+		write(1, "Bad address", 25);
+		break;
+	case EINVAL:
+		write(1, "Invalid argument", 25);
+                break;
 	case ENOSYS:
 		write(1, "Function not implemented", 25);
 		break;
