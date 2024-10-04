@@ -12,6 +12,8 @@ extern int errno;
 
 int write(int fd, char *buffer, int size);
 
+int gettime();
+
 void perror();
 
 void itoa(int a, char *b);

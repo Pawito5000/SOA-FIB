@@ -57,7 +57,7 @@
 
 #define RESTORE_ALL \
       popl %edx; \
-      popl %ecx; \  
+      popl %ecx; \ 
       popl %ebx; \
       popl %esi; \
       popl %edi; \

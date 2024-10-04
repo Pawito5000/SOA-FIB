@@ -20,6 +20,9 @@
 
 extern int zeos_tick;
 
+char buff[512];
+
+
 int check_fd(int fd, int permissions)
 {
   if (fd!=1) return -9; /*EBADF*/
@@ -50,20 +53,25 @@ void sys_exit()
 {  
 }
 
+
 int sys_write(int fd, char *buffer, int size){
 	int check = check_fd(fd, ESCRIPTURA);
 	if(check < 0) return check;
 	if(buffer == NULL) return -EFAULT;
 	if(size < 0) return -EINVAL;
-	char buff[512];
 
-	if(check == 0 && buffer != NULL && size > 0){
-		copy_from_user(0, buffer, size);
-		sys_write_console(buff, size);
-		return size;			
-	} else if(check == 0){
-		return -22;
-	} else return check;
+	for(int i = 0; i < size; i+=512){
+		if(i+512 > size) {
+			copy_from_user(buffer, buff, size-i);
+			sys_write_console(buff, size-i);
+		} else {
+			copy_from_user(buffer, buff, 512);
+                        sys_write_console(buff, 512);
+
+		}
+					
+	}
+	return size;
 	
 
 }

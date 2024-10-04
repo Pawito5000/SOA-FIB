@@ -70,4 +70,4 @@ retorn_gt:
 fin_gt:
 	movl %ebp, %esp
         pop %ebp
-	iret
+	ret
