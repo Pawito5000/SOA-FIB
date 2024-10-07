@@ -9,22 +9,23 @@
 int errno;
 
 void perror(){
+	write(1, "Perror: ", 8);
 	char buff[25];
 	switch(errno){
 	case EFAULT:
-		write(1, "Bad address", 25);
+		write(1, "Bad address\n", 12);
 		break;
 	case EINVAL:
-		write(1, "Invalid argument", 25);
+		write(1, "Invalid argument\n", 17);
                 break;
 	case ENOSYS:
-		write(1, "Function not implemented", 25);
+		write(1, "Function not implemented\n", 25);
 		break;
 	case EBADF:
-		write(1, "Bad file number", 25);
+		write(1, "Bad file number\n", 16);
 		break;
 	case EACCES:
-                write(1, "Permission denied", 25);
+                write(1, "Permission denied\n", 18);
 		break;
 	default:
 		itoa(errno, buff);

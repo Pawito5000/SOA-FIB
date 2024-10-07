@@ -4,9 +4,10 @@ char buff[24];
 
 int pid;
 
-int zeos_tick;
+//int zeos_tick;
 
 int addASM(int, int);
+
 
 int __attribute__ ((__section__(".text.main")))
   main(void)
@@ -16,20 +17,35 @@ int __attribute__ ((__section__(".text.main")))
   	
 
 	//WRITE
-	if(write(1, "\n", 1) == -1) perror();
-	char *mesg = "Write: funciona\n";
-	if(write(1, mesg, strlen(mesg)) == -1) perror();
-
-	//GETTIME
-	if(write(1, "\n", 1) == -1) perror();
-	int time = gettime();
-	if(time == -1) perror();
-	mesg = "Gettime: ";
-	if(write(1, mesg, strlen(mesg)) == -1) perror();
-	itoa(time, mesg);
-	if(write(1, mesg, strlen(mesg)) == -1) perror();
-
+	if(write(1, "\n", 1) == -1) perror();	
 	
-	while(1) { }
+        char *mesg = "Write: prueba funcionamiento perror\n";
+	if(write(1, mesg, strlen(mesg)) == -1) perror();
+	//PERROR
+	if(write(12, mesg, strlen(mesg)) == -1) perror();
+
+        //GETTIME      
+        mesg = "Gettime: ";
+        if(write(1, mesg, strlen(mesg)) == -1) perror();
+        itoa(gettime(), buff);
+        if(write(1, buff, strlen(buff)) == -1) perror();
+	if(write(1, "\n", 1) == -1) perror();
+
+	//PAGE_FAULT
+	mesg = "Test Page Fault: ";
+        if(write(1, mesg, strlen(mesg)) == -1) perror();
+	char* p = 0;
+	*p = 'x';
+
+	while(1) {
+		//It was for testing if the gettime() function worked
+		/*if(write(1, "\n", 1) == -1) perror();
+
+        	mesg = "Gettime: ";
+        	if(write(1, mesg, strlen(mesg)) == -1) perror();
+        	itoa(gettime(), buff);
+	        if(write(1, buff, strlen(buff)) == -1) perror();
+		*/
+	}
 }
 

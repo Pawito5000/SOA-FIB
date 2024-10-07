@@ -113,7 +113,11 @@ void clk_handler(void);
 int zeos_tick = 0;
 
 void clk_routine(void){
-	++zeos_tick;
+	zeos_tick += 1;
+	//zeos_tick = 12;
+	//char *tick = "a";
+	//itoa(zeos_tick, tick);
+	//printc(zeos_tick);
 	zeos_show_clock();
 }
 

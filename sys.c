@@ -57,7 +57,7 @@ void sys_exit()
 int sys_write(int fd, char *buffer, int size){
 	int check = check_fd(fd, ESCRIPTURA);
 	if(check < 0) return check;
-	if((buffer == NULL) && !access_ok(VERIFY_READ, buffer, size)) return -EFAULT;
+	if((buffer == NULL) || !access_ok(VERIFY_READ, buffer, size)) return -EFAULT;
 	if(size <= 0) return -EINVAL;
 
 	for(int i = 0; i < size; i+=512){
@@ -77,4 +77,5 @@ int sys_write(int fd, char *buffer, int size){
 
 int sys_gettime(){
 	return zeos_tick;
+	
 }
