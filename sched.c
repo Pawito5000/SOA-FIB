@@ -16,6 +16,8 @@ struct task_struct *list_head_to_task_struct(struct list_head *l)
 }
 #endif
 
+struct list_head readyqueue;
+struct list_head freequeue;
 extern struct list_head blocked;
 
 
@@ -55,7 +57,17 @@ void cpu_idle(void)
 
 void init_idle (void)
 {
+	struct task_struct *PCB;
+	PCB->PID = 0;
+	allocate_DIR(PCB);
 
+	union task_union *t_u = (union task_union *)PCB;
+	
+	//unsigned long sys_s[KERNEL_STACK_SIZE];
+	//t_u->stack = sys_s;
+
+	//inicializacion ctx ejecucion
+	
 }
 
 void init_task1(void)
@@ -65,7 +77,12 @@ void init_task1(void)
 
 void init_sched()
 {
-
+	INIT_LIST_HEAD(&freequeue);
+	INIT_LIST_HEAD(&readyqueue);
+	int i;
+	for(i = 0; i < NR_TASKS; i++){
+	   list_add(&task[i].task.list, &readyqueue);
+	}
 }
 
 struct task_struct* current()
