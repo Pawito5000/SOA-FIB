@@ -19,7 +19,7 @@ struct task_struct *list_head_to_task_struct(struct list_head *l)
 struct list_head readyqueue;
 struct list_head freequeue;
 extern struct list_head blocked;
-
+struct task_struct * idle_task;
 
 /* get_DIR - Returns the Page Directory address for task 't' */
 page_table_entry * get_DIR (struct task_struct *t) 
@@ -57,23 +57,79 @@ void cpu_idle(void)
 
 void init_idle (void)
 {
-	struct task_struct *PCB;
+	//First we look for the first element on the freequeue
+	struct list_head *head = list_first(&freequeue);
+
+	//we eliminate this element from the freequeue
+	list_del(head);
+
+	//with the head of the list we convert it into the pcb task_struct
+	struct task_struct *PCB = list_head_to_task_struct(head);
+
+	//We assign the PID of the process, in this case 0
 	PCB->PID = 0;
+
+	//And we use allocate_DIR to initialize the address of the pages
 	allocate_DIR(PCB);
 
+	//Now we take the PCB task_union to initialize the contect of the process
 	union task_union *t_u = (union task_union *)PCB;
+	//we store the address of the code we want to execute
+	t_u->stack[KERNEL_STACK_SIZE - 1] = cpu_idle;
+	//we store the initial value we want on the %ebp
+	t_u->stack[KERNEL_STACK_SIZE - 2] = 0;
+	//we store the position of the stack where we have stored the initial value for the %ebp
+	//we will need a new field on the task_struct
+	t_u->task.kernel_esp = &(t_u->stack[KERNEL_STACK_SIZE - 2]);
 	
-	//unsigned long sys_s[KERNEL_STACK_SIZE];
-	//t_u->stack = sys_s;
-
-	//inicializacion ctx ejecucion
+	//We initialize idle_task with the task_struct we have created
+	idle_task = PCB;
 	
 }
 
 void init_task1(void)
 {
+	//First we look for the first element on the freequeue
+        struct list_head *head = list_first(&freequeue);
+
+        //we eliminate this element from the freequeue
+        list_del(head);
+
+        //with the head of the list we convert it into the pcb task_struct
+        struct task_struct *PCB = list_head_to_task_struct(head);
+
+        //We assign the PID of the process, in this case 1
+        PCB->PID = 1;
+
+        //And we use allocate_DIR to initialize the address of the pages
+        allocate_DIR(PCB);
+
+	//We initialize the user address space
+	set_user_pages(PCB);
+
+        //Now we have to update the tss to point to the new_task system stack
+        union task_union *t_u = (union task_union *)PCB;
+	TSS.esp0 = KERNEL_ESP(t_u);
+	//And modify the MSR register
+	writeMSR(0x175, (int) TSS.esp0);
+
+	//Set the cr3 register
+	set_cr3(PCB->dir_pages_baseAddr);
 }
 
+void inner_task_switch(union task_union *t){
+	//update the tss to point to the user code
+	TSS.esp0 = KERNEL_ESP(t);
+        //And modify the MSR register
+        writeMSR(0x175, (int) TSS.esp0);
+
+        //Set the cr3 register
+        set_cr3(get_DIR(&(t->task)));
+
+	//Now we have to save into the current task the current value of ebp
+	//And the esp to point to the stored value of the new task
+	inner_switch(&current()->kernel_esp, t->task.kernel_esp);
+}
 
 void init_sched()
 {
@@ -81,7 +137,7 @@ void init_sched()
 	INIT_LIST_HEAD(&readyqueue);
 	int i;
 	for(i = 0; i < NR_TASKS; i++){
-	   list_add(&task[i].task.list, &readyqueue);
+	   list_add(&task[i].task.list, &freequeue);
 	}
 }
 
