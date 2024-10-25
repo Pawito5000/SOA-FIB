@@ -32,10 +32,10 @@ int __attribute__ ((__section__(".text.main")))
 	if(write(1, "\n", 1) == -1) perror();
 
 	//PAGE_FAULT
-	mesg = "Test Page Fault: ";
-        if(write(1, mesg, strlen(mesg)) == -1) perror();
-	char* p = 0;
-	*p = 'x';
+//	mesg = "Test Page Fault: ";
+//        if(write(1, mesg, strlen(mesg)) == -1) perror();
+//	char* p = 0;
+//	*p = 'x';
 
 	while(1) {
 		//It was for testing if the gettime() function worked

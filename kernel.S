@@ -22,7 +22,7 @@ ENTRY(task_switch)
 	pop %ebp
 	ret
 
-ENTRY(switch_stack)
+ENTRY(inner_switch)
 	mov 4(%esp), %eax
 	mov %ebp, (%eax)
 	mov 8(%esp), %esp

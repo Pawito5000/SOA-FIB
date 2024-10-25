@@ -9,12 +9,11 @@
 union task_union task[NR_TASKS]
   __attribute__((__section__(".data.task")));
 
-#if 0
 struct task_struct *list_head_to_task_struct(struct list_head *l)
 {
-  return list_entry( l, struct task_struct, list);
+ 	return ((unsigned int)l&0xFFFFF000);
 }
-#endif
+
 
 struct list_head readyqueue;
 struct list_head freequeue;
@@ -48,7 +47,9 @@ int allocate_DIR(struct task_struct *t)
 void cpu_idle(void)
 {
 	__asm__ __volatile__("sti": : :"memory");
+	
 
+	printk("IDLE");
 	while(1)
 	{
 	;
@@ -84,7 +85,7 @@ void init_idle (void)
 	
 	//We initialize idle_task with the task_struct we have created
 	idle_task = PCB;
-	
+	printk("a");	
 }
 
 void init_task1(void)
@@ -109,19 +110,20 @@ void init_task1(void)
 
         //Now we have to update the tss to point to the new_task system stack
         union task_union *t_u = (union task_union *)PCB;
-	TSS.esp0 = KERNEL_ESP(t_u);
+	tss.esp0 = KERNEL_ESP(t_u);
 	//And modify the MSR register
-	writeMSR(0x175, (int) TSS.esp0);
+	writeMSR(0x175, (int) tss.esp0);
 
 	//Set the cr3 register
 	set_cr3(PCB->dir_pages_baseAddr);
+	printk("b");
 }
 
 void inner_task_switch(union task_union *t){
 	//update the tss to point to the user code
-	TSS.esp0 = KERNEL_ESP(t);
+	tss.esp0 = KERNEL_ESP(t);
         //And modify the MSR register
-        writeMSR(0x175, (int) TSS.esp0);
+        writeMSR(0x175, (int) tss.esp0);
 
         //Set the cr3 register
         set_cr3(get_DIR(&(t->task)));

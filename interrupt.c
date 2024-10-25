@@ -112,12 +112,11 @@ void clk_handler(void);
 
 int zeos_tick = 0;
 
+extern struct task_struct * idle_task;
+
 void clk_routine(void){
 	zeos_tick += 1;
-	//zeos_tick = 12;
-	//char *tick = "a";
-	//itoa(zeos_tick, tick);
-	//printc(zeos_tick);
+	if(zeos_tick == 10) task_switch((union task_union *)idle_task); 
 	zeos_show_clock();
 }
 
