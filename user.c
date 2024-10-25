@@ -31,6 +31,13 @@ int __attribute__ ((__section__(".text.main")))
         if(write(1, buff, strlen(buff)) == -1) perror();
 	if(write(1, "\n", 1) == -1) perror();
 
+	//GETPID      
+        mesg = "Getpid: ";
+        if(write(1, mesg, strlen(mesg)) == -1) perror();
+        itoa(getpid(), buff);
+        if(write(1, buff, strlen(buff)) == -1) perror();
+        if(write(1, "\n", 1) == -1) perror();
+
 	//PAGE_FAULT
 //	mesg = "Test Page Fault: ";
 //        if(write(1, mesg, strlen(mesg)) == -1) perror();

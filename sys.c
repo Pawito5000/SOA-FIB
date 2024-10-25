@@ -42,11 +42,30 @@ int sys_getpid()
 
 int sys_fork()
 {
-  int PID=-1;
+  	if (list_empry(&freequeue)) return -ENOMEM;
+	//First we look for the first element on the freequeue
+        struct list_head *head = list_first(&freequeue);
 
-  // creates the child process
-  
-  return PID;
+        //we eliminate this element from the freequeue
+        list_del(head);
+
+        //with the head of the list we convert it into the task_union
+        union task_union *child = (union task_union*) list_head_to_task_struct(head);
+
+	copy_data(current(), child, sizeof(union task_union));
+
+	allocate_DIR(child);
+
+	if (alloc_frames(child)) return -ENOMEM;
+
+	//TODO: apartats e i f
+	//page_table_entry *child_PT = get_PT(child->task);
+
+	set_cr3(get_DIR(current()->task));
+
+	child->task()->PID = ;
+
+  	return PID;
 }
 
 void sys_exit()
