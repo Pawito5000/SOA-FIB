@@ -42,7 +42,7 @@ int sys_getpid()
 
 int sys_fork()
 {
-  	if (list_empry(&freequeue)) return -ENOMEM;
+  	if (list_empty(&freequeue)) return -ENOMEM;
 	//First we look for the first element on the freequeue
         struct list_head *head = list_first(&freequeue);
 
@@ -54,13 +54,52 @@ int sys_fork()
 
 	copy_data(current(), child, sizeof(union task_union));
 
+	//Initializes child's directory structrue
 	allocate_DIR(child);
+	
+	//Get the child PT address
+	page_table_entry *child_PT = get_PT(child->task);
 
-	if (alloc_frames(child)) return -ENOMEM;
+	//allocate physical pages
+	//if there is not enough space -> rollback
+	int npages[NUM_PAG_DATA];
+	for (int i = 0; i < NUM_PAG_DATA; i++){
+		npages[i] = alloc_frame();
+		
+		if (npages[i] < 1){
+			for(int j = 0; j < i; j++) free_frame(npages[j]);
 
-	//TODO: apartats e i f
-	//page_table_entry *child_PT = get_PT(child->task);
+			list_add_tail(&child->task.list, &freequeue);
+			return -ENOMEM;
+		}
+	}
 
+	page_table_entry *parent_PT = get_PT(current()); 
+
+	//Setting Kernel+Code segments into the child TP(same segments as the parent)
+	for(int i = 0; i < NUM_PAG_KERNEL; i++){
+		set_ss_pag(child_PT, i, get_frame(parent_PT,i));
+	}
+
+	for(int i = 0; i < NUM_PAG_CODE; i++){
+                set_ss_pag(child_PT, PAG_LOG_INIT_CODE+i, get_frame(parent_PT, PAG_LOG_INIT_CODE+i));
+	}
+
+	//Setting Data+Stack segments into child TP(new physical pages for the child)
+	for(int i = 0; i < NUM_PAG_DATA; i++){
+		set_ss_pag(child_PT, PAG_LOG_INIT_DATA+i, npages[i])
+	}
+
+	//Free space of the parent PT to write child's translation
+	int FREE_SPACE = PAG_LOG_INIT_CODE+NUM_PAG_CODE;
+
+	for (int i = 0; i < NUM_PAG_DATA; i++){
+		set_ss_pag(parent_PT, FREE_SPACE+i, get_frame(child_PT, PAG_LOG_INIT_DATA+i));
+		//todo copy
+		del_ss_pag(parent_PT, FREE_SPACE+i);
+	}
+
+	//Forcing TLB FLUSH to delete father-to-son translation
 	set_cr3(get_DIR(current()->task));
 
 	child->task()->PID = ;
