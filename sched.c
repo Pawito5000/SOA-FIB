@@ -75,7 +75,7 @@ void init_idle (void)
 	//Now we take the PCB task_union to initialize the contect of the process
 	union task_union *t_u = (union task_union *)PCB;
 	//we store the address of the code we want to execute
-	t_u->stack[KERNEL_STACK_SIZE - 1] = cpu_idle;
+	t_u->stack[KERNEL_STACK_SIZE - 1] = (unsigned long) &cpu_idle;
 	//we store the initial value we want on the %ebp
 	t_u->stack[KERNEL_STACK_SIZE - 2] = 0;
 	//we store the position of the stack where we have stored the initial value for the %ebp
@@ -111,7 +111,7 @@ void init_task1(void)
         union task_union *t_u = (union task_union *)PCB;
 	tss.esp0 = KERNEL_ESP(t_u);
 	//And modify the MSR register
-	writeMSR(0x175, (int) tss.esp0);
+	writeMSR((int) tss.esp0, 0x175);
 
 	//Set the cr3 register
 	set_cr3(PCB->dir_pages_baseAddr);

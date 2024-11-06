@@ -120,7 +120,7 @@ ENTRY(fork)
         movl %esp, %ebp
 
         SYSENTER
-retorn_gp:
+retorn_fk:
         pop %ebp
         addl $4, %esp
 
@@ -132,7 +132,7 @@ retorn_gp:
         negl %eax
         movl %eax, errno
         movl $-1, %eax
-fin_gp:
+fin_fk:
         movl %ebp, %esp
         pop %ebp
         ret

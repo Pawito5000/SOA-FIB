@@ -113,10 +113,12 @@ void clk_handler(void);
 int zeos_tick = 0;
 
 extern struct task_struct * idle_task;
+extern struct task_struct * child_task;
+
 
 void clk_routine(void){
 	zeos_tick += 1;
-	if(zeos_tick == 10) task_switch((union task_union *)idle_task); 
+	if(zeos_tick == 100000000) task_switch((union task_union *)child_task); 
 	zeos_show_clock();
 }
 

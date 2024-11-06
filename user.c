@@ -44,6 +44,18 @@ int __attribute__ ((__section__(".text.main")))
 //	char* p = 0;
 //	*p = 'x';
 
+	mesg = "Fork: ";
+        if(write(1, mesg, strlen(mesg)) == -1) perror();
+	int pid = fork();
+	if(pid == 0){
+		mesg = "Child process";
+        	if(write(1, mesg, strlen(mesg)) == -1) perror();
+	} else {
+		mesg = "Parent process";
+        	if(write(1, mesg, strlen(mesg)) == -1) perror(); 
+	}
+
+
 	while(1) {
 		//It was for testing if the gettime() function worked
 		/*if(write(1, "\n", 1) == -1) perror();

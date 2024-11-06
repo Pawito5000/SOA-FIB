@@ -66,7 +66,7 @@
       popl %ds; \
       popl %es; \
       popl %fs; \
-      popl %gs; \
+      popl %gs; 
 
 ENTRY(clk_handler)
 	SAVE_ALL
