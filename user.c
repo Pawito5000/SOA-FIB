@@ -44,9 +44,13 @@ int __attribute__ ((__section__(".text.main")))
 //	char* p = 0;
 //	*p = 'x';
 
-	mesg = "Fork: ";
+	mesg = "Fork: \n Return PID of the fork: ";
         if(write(1, mesg, strlen(mesg)) == -1) perror();
 	int pid = fork();
+
+	itoa(pid, buff);
+	write(1,buff,strlen(buff));
+
 	if(pid == 0){
 		mesg = "Child process";
         	if(write(1, mesg, strlen(mesg)) == -1) perror();

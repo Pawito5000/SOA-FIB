@@ -153,3 +153,30 @@ struct task_struct* current()
   return (struct task_struct*)(ret_value&0xfffff000);
 }
 
+
+int remaining_ticks = 200;
+
+void update_sched_data_rr (void)
+{
+  --remaining_ticks;
+}
+
+int needs_sched_rr (void)
+{
+
+}
+
+void update_process_state_rr (struct task_struct *t, struct list_head *dst_queue)
+{
+
+}
+
+void sched_next_rr (void)
+{
+
+}
+
+void schedule() 
+{
+	update_sched_data_rr();
+}
