@@ -128,7 +128,7 @@ retorn_fk:
         pop %ecx
 
         cmpl $0, %eax
-        jge fin_gp
+        jge fin_fk
         negl %eax
         movl %eax, errno
         movl $-1, %eax
@@ -137,4 +137,34 @@ fin_fk:
         pop %ebp
         ret
 
+ENTRY(exit)
+        push %ebp
+        movl %esp, %ebp
+
+        movl $1, %eax
+        push %ecx
+        push %edx
+
+        push $retorn_ex
+
+        push %ebp
+        movl %esp, %ebp
+
+        SYSENTER
+retorn_ex:
+        pop %ebp
+        addl $4, %esp
+
+        pop %edx
+        pop %ecx
+
+        cmpl $0, %eax
+        jge fin_ex
+        negl %eax
+        movl %eax, errno
+        movl $-1, %eax
+fin_ex:
+        movl %ebp, %esp
+        pop %ebp
+        ret
 

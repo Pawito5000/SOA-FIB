@@ -6,6 +6,7 @@
 #include <segment.h>
 #include <hardware.h>
 #include <io.h>
+#include <sched.h>
 
 #include <zeos_interrupt.h>
 
@@ -117,9 +118,9 @@ extern struct task_struct * child_task;
 
 
 void clk_routine(void){
-	zeos_tick += 1;
-	if(zeos_tick == 1000) task_switch((union task_union *)child_task); 
+	zeos_tick += 1; 
 	zeos_show_clock();
+	scheduler();
 }
 
 void kbd_handler(void);

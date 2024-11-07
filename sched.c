@@ -207,6 +207,7 @@ void sched_next_rr (void)
 	//there is no procces to switch, switch to idle
 	if(list_empty(&readyqueue)) new_ts = idle_task;	
 	else {
+		printk("cambia de proc");
 		new_lh = list_first(&readyqueue);
 		new_ts = list_head_to_task_struct(new_lh);
 		update_process_state_rr(new_ts,NULL);
@@ -216,10 +217,11 @@ void sched_next_rr (void)
 	task_switch((union task_union *)new_ts);
 }
 
-void schedule() 
+void scheduler() 
 {
 	update_sched_data_rr();
 	if(needs_sched_rr()){
+		printk("canvi");
 		update_process_state_rr(current(), &readyqueue);
 		sched_next_rr();
 	}

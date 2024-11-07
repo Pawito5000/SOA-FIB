@@ -29,7 +29,6 @@ struct task_struct * child_task;
 char buff[512];
 
 int ret_from_fork(){
-	printk("j");
 	return 0;
 }
 
@@ -69,7 +68,6 @@ int sys_fork()
 	
 	//Get the child PT address
 	page_table_entry *child_PT = get_PT(&child->task);
-	printk("p");
 	//allocate physical pages
 	//if there is not enough space -> rollback
 	int npages[NUM_PAG_DATA];
@@ -85,7 +83,6 @@ int sys_fork()
 	}
 
 	page_table_entry *parent_PT = get_PT(current()); 
-	printk("a");
 	//Setting Kernel+Code segments into the child TP(same segments as the parent)
 	for(int i = 0; i < NUM_PAG_KERNEL; i++){
 		set_ss_pag(child_PT, i, get_frame(parent_PT,i));
@@ -129,13 +126,24 @@ int sys_fork()
 
 	//Insert the new process into the ready list
 	list_add_tail(&child->task.list,&readyqueue);
-	
+	child->task.state = ST_READY;
+
 	child_task = &child->task;
   	return child->task.PID;
 }
 
 void sys_exit()
-{  
+{ 
+	page_table_entry *current_PT = get_PT(current());
+	for (int i = 0; i < NUM_PAG_DATA; i++){
+                free_frame(get_frame(current_PT, PAG_LOG_INIT_DATA+i));
+		del_ss_pag(current_PT, PAG_LOG_INIT_DATA+i);
+	}
+	
+	current()->PID = -1;
+
+	list_add_tail(current(),&freequeue);
+	sched_next_rr();	
 }
 
 
