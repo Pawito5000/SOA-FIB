@@ -19,6 +19,9 @@ struct task_struct {
   struct list_head list;
   unsigned int kernel_esp;
   page_table_entry * dir_pages_baseAddr;
+	
+  struct task_struct *parent;
+  struct list_head child_list;
 };
 
 union task_union {

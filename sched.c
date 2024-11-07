@@ -84,7 +84,6 @@ void init_idle (void)
 	
 	//We initialize idle_task with the task_struct we have created
 	idle_task = PCB;
-	printk("a");	
 }
 
 void init_task1(void)
@@ -107,6 +106,9 @@ void init_task1(void)
 	//We initialize the user address space
 	set_user_pages(PCB);
 
+	//Initialize child-parent structures
+	INIT_LIST_HEAD(&(PCB->child_list));
+
         //Now we have to update the tss to point to the new_task system stack
         union task_union *t_u = (union task_union *)PCB;
 	tss.esp0 = KERNEL_ESP(t_u);
@@ -115,14 +117,13 @@ void init_task1(void)
 
 	//Set the cr3 register
 	set_cr3(PCB->dir_pages_baseAddr);
-	printk("b");
 }
 
 void inner_task_switch(union task_union *t){
 	//update the tss to point to the user code
 	tss.esp0 = KERNEL_ESP(t);
         //And modify the MSR register
-        writeMSR(0x175, (int) tss.esp0);
+        writeMSR((int) tss.esp0, 0x175);
 
         //Set the cr3 register
         set_cr3(get_DIR(&(t->task)));
@@ -154,20 +155,24 @@ struct task_struct* current()
 }
 
 
-int remaining_ticks = 200;
+int remaining_quantum = 0;
 
 void update_sched_data_rr (void)
 {
-  --remaining_ticks;
+  --remaining_quantum;
 }
 
 int needs_sched_rr (void)
 {
-
+	// 1 is necessary to change the process, 0 otherwise
+	if((remaining_quantum == 0) && (!list_empty(&readyqueue))) return 1;
+	//if(remaining_quantum == 0) remaining_quantum = get_quantum(current());
+	return 0;
 }
 
 void update_process_state_rr (struct task_struct *t, struct list_head *dst_queue)
 {
+	//change the process queue
 
 }
 
@@ -179,4 +184,8 @@ void sched_next_rr (void)
 void schedule() 
 {
 	update_sched_data_rr();
+	if(needs_sched_rr()){
+		update_process_state_rr(current(), &readyqueue);
+		sched_next_rr();
+	}
 }
