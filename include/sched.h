@@ -19,7 +19,10 @@ struct task_struct {
   struct list_head list;
   unsigned int kernel_esp;
   page_table_entry * dir_pages_baseAddr;
-	
+
+  int process_quantum;
+  enum state_t state;
+	  
   struct task_struct *parent;
   struct list_head child_list;
 };
@@ -60,6 +63,9 @@ page_table_entry * get_PT (struct task_struct *t) ;
 page_table_entry * get_DIR (struct task_struct *t) ;
 
 /* Headers for the scheduling policy */
+int get_quantum (struct task_struct *t);
+void set_quantum (struct task_struct *t, int new_quantum);
+
 void sched_next_rr();
 void update_process_state_rr(struct task_struct *t, struct list_head *dest);
 int needs_sched_rr();

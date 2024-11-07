@@ -125,7 +125,7 @@ int sys_fork()
 	//Setting the child stack
 	child->stack[KERNEL_STACK_SIZE-18] = (unsigned long) &ret_from_fork;
 	child->stack[KERNEL_STACK_SIZE-19] = 0;
-	child->task.kernel_esp = child->stack[KERNEL_STACK_SIZE-19];
+	child->task.kernel_esp = &child->stack[KERNEL_STACK_SIZE-19];
 
 	//Insert the new process into the ready list
 	list_add_tail(&child->task.list,&readyqueue);

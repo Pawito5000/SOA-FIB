@@ -68,6 +68,9 @@ void init_idle (void)
 
 	//We assign the PID of the process, in this case 0
 	PCB->PID = 0;
+	
+	//Set the quantum for the idle process
+        set_quantum(PCB, 100);
 
 	//And we use allocate_DIR to initialize the address of the pages
 	allocate_DIR(PCB);
@@ -99,6 +102,9 @@ void init_task1(void)
 
         //We assign the PID of the process, in this case 1
         PCB->PID = 1;
+
+	//Set the quantum for the inicial process
+	set_quantum(PCB, 200);
 
         //And we use allocate_DIR to initialize the address of the pages
         allocate_DIR(PCB);
@@ -155,30 +161,59 @@ struct task_struct* current()
 }
 
 
-int remaining_quantum = 0;
+int remaining_sys_quantum = 200;
+
+int get_quantum (struct task_struct *t)
+{
+	return t->process_quantum;
+}
+
+void set_quantum (struct task_struct *t, int new_quantum)
+{
+	t->process_quantum = new_quantum; 
+}
 
 void update_sched_data_rr (void)
 {
-  --remaining_quantum;
+  	--remaining_sys_quantum;
 }
 
 int needs_sched_rr (void)
 {
 	// 1 is necessary to change the process, 0 otherwise
-	if((remaining_quantum == 0) && (!list_empty(&readyqueue))) return 1;
-	//if(remaining_quantum == 0) remaining_quantum = get_quantum(current());
+	if((remaining_sys_quantum == 0) && (!list_empty(&readyqueue))) return 1;
+	if(remaining_sys_quantum == 0) remaining_sys_quantum = get_quantum(current());
 	return 0;
 }
 
 void update_process_state_rr (struct task_struct *t, struct list_head *dst_queue)
 {
-	//change the process queue
-
+	//update the ready queue
+	if(t->state == ST_RUN){
+		t->state = ST_READY;
+		list_add_tail(&(t->list),dst_queue);
+	}
+	else if(t->state == ST_READY){
+		t->state = ST_RUN;
+		list_del(&(t->list));
+	}
 }
 
 void sched_next_rr (void)
 {
+	struct list_head *new_lh;
+	struct task_struct *new_ts;
 
+	//there is no procces to switch, switch to idle
+	if(list_empty(&readyqueue)) new_ts = idle_task;	
+	else {
+		new_lh = list_first(&readyqueue);
+		new_ts = list_head_to_task_struct(new_lh);
+		update_process_state_rr(new_ts,NULL);
+	}
+
+	remaining_sys_quantum = get_quantum(new_ts);
+	task_switch((union task_union *)new_ts);
 }
 
 void schedule() 
