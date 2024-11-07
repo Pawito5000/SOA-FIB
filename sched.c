@@ -19,7 +19,7 @@ struct list_head readyqueue;
 struct list_head freequeue;
 extern struct list_head blocked;
 struct task_struct * idle_task;
-
+int remaining_sys_quantum = 0;
 /* get_DIR - Returns the Page Directory address for task 't' */
 page_table_entry * get_DIR (struct task_struct *t) 
 {
@@ -102,10 +102,11 @@ void init_task1(void)
 
         //We assign the PID of the process, in this case 1
         PCB->PID = 1;
-
+	PCB->state = ST_RUN;
 	//Set the quantum for the inicial process
-	set_quantum(PCB, 200);
-
+	//set_quantum(PCB, 200);
+	PCB->process_quantum = 200;
+	remaining_sys_quantum = 200;
         //And we use allocate_DIR to initialize the address of the pages
         allocate_DIR(PCB);
 
@@ -161,8 +162,6 @@ struct task_struct* current()
 }
 
 
-int remaining_sys_quantum = 200;
-
 int get_quantum (struct task_struct *t)
 {
 	return t->process_quantum;
@@ -175,14 +174,16 @@ void set_quantum (struct task_struct *t, int new_quantum)
 
 void update_sched_data_rr (void)
 {
-  	--remaining_sys_quantum;
+	--remaining_sys_quantum;
 }
 
 int needs_sched_rr (void)
 {
 	// 1 is necessary to change the process, 0 otherwise
-	if((remaining_sys_quantum == 0) && (!list_empty(&readyqueue))) return 1;
-	if(remaining_sys_quantum == 0) remaining_sys_quantum = get_quantum(current());
+	if((remaining_sys_quantum == 0) && !list_empty(&readyqueue)) return 1;
+	if(remaining_sys_quantum == 0) {
+		remaining_sys_quantum = get_quantum(current());
+	}
 	return 0;
 }
 
@@ -207,7 +208,6 @@ void sched_next_rr (void)
 	//there is no procces to switch, switch to idle
 	if(list_empty(&readyqueue)) new_ts = idle_task;	
 	else {
-		printk("cambia de proc");
 		new_lh = list_first(&readyqueue);
 		new_ts = list_head_to_task_struct(new_lh);
 		update_process_state_rr(new_ts,NULL);
@@ -221,8 +221,8 @@ void scheduler()
 {
 	update_sched_data_rr();
 	if(needs_sched_rr()){
-		printk("canvi");
 		update_process_state_rr(current(), &readyqueue);
 		sched_next_rr();
 	}
+	
 }

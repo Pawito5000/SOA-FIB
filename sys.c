@@ -127,13 +127,13 @@ int sys_fork()
 	//Insert the new process into the ready list
 	list_add_tail(&child->task.list,&readyqueue);
 	child->task.state = ST_READY;
-
+	set_quantum(&child->task,200); 
 	child_task = &child->task;
   	return child->task.PID;
 }
 
 void sys_exit()
-{ 
+{	
 	page_table_entry *current_PT = get_PT(current());
 	for (int i = 0; i < NUM_PAG_DATA; i++){
                 free_frame(get_frame(current_PT, PAG_LOG_INIT_DATA+i));
@@ -141,8 +141,8 @@ void sys_exit()
 	}
 	
 	current()->PID = -1;
-
-	list_add_tail(current(),&freequeue);
+	current()->state = NULL;
+	list_add_tail(&(current()->list),&freequeue);
 	sched_next_rr();	
 }
 
