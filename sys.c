@@ -140,8 +140,7 @@ int sys_fork()
 extern struct task_struct * idle_task;
 
 void sys_exit()
-{
-	printk("exit");	
+{	
 	struct task_struct *parent_ts = current()->parent; 
 	struct list_head *head;
 	struct task_struct *child_ts;
@@ -152,9 +151,14 @@ void sys_exit()
                 child_ts = list_head_to_task_struct(head);
                 if(child_ts->PID == current()->PID) list_del(head);
 	}
-	struct list_head *first = list_first(&(current()->child_list));
-	list_add_tail(first, &(idle_task->child_list));
+//	struct list_head *first = list_first(&(current()->child_list));
+//	list_add_tail(first, &(idle_task->child_list));
 
+	list_for_each_safe(head, n,&(current()->child_list)){
+		list_add_tail(head, &(idle_task->child_list));
+		child_ts = list_head_to_task_struct(head);
+		child_ts->parent = idle_task;
+	}
 
 	page_table_entry *current_PT = get_PT(current());
 	for (int i = 0; i < NUM_PAG_DATA; i++){
@@ -171,7 +175,6 @@ void sys_exit()
 
 void sys_block(void)
 {	
-	printk("block");
 	//block the process
 	if(current()->pending_unblocks == 0){
 		current()->state = ST_BLOCKED;
@@ -182,7 +185,6 @@ void sys_block(void)
 
 int sys_unblock(int pid)
 {
-	printk("unblock");
 	struct list_head *new_lh; //cursor of the loop
         struct task_struct *new_ts; // element to check the pid
 
@@ -193,7 +195,6 @@ int sys_unblock(int pid)
 		if(new_ts->PID == pid) {
 			//process need to be unblocked
 			if(new_ts->state == ST_BLOCKED){
-				printk("\n process found");
 				new_ts->state = ST_READY;
 				list_add_tail(&(new_ts->list),&readyqueue);
 			}
