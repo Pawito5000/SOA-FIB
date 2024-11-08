@@ -168,3 +168,70 @@ fin_ex:
         pop %ebp
         ret
 
+ENTRY(block)
+        push %ebp
+        movl %esp, %ebp
+
+        movl $14, %eax
+        push %ecx
+        push %edx
+
+        push $retorn_bl
+
+        #dynamic link??
+        push %ebp
+        movl %esp, %ebp
+
+        SYSENTER
+retorn_bl:
+        pop %ebp
+        addl $4, %esp
+
+        pop %edx
+        pop %ecx
+
+        cmpl $0, %eax
+        jge fin_bl
+        negl %eax
+        movl %eax, errno
+        movl $-1, %eax
+fin_bl:
+        movl %ebp, %esp
+        pop %ebp
+        ret
+
+
+ENTRY(unblock)
+        push %ebp
+        movl %esp, %ebp
+
+        movl $15, %eax
+        push %ecx
+        push %edx
+
+	movl 8(%ebp), %edx
+
+        push $retorn_ub
+
+        #dynamic link??
+        push %ebp
+        movl %esp, %ebp
+
+        SYSENTER
+retorn_ub:
+        pop %ebp
+        addl $4, %esp
+
+        pop %edx
+        pop %ecx
+
+        cmpl $0, %eax
+        jge fin_ub
+        negl %eax
+        movl %eax, errno
+        movl $-1, %eax
+fin_ub:
+        movl %ebp, %esp
+        pop %ebp
+        ret
+

@@ -75,6 +75,10 @@ void init_idle (void)
 	//And we use allocate_DIR to initialize the address of the pages
 	allocate_DIR(PCB);
 
+	//Initialize child-parent structures
+        INIT_LIST_HEAD(&(PCB->child_list));
+        INIT_LIST_HEAD(&(PCB->anchor));
+
 	//Now we take the PCB task_union to initialize the contect of the process
 	union task_union *t_u = (union task_union *)PCB;
 	//we store the address of the code we want to execute
@@ -115,6 +119,7 @@ void init_task1(void)
 
 	//Initialize child-parent structures
 	INIT_LIST_HEAD(&(PCB->child_list));
+	INIT_LIST_HEAD(&(PCB->anchor));
 
         //Now we have to update the tss to point to the new_task system stack
         union task_union *t_u = (union task_union *)PCB;
@@ -144,6 +149,7 @@ void init_sched()
 {
 	INIT_LIST_HEAD(&freequeue);
 	INIT_LIST_HEAD(&readyqueue);
+	INIT_LIST_HEAD(&blocked);
 	int i;
 	for(i = 0; i < NR_TASKS; i++){
 	   list_add(&task[i].task.list, &freequeue);

@@ -20,11 +20,14 @@ struct task_struct {
   unsigned int kernel_esp;
   page_table_entry * dir_pages_baseAddr;
 
+  int pending_unblocks;
+
   int process_quantum;
   enum state_t state;
 	  
   struct task_struct *parent;
   struct list_head child_list;
+  struct list_head anchor;
 };
 
 union task_union {

@@ -51,12 +51,24 @@ int __attribute__ ((__section__(".text.main")))
 	if(pid == 0){
 		mesg = "\nChild process";
         	if(write(1, mesg, strlen(mesg)) == -1) perror();
+		mesg = "\nChild blocked";
+                if(write(1, mesg, strlen(mesg)) == -1) perror();
+		block();
+		mesg = "\nChild unblocked";
+                if(write(1, mesg, strlen(mesg)) == -1) perror();
+
+		exit();
 	} else {
 		mesg = "\nParent process";
-        	if(write(1, mesg, strlen(mesg)) == -1) perror(); 
+        	if(write(1, mesg, strlen(mesg)) == -1) perror();
+	       	while(gettime() < 5000);
+		mesg = "\nParent unblocks child";
+                if(write(1, mesg, strlen(mesg)) == -1) perror();	
+		unblock(pid);
+		while(gettime() < 10000);
 	}
 
-	exit();
+	//exit();
 	 
 	mesg = "EXIT ";
         if(write(1, mesg, strlen(mesg)) == -1) perror();

@@ -23,6 +23,7 @@ int globalPID = 100;
 
 extern struct list_head freequeue;
 extern struct list_head readyqueue;
+extern struct list_head blocked;
 
 struct task_struct * child_task;
 
@@ -116,7 +117,8 @@ int sys_fork()
 	child->task.PID = ++globalPID;
 
 	child->task.parent = current();
-	//list_add_tail(, &current()->child_list);
+	INIT_LIST_HEAD(&(child->task.anchor));
+	list_add_tail(&(child->task.anchor), &current()->child_list);
 	INIT_LIST_HEAD(&(child->task.child_list));
 
 	//Setting the child stack
@@ -129,11 +131,31 @@ int sys_fork()
 	child->task.state = ST_READY;
 	set_quantum(&child->task,200); 
 	child_task = &child->task;
-  	return child->task.PID;
+
+	child->task.pending_unblocks = 0;
+
+	return child->task.PID;
 }
 
+extern struct task_struct * idle_task;
+
 void sys_exit()
-{	
+{
+	printk("exit");	
+	struct task_struct *parent_ts = current()->parent; 
+	struct list_head *head;
+	struct task_struct *child_ts;
+	struct list_head *n;	
+
+        list_for_each_safe(head, n,&(parent_ts->child_list)){
+                //for each element of the child list we need to obtain the PID
+                child_ts = list_head_to_task_struct(head);
+                if(child_ts->PID == current()->PID) list_del(head);
+	}
+	struct list_head *first = list_first(&(current()->child_list));
+	list_add_tail(first, &(idle_task->child_list));
+
+
 	page_table_entry *current_PT = get_PT(current());
 	for (int i = 0; i < NUM_PAG_DATA; i++){
                 free_frame(get_frame(current_PT, PAG_LOG_INIT_DATA+i));
@@ -146,6 +168,41 @@ void sys_exit()
 	sched_next_rr();	
 }
 
+
+void sys_block(void)
+{	
+	printk("block");
+	//block the process
+	if(current()->pending_unblocks == 0){
+		current()->state = ST_BLOCKED;
+		list_add_tail(&(current()->list),&blocked);
+		sched_next_rr();
+	} else current()->pending_unblocks -= 1;
+}
+
+int sys_unblock(int pid)
+{
+	printk("unblock");
+	struct list_head *new_lh; //cursor of the loop
+        struct task_struct *new_ts; // element to check the pid
+
+	//first check if the pid's process is a child of current
+	list_for_each(new_lh,&(current()->child_list)){
+		//for each element of the child list we need to obtain the PID
+		new_ts = list_head_to_task_struct(new_lh);
+		if(new_ts->PID == pid) {
+			//process need to be unblocked
+			if(new_ts->state == ST_BLOCKED){
+				printk("\n process found");
+				new_ts->state = ST_READY;
+				list_add_tail(&(new_ts->list),&readyqueue);
+			}
+			new_ts->pending_unblocks += 1;			
+			return 0;
+		}
+	}
+	return -1;
+}
 
 int sys_write(int fd, char *buffer, int size){
 	int check = check_fd(fd, ESCRIPTURA);
