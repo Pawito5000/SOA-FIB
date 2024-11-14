@@ -24,6 +24,8 @@ int globalPID = 100;
 extern struct list_head freequeue;
 extern struct list_head readyqueue;
 extern struct list_head blocked;
+extern struct list_head sleeping;
+extern int remaining_sys_quantum;
 
 struct task_struct * child_task;
 
@@ -50,6 +52,38 @@ int sys_getpid()
 	return (current()->PID);
 }
 
+int find_consecutive_free_pages(page_table_entry *PT){
+	for(int i = 0; i < TOTAL_PAGES -1; i++){
+		if((PT[i].bits.present == 0) && (PT[i+1].bits.present == 0)) return i;
+	}
+	return -1;
+}
+
+int copy_memory_from(struct task_struct* SRC, char* from, int size, char* to){
+	page_table_entry *SRC_PT = get_PT(SRC);
+	page_table_entry *current_PT = get_PT(current());
+	
+	int copy_space = find_consecutive_free_pages(current_PT);
+	if(copy_space == -1) return -ENOMEM;
+
+	unsigned int from_alligned = (unsigned int) from/PAGE_SIZE;
+	unsigned int to_alligned = (unsigned int) to/PAGE_SIZE;
+	unsigned int pages = (unsigned int) size/PAGE_SIZE;
+
+	for(int i = 0; i < pages; i++){
+		if(i%2 != 0) copy_space += 1;
+		set_ss_pag(current_PT, copy_space, get_frame(SRC_PT,from_alligned+i));
+                copy_data((void *)(copy_space << 12), (void *)((to_alligned+i)<<12), PAGE_SIZE);
+                del_ss_pag(current_PT, copy_space);
+		if(i%2 != 0) {
+			set_cr3(get_DIR(current()));
+			copy_space -= 1;
+		}
+	}
+	return 0;
+}
+
+
 int sys_fork()
 {
   	if (list_empty(&freequeue)) return -ENOMEM;
@@ -58,7 +92,7 @@ int sys_fork()
 
         //we eliminate this element from the freequeue
         list_del(head);
-
+	
         //with the head of the list we convert it into the task_union
         union task_union *child = (union task_union*) list_head_to_task_struct(head);
 
@@ -114,7 +148,9 @@ int sys_fork()
 	set_cr3(get_DIR(current()));
 
 	//Set the PID
-	child->task.PID = ++globalPID;
+	int PID = ++globalPID;
+	child->task.PID = PID;
+
 
 	child->task.parent = current();
 	INIT_LIST_HEAD(&(child->task.anchor));
@@ -225,6 +261,71 @@ int sys_write(int fd, char *buffer, int size){
 	
 
 }
+
+int sys_schedule(int pid){
+	if(current()->PID == pid) return 0;	
+        struct list_head *new_lh;
+        struct task_struct *new_ts;
+        struct list_head *n;
+
+        list_for_each_safe(new_lh, n,&readyqueue){
+                //for each element of the child list we need to obtain the PID
+                new_ts = list_head_to_task_struct(new_lh);
+                if(new_ts->PID == pid) {
+			current()->state = ST_READY;
+			list_add_tail(&(current()->list),&readyqueue);
+			new_ts->state = ST_RUN;
+                	list_del(&(new_ts->list));
+        		remaining_sys_quantum = get_quantum(new_ts);
+        		task_switch((union task_union *)new_ts);
+			printk("fet");
+			return 0;
+		}
+        }
+	return -ESRCH;
+
+}
+
+int sys_sleep(int seconds){
+	if(seconds < 0) return -EINVAL;
+	current()->seconds = seconds;
+	current()->state = ST_BLOCKED;
+	list_add_tail(&(current()->list),&sleeping);
+	sched_next_rr();
+	if(current()->seconds != 0) return -EINTR;
+	else return 0;
+}
+
+int sys_wake(int pid, int NOW){
+	struct list_head *new_lh;
+        struct task_struct *new_ts;
+        struct list_head *n;
+	if(NOW < 0 || NOW > 1) return -EINVAL;
+        list_for_each_safe(new_lh, n,&sleeping){
+                //for each element of the child list we need to obtain the PID
+                new_ts = list_head_to_task_struct(new_lh);
+                if(new_ts->PID == pid) {
+			if(NOW == 1){
+                        	current()->state = ST_READY;
+                        	list_add_tail(&(current()->list),&readyqueue);
+                        	new_ts->state = ST_RUN;
+                        	list_del(&(new_ts->list));
+                        	remaining_sys_quantum = get_quantum(new_ts);
+                        	task_switch((union task_union *)new_ts);
+                        	printk("fet");
+                        	return 0;
+			} else {
+				new_ts->state = ST_READY;
+				list_del(&(new_ts->list));
+				list_add_tail(&(new_ts->list),&readyqueue);
+				return 0;
+			}
+
+                }
+        }
+        return -EEXIST;
+}
+
 
 int sys_gettime(){
 	return zeos_tick;

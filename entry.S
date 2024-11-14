@@ -85,6 +85,24 @@ ENTRY(kbd_handler)
 ENTRY(pf_handler)
 	call pf_routine
 
+ENTRY(sl_handler)
+        SAVE_ALL
+	EOI
+        call sys_sleep
+        movl %eax, 0x18(%esp)
+        RESTORE_ALL
+        iret
+
+ENTRY(wk_handler)
+        SAVE_ALL
+	EOI
+        call sys_wake
+	movl %eax, 0x18(%esp)
+        RESTORE_ALL
+	iret
+
+
+
 ENTRY(syscall_handler)
 	push $__USER_DS
 	push %ebp

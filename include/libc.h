@@ -28,6 +28,12 @@ void block(void);
 
 int unblock(int pid);
 
+int schedule(int pid);
+
+int sleep(int seconds);
+
+int wakeup(int pid, int NOW);
+
 void exit();
 
 #endif  /* __LIBC_H__ */

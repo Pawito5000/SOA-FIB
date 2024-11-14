@@ -53,7 +53,7 @@ int __attribute__ ((__section__(".text.main")))
 		if(write(1, mesg, strlen(mesg)) == -1) perror();
                 itoa(getpid(), buff);
                 if(write(1, buff, strlen(buff)) == -1) perror();
-		block();
+		//block();
 		mesg = "\nChild unblocked: ";
                 if(write(1, mesg, strlen(mesg)) == -1) perror();
 		itoa(getpid(), buff);
@@ -84,13 +84,13 @@ int __attribute__ ((__section__(".text.main")))
         	if(write(1, mesg, strlen(mesg)) == -1) perror();
 	       	itoa(getpid(), buff);
                 if(write(1, buff, strlen(buff)) == -1) perror();
-		while(gettime() < 5000);
+		//while(gettime() < 5000);
 		//Let's try to unblock the child
-		mesg = "\nParent unblocks child: ";
+		mesg = "\nParent forces change to child: ";
                 if(write(1, mesg, strlen(mesg)) == -1) perror();
 		itoa(pid, buff);
                 if(write(1, buff, strlen(buff)) == -1) perror();	
-		unblock(pid);
+		schedule(pid);
 		while(gettime() < 10000);
 	}
 

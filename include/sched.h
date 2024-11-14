@@ -21,6 +21,7 @@ struct task_struct {
   page_table_entry * dir_pages_baseAddr;
 
   int pending_unblocks;
+  int seconds;
 
   int process_quantum;
   enum state_t state;

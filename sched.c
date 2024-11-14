@@ -17,6 +17,7 @@ struct task_struct *list_head_to_task_struct(struct list_head *l)
 
 struct list_head readyqueue;
 struct list_head freequeue;
+struct list_head sleeping;
 extern struct list_head blocked;
 struct task_struct * idle_task;
 int remaining_sys_quantum = 0;
@@ -150,6 +151,7 @@ void init_sched()
 	INIT_LIST_HEAD(&freequeue);
 	INIT_LIST_HEAD(&readyqueue);
 	INIT_LIST_HEAD(&blocked);
+	INIT_LIST_HEAD(&sleeping);
 	int i;
 	for(i = 0; i < NR_TASKS; i++){
 	   list_add(&task[i].task.list, &freequeue);

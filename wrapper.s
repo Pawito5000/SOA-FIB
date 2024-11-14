@@ -1,96 +1,104 @@
-#include <asm.h>
-#include <segment.h>
+# 0 "wrapper.S"
+# 0 "<built-in>"
+# 0 "<command-line>"
+# 1 "/usr/include/stdc-predef.h" 1 3 4
+# 0 "<command-line>" 2
+# 1 "wrapper.S"
+# 1 "include/asm.h" 1
+# 2 "wrapper.S" 2
+# 1 "include/segment.h" 1
+# 3 "wrapper.S" 2
 
 
-ENTRY(write)
-	push %ebp
-	movl %esp, %ebp
+.globl write; .type write, @function; .align 0; write:
+ push %ebp
+ movl %esp, %ebp
 
-	push %ebx
-	push %ecx
-	push %edx
+ push %ebx
+ push %ecx
+ push %edx
 
-	movl 8(%ebp), %edx
-	movl 12(%ebp), %ecx
-	movl 16(%ebp), %ebx
+ movl 8(%ebp), %edx
+ movl 12(%ebp), %ecx
+ movl 16(%ebp), %ebx
 
-	movl $4, %eax
-	
-	push $retorn_w	
+ movl $4, %eax
 
-	#dynamic link??
-	push %ebp
-	movl %esp, %ebp
+ push $retorn_w
 
-	SYSENTER
+ #dynamic link??
+ push %ebp
+ movl %esp, %ebp
+
+ SYSENTER
 
 retorn_w:
-	pop %ebp
+ pop %ebp
 
-	addl $4, %esp
-	pop %edx
-	pop %ecx
-	pop %ebx
+ addl $4, %esp
+ pop %edx
+ pop %ecx
+ pop %ebx
 
-	cmpl $0, %eax
-	jge fin_w
-	negl %eax
-	movl %eax, errno
-	movl $-1, %eax
+ cmpl $0, %eax
+ jge fin_w
+ negl %eax
+ movl %eax, errno
+ movl $-1, %eax
 fin_w:
-	movl %ebp, %esp
+ movl %ebp, %esp
         pop %ebp
 
-	ret
+ ret
 
-ENTRY(gettime)
-	push %ebp
+.globl gettime; .type gettime, @function; .align 0; gettime:
+ push %ebp
         movl %esp, %ebp
-	
-	movl $10, %eax
-	push %ecx
-	push %edx
 
-	push $retorn_gt
+ movl $10, %eax
+ push %ecx
+ push %edx
+
+ push $retorn_gt
 
         #dynamic link??
         push %ebp
         movl %esp, %ebp
-	
-	SYSENTER
+
+ SYSENTER
 retorn_gt:
-	pop %ebp
-	addl $4, %esp
+ pop %ebp
+ addl $4, %esp
 
-	pop %edx
-	pop %ecx
+ pop %edx
+ pop %ecx
 
-	cmpl $0, %eax
+ cmpl $0, %eax
         jge fin_gt
         negl %eax
         movl %eax, errno
         movl $-1, %eax
 fin_gt:
-	movl %ebp, %esp
+ movl %ebp, %esp
         pop %ebp
-	ret
+ ret
 
-ENTRY(getpid)
-	push %ebp
-	movl %esp, %ebp
+.globl getpid; .type getpid, @function; .align 0; getpid:
+ push %ebp
+ movl %esp, %ebp
 
-	movl $20, %eax
-	push %ecx
-	push %edx	
+ movl $20, %eax
+ push %ecx
+ push %edx
 
-	push $retorn_gp
+ push $retorn_gp
 
-	push %ebp
-	movl %esp, %ebp
+ push %ebp
+ movl %esp, %ebp
 
-	SYSENTER
+ SYSENTER
 retorn_gp:
-	pop %ebp
+ pop %ebp
         addl $4, %esp
 
         pop %edx
@@ -106,7 +114,7 @@ fin_gp:
         pop %ebp
         ret
 
-ENTRY(fork)
+.globl fork; .type fork, @function; .align 0; fork:
         push %ebp
         movl %esp, %ebp
 
@@ -137,7 +145,7 @@ fin_fk:
         pop %ebp
         ret
 
-ENTRY(exit)
+.globl exit; .type exit, @function; .align 0; exit:
         push %ebp
         movl %esp, %ebp
 
@@ -168,7 +176,7 @@ fin_ex:
         pop %ebp
         ret
 
-ENTRY(block)
+.globl block; .type block, @function; .align 0; block:
         push %ebp
         movl %esp, %ebp
 
@@ -201,7 +209,7 @@ fin_bl:
         ret
 
 
-ENTRY(unblock)
+.globl unblock; .type unblock, @function; .align 0; unblock:
         push %ebp
         movl %esp, %ebp
 
@@ -209,7 +217,7 @@ ENTRY(unblock)
         push %ecx
         push %edx
 
-	movl 8(%ebp), %edx
+ movl 8(%ebp), %edx
 
         push $retorn_ub
 
@@ -235,7 +243,7 @@ fin_ub:
         pop %ebp
         ret
 
-ENTRY(schedule)
+.globl schedule; .type schedule, @function; .align 0; schedule:
         push %ebp
         movl %esp, %ebp
 
@@ -269,7 +277,7 @@ fin_sh:
         pop %ebp
         ret
 
-ENTRY(sleep)
+.globl sleep; .type sleep, @function; .align 0; sleep:
         push %ebp
         movl %esp, %ebp
 
@@ -302,7 +310,7 @@ fin_sl:
         pop %ebp
         ret
 
-ENTRY(wakeup)
+.globl wakeup; .type wakeup, @function; .align 0; wakeup:
         push %ebp
         movl %esp, %ebp
 
@@ -310,7 +318,7 @@ ENTRY(wakeup)
         push %edx
 
         movl 8(%ebp), %edx
-	movl 12(%ebp), %ecx
+ movl 12(%ebp), %ecx
 
         push $retorn_wk
 
@@ -335,4 +343,3 @@ fin_wk:
         movl %ebp, %esp
         pop %ebp
         ret
-

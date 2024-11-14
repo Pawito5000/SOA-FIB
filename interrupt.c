@@ -115,10 +115,28 @@ int zeos_tick = 0;
 
 extern struct task_struct * idle_task;
 extern struct task_struct * child_task;
+extern struct list_head sleeping;
+extern struct list_head readyqueue;
 
+void check_sleeping(){
+	struct list_head *new_lh;
+        struct task_struct *new_ts;
+        struct list_head *n;
+
+        list_for_each_safe(new_lh, n,&sleeping){
+                new_ts = list_head_to_task_struct(new_lh);
+                new_ts->seconds -= 1;
+		if(new_ts->seconds == 0) {
+                        new_ts->state = ST_READY;
+                        list_del(&(new_ts->list));
+                        list_add_tail(&(new_ts->list),&readyqueue);
+                }
+        }
+}
 
 void clk_routine(void){
 	zeos_tick += 1; 
+	if((zeos_tick%18)==0) check_sleeping();
 	zeos_show_clock();
 	scheduler();
 }
@@ -146,6 +164,10 @@ void pf_routine(unsigned int error, unsigned int EIP){
 	while(1);
 }
 
+void sl_handler(void);
+
+void wk_handler(void);
+
 void syscall_handler(void);
 
 void setIdt()
@@ -160,6 +182,9 @@ void setIdt()
   setInterruptHandler (14, pf_handler, 0);	
   setInterruptHandler (32, clk_handler, 0);
   setInterruptHandler (33, kbd_handler, 0);
+  setInterruptHandler (0x60, sl_handler, 0);
+  setInterruptHandler (0x61, wk_handler, 0);
+
 
   writeMSR(__KERNEL_CS, 0x174);
   writeMSR(INITIAL_ESP, 0x175);
