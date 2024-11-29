@@ -68,7 +68,7 @@ user.o:user.c $(INCLUDEDIR)/libc.h
 
 interrupt.o:interrupt.c $(INCLUDEDIR)/interrupt.h $(INCLUDEDIR)/segment.h $(INCLUDEDIR)/types.h
 
-io.o:io.c $(INCLUDEDIR)/io.h
+io.o:io.c $(INCLUDEDIR)/io.h $(INCLUDEDIR)/errno.h $(INCLUDEDIR)/utils.h
 
 sched.o:sched.c $(INCLUDEDIR)/sched.h
 

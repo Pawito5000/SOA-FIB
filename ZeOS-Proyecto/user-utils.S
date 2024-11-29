@@ -47,6 +47,19 @@ ENTRY(gettime)
 	popl %ebp
 	ret
 
+ENTRY(getKey)
+	pushl %ebp
+        movl %esp, %ebp
+        movl $16, %eax
+	movl 0x8(%ebp), %ebx;
+        call syscall_sysenter
+	popl %ebx
+        test %eax, %eax
+        js nok  // if (eax < 0) -->
+	popl %ebp
+        ret
+
+
 /* int getpid() */
 ENTRY(getpid)
 	pushl %ebp

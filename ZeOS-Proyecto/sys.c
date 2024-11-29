@@ -22,11 +22,6 @@
 
 void * get_ebp();
 
-char circular_char_buff[256];
-char * read_ptr = &circular_char_buff[0];
-char * write_ptr = &circular_char_buff[0];
-char * size_ptr = &circular_char_buff[255];
-
 int check_fd(int fd, int permissions)
 {
   if (fd!=1) return -EBADF; 
@@ -184,6 +179,11 @@ int ret;
 	return (nbytes-bytes_left);
 }
 
+int sys_getKey(char* b)
+{
+	if(!access_ok(VERIFY_WRITE, b, sizeof(char))) return -EFAULT;
+	return read_circular_buff(b);
+}
 
 extern int zeos_ticks;
 

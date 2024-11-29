@@ -31,10 +31,6 @@ char char_map[] =
   '\0','\0'
 };
 
-extern char circular_char_buff[256];
-extern char * read_ptr;
-extern char write_ptr;
-extern char *size_ptr;
 
 int zeos_ticks = 0;
 
@@ -52,9 +48,7 @@ void keyboard_routine()
   
   if (c&0x80){
 	printc_xy(0, 0, char_map[c&0x7f]);
- 	*read_ptr = char_map[c&0x7f];
-	if(read_ptr == size_ptr) read_ptr = &circular_char_buff[0];
-	else read_ptr++;
+ 	write_circular_buff(char_map[c&0x7f]);
   }
 }
 

@@ -3,8 +3,9 @@
  */
 
 #include <io.h>
-
+#include <errno.h>
 #include <types.h>
+#include <utils.h>
 
 /**************/
 /** Screen  ***/
@@ -14,6 +15,36 @@
 #define NUM_ROWS    25
 
 Byte x, y=19;
+
+#define CIRCULAR_BUFFER_SIZE 256
+
+struct c_buff {
+	char buff[CIRCULAR_BUFFER_SIZE];
+	unsigned int read_ptr;
+	unsigned int write_ptr;
+};
+
+struct c_buff circular_buff;
+
+void init_circular_buff(){
+	circular_buff.read_ptr = 0;
+	circular_buff.write_ptr = 0;
+}
+
+void write_circular_buff(char c) {
+	circular_buff.buff[circular_buff.write_ptr] = c;
+	circular_buff.write_ptr = (circular_buff.write_ptr+1) % CIRCULAR_BUFFER_SIZE;
+}
+
+int read_circular_buff(char *b){
+	if(circular_buff.read_ptr == circular_buff.write_ptr) return -ENODATA;
+	
+	copy_to_user(&circular_buff.buff[circular_buff.read_ptr], &b, sizeof(char));
+	circular_buff.read_ptr = (circular_buff.read_ptr+1) % CIRCULAR_BUFFER_SIZE;
+
+	return 0;
+}
+
 
 /* Read a byte from 'port' */
 Byte inb (unsigned short port)
