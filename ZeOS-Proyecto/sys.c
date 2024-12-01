@@ -182,7 +182,8 @@ int ret;
 int sys_getKey(char* b)
 {
 	if(!access_ok(VERIFY_WRITE, b, sizeof(char))) return -EFAULT;
-	return read_circular_buff(b);
+	int a = read_circular_buff(b);
+	return a;
 }
 
 extern int zeos_ticks;

@@ -50,8 +50,9 @@ ENTRY(gettime)
 ENTRY(getKey)
 	pushl %ebp
         movl %esp, %ebp
-        movl $16, %eax
-	movl 0x8(%ebp), %ebx;
+        pushl %ebx
+	movl $16, %eax
+	movl 0x8(%ebp), %ebx; //char *b
         call syscall_sysenter
 	popl %ebx
         test %eax, %eax

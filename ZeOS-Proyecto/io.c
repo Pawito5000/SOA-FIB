@@ -38,11 +38,10 @@ void write_circular_buff(char c) {
 
 int read_circular_buff(char *b){
 	if(circular_buff.read_ptr == circular_buff.write_ptr) return -ENODATA;
-	
-	copy_to_user(&circular_buff.buff[circular_buff.read_ptr], &b, sizeof(char));
+	copy_to_user(&circular_buff.buff[circular_buff.read_ptr], &b[0], sizeof(char));
 	circular_buff.read_ptr = (circular_buff.read_ptr+1) % CIRCULAR_BUFFER_SIZE;
 
-	return 0;
+	return 1;
 }
 
 
