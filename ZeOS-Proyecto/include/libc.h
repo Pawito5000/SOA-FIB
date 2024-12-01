@@ -28,6 +28,8 @@ void exit();
 
 int yield();
 
+char *sbrk(int size);
+
 int get_stats(int pid, struct stats *st);
 
 void SAVE_REGS(void);

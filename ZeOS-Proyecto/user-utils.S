@@ -60,6 +60,19 @@ ENTRY(getKey)
 	popl %ebp
         ret
 
+ENTRY(sbrk)
+        pushl %ebp
+        movl %esp, %ebp
+        pushl %ebx
+        movl $18, %eax
+        movl 0x8(%ebp), %ebx; //int size
+        call syscall_sysenter
+        popl %ebx
+        test %eax, %eax
+        js nok  // if (eax < 0) -->
+        popl %ebp
+        ret
+
 
 /* int getpid() */
 ENTRY(getpid)

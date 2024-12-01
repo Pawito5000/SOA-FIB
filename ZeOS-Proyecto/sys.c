@@ -186,6 +186,14 @@ int sys_getKey(char* b)
 	return a;
 }
 
+char *sbrk(int size)
+{
+	if(size > 0) {
+	}
+	else {
+	}
+}
+
 extern int zeos_ticks;
 
 int sys_gettime()
