@@ -186,7 +186,7 @@ int sys_getKey(char* b)
 	return a;
 }
 
-char *sbrk(int size)
+char *sys_sbrk(int size)
 {
 	if(size > 0) {
 	}

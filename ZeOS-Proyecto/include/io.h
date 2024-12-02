@@ -15,7 +15,7 @@ void printc(char c);
 void printc_xy(Byte x, Byte y, char c);
 void printk(char *string);
 void init_circular_buff();
-void write_circular_buff(char c);
+int write_circular_buff(char c);
 int read_circular_buff(char *b);
 
 #endif  /* __IO_H__ */

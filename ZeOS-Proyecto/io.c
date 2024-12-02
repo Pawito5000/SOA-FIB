@@ -22,6 +22,7 @@ struct c_buff {
 	char buff[CIRCULAR_BUFFER_SIZE];
 	unsigned int read_ptr;
 	unsigned int write_ptr;
+	unsigned int char_written;
 };
 
 struct c_buff circular_buff;
@@ -29,18 +30,22 @@ struct c_buff circular_buff;
 void init_circular_buff(){
 	circular_buff.read_ptr = 0;
 	circular_buff.write_ptr = 0;
+	circular_buff.char_written = 0;
 }
 
-void write_circular_buff(char c) {
+int write_circular_buff(char c) {
+	if(circular_buff.char_written > 0 && circular_buff.read_ptr == circular_buff.write_ptr) return -ENOMEM;
 	circular_buff.buff[circular_buff.write_ptr] = c;
 	circular_buff.write_ptr = (circular_buff.write_ptr+1) % CIRCULAR_BUFFER_SIZE;
+	++circular_buff.char_written;
+	return 1;
 }
 
 int read_circular_buff(char *b){
-	if(circular_buff.read_ptr == circular_buff.write_ptr) return -ENODATA;
+	if(circular_buff.read_ptr == circular_buff.write_ptr) return 0;
 	copy_to_user(&circular_buff.buff[circular_buff.read_ptr], &b[0], sizeof(char));
 	circular_buff.read_ptr = (circular_buff.read_ptr+1) % CIRCULAR_BUFFER_SIZE;
-
+	--circular_buff.char_written;
 	return 1;
 }
 
