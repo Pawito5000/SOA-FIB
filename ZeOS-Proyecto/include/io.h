@@ -7,6 +7,13 @@
 
 #include <types.h>
 
+typedef struct {
+        int x; //number of rows
+        int y; //number of columns
+        char* content; //pointer to sprite content
+} Sprite;
+
+
 /** Screen functions **/
 /**********************/
 

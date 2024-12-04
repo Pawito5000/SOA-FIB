@@ -18,11 +18,7 @@ Byte x, y=19;
 
 #define CIRCULAR_BUFFER_SIZE 256
 
-typedef struct {
-	int x; //number of rows
-	int y; //number of columns
-	char* content; //pointer to sprite content
-} Sprite;
+int ac_posX, ac_posY; 
 
 struct c_buff {
 	char buff[CIRCULAR_BUFFER_SIZE];
@@ -58,8 +54,10 @@ int read_circular_buff(char *b){
 
 int move_cursor(int posX, int posY)
 {
-	if ((posX < 0) || (posX >= ) || (posY < 0) || (posY >= )) return -EINVAL;
+	if ((posX < 0) || (posX >= 80) || (posY < 0) || (posY >= 25)) return -EINVAL;
 	//Set the actual cursor possition
+	ac_posX = posX;
+	ac_posY = posY;
 	return 0;
 }	
 

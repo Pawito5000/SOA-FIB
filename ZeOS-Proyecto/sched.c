@@ -184,7 +184,7 @@ void setMSR(unsigned long msr_number, unsigned long high, unsigned long low);
 
 void init_task1(void)
 {
-  struct list_head *l = list_first(&freequeue);
+struct list_head *l = list_first(&freequeue);
   list_del(l);
   struct task_struct *c = list_head_to_task_struct(l);
   union task_union *uc = (union task_union*)c;
@@ -193,7 +193,8 @@ void init_task1(void)
 
   c->total_quantum=DEFAULT_QUANTUM;
   c->heap_srt_ptr = PAG_LOG_INIT_HEAP;
-  c->heap_end_ptr = c->heap_srt_ptr;
+  c->heap_pointer = c->heap_srt_ptr;
+  c->
 
   c->state=ST_RUN;
 

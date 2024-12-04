@@ -27,6 +27,7 @@ struct task_struct {
 
   char *heap_srt_ptr;
   char *heap_end_ptr; 
+  char *heap_pointer;
 };
 
 union task_union {
