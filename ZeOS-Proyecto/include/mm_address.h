@@ -25,5 +25,8 @@
 
 #define PH_PAGE(x) (x>>12)
 
+#define PAG_LOG_INIT_HEAP ()
+
+
 #endif
 

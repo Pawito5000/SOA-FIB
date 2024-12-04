@@ -189,8 +189,11 @@ int sys_getKey(char* b)
 char *sys_sbrk(int size)
 {
 	if(size > 0) {
-	}
-	else {
+	
+	} else if (size == 0) {
+		return current()->heap_end_ptr;
+	} else {
+		return 	(char*) NULL;
 	}
 }
 
