@@ -197,6 +197,21 @@ char *sys_sbrk(int size)
 	}
 }
 
+int sys_spritePut(int posX, int posY, Sprite *sp)
+{
+
+}
+
+int sys_gotoXY(int posX, int posY)
+{
+	return move_cursor(posX, posY);
+}
+
+int sys_SetColor(int color, int background)
+{
+
+}
+
 extern int zeos_ticks;
 
 int sys_gettime()

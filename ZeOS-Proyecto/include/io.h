@@ -17,5 +17,6 @@ void printk(char *string);
 void init_circular_buff();
 int write_circular_buff(char c);
 int read_circular_buff(char *b);
+int move_cursor(int posX, int posY);
 
 #endif  /* __IO_H__ */

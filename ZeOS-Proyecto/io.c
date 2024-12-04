@@ -18,6 +18,12 @@ Byte x, y=19;
 
 #define CIRCULAR_BUFFER_SIZE 256
 
+typedef struct {
+	int x; //number of rows
+	int y; //number of columns
+	char* content; //pointer to sprite content
+} Sprite;
+
 struct c_buff {
 	char buff[CIRCULAR_BUFFER_SIZE];
 	unsigned int read_ptr;
@@ -49,6 +55,13 @@ int read_circular_buff(char *b){
 	return 1;
 }
 
+
+int move_cursor(int posX, int posY)
+{
+	if ((posX < 0) || (posX >= ) || (posY < 0) || (posY >= )) return -EINVAL;
+	//Set the actual cursor possition
+	return 0;
+}	
 
 /* Read a byte from 'port' */
 Byte inb (unsigned short port)

@@ -73,6 +73,49 @@ ENTRY(sbrk)
         popl %ebp
         ret
 
+ENTRY(spritePut)
+        pushl %ebp
+        movl %esp, %ebp
+        pushl %ebx
+        movl $6, %eax
+        movl 0x8(%ebp), %ebx; //int posX
+	movl 0x12(%ebp), %ecx; //int posY
+	movl 0x16(%ebp), %edx; //Sprite* sp
+        call syscall_sysenter
+        popl %ebx
+        test %eax, %eax
+        js nok  // if (eax < 0) -->
+        popl %ebp
+        ret
+
+ENTRY(gotoXY)
+        pushl %ebp
+        movl %esp, %ebp
+        pushl %ebx
+        movl $7, %eax
+        movl 0x8(%ebp), %ebx; //int posX
+	movl 0x12(%ebp), %ecx; //int posY
+        call syscall_sysenter
+        popl %ebx
+        test %eax, %eax
+        js nok  // if (eax < 0) -->
+        popl %ebp
+        ret
+
+ENTRY(SetColor)
+        pushl %ebp
+        movl %esp, %ebp
+        pushl %ebx
+        movl $8, %eax
+        movl 0x8(%ebp), %ebx; //int color
+	movl 0x12(%ebp), %ecx; //int background
+        call syscall_sysenter
+        popl %ebx
+        test %eax, %eax
+        js nok  // if (eax < 0) -->
+        popl %ebp
+        ret
+
 
 /* int getpid() */
 ENTRY(getpid)

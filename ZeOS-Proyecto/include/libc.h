@@ -30,6 +30,12 @@ int yield();
 
 char *sbrk(int size);
 
+int spritePut(int posX, int posY, Sprite *sp);
+
+int gotoXY(int posX, int posY);
+
+int SetColor(int color, int background);
+
 int get_stats(int pid, struct stats *st);
 
 void SAVE_REGS(void);

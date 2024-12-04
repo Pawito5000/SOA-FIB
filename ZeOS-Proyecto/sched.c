@@ -167,10 +167,7 @@ void init_idle (void)
   c->PID=0;
 
   c->total_quantum=DEFAULT_QUANTUM;
-  c->heap_srt_ptr = PAG_LOG_INIT_HEAP;
-  c->heap_end_ptr = c->heap_str_ptr;
-
-
+  
   init_stats(&c->p_stats);
 
   allocate_DIR(c);
@@ -195,6 +192,8 @@ void init_task1(void)
   c->PID=1;
 
   c->total_quantum=DEFAULT_QUANTUM;
+  c->heap_srt_ptr = PAG_LOG_INIT_HEAP;
+  c->heap_end_ptr = c->heap_srt_ptr;
 
   c->state=ST_RUN;
 
