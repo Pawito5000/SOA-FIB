@@ -30,7 +30,7 @@ int yield();
 
 char *sbrk(int size);
 
-//int spritePut(int posX, int posY, struct Sprite *sp);
+int spritePut(int posX, int posY, struct Sprite *sp);
 
 int gotoXY(int posX, int posY);
 

@@ -24,6 +24,7 @@ void printk(char *string);
 void init_circular_buff();
 int write_circular_buff(char c);
 int read_circular_buff(char *b);
+int draw_sprite(int posX, int posY, Sprite *sp);
 int move_cursor(int posX, int posY);
 int change_color(int color, int background);
 

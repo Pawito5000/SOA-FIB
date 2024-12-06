@@ -57,6 +57,17 @@ int read_circular_buff(char *b){
 	return 1;
 }
 
+int draw_sprite(int posX, int posY, Sprite *sp){
+	if ((posX < 0) || (posX > NUM_COLUMNS) || (posY < 0) || (posY > NUM_ROWS)) return -EINVAL;
+	if ((posX + sp->x) > NUM_COLUMNS || (posY + sp->y) > NUM_ROWS) return -EINVAL;
+	for(int i = 0; i < sp->x; i++){
+		for(int j = 0; j < sp->y; j++){
+			printc_xy(posX+i, posY+j,sp->content[i*sp->y+j]);
+		}
+	}
+	return 0;
+}
+
 
 int move_cursor(int posX, int posY)
 {
@@ -70,6 +81,7 @@ int move_cursor(int posX, int posY)
 int change_color(int color, int background)
 {
 	if((color < 0) || (color > 15) || (background < 0) || (background > 15)) return -EINVAL;
+	//Set the actual color settings
 	c_col = color;
 	bg_col = background;
 	return 0;

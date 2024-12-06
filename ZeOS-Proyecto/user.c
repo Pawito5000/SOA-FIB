@@ -1,6 +1,12 @@
 #include <libc.h>
 #include <io.h>
 
+char coin[3][3] = {
+	{'X','X','X'},
+	{'X',' ','X'},
+	{'X','X','X'}
+};
+
 void print(char *msg)
 {
 	if(msg != (void *) 0) write(1,msg,strlen(msg));
@@ -20,13 +26,24 @@ void clear_screen()
   	
 }
 
+void init_elems()
+{
+	Sprite *p1; //Aqui habria que asignarle memoria dinamica Sprite *p1 = (Sprite *)sbrk(sizeof(Sprite));
+	//Tratamiento de error con el sbrk
+	
+	p1->x = 3;
+	p1->y = 3;
+	p1->content = (char *) coin;
+}
+
 
 int __attribute__ ((__section__(".text.main")))
   main(void)
 {
 	//Set the inicial view
 	clear_screen();	
-  	while(1) {
+	init_elems(); 
+	while(1) {
 		
 	}
 }

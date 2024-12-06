@@ -199,7 +199,7 @@ char *sys_sbrk(int size)
 
 int sys_spritePut(int posX, int posY, Sprite *sp)
 {
-
+	return draw_sprite(posX, posY, sp);
 }
 
 int sys_gotoXY(int posX, int posY)
