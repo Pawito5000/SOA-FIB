@@ -25,5 +25,6 @@ void init_circular_buff();
 int write_circular_buff(char c);
 int read_circular_buff(char *b);
 int move_cursor(int posX, int posY);
+int change_color(int color, int background);
 
 #endif  /* __IO_H__ */

@@ -31,7 +31,7 @@ SYSOBJ = interrupt.o entry.o sys_call_table.o io.o sched.o sys.o mm.o devices.o 
 LIBZEOS = -L . -l zeos -l auxjp
 
 #add to USROBJ the object files required to complete the user program
-USROBJ = libc.o user-utils.o # libjp.a
+USROBJ = libc.o io.o utils.o user-utils.o # libjp.a
 
 all:zeos.bin
 
@@ -64,11 +64,11 @@ kernel-utils.s: kernel-utils.S $(INCLUDEDIR)/asm.h
 sys_call_table.s: sys_call_table.S $(INCLUDEDIR)/asm.h $(INCLUDEDIR)/segment.h
 	$(CPP) $(ASMFLAGS) -o $@ $<
 
-user.o:user.c $(INCLUDEDIR)/libc.h
+user.o:user.c $(INCLUDEDIR)/libc.h $(INCLUDEDIR)/io.h
 
 interrupt.o:interrupt.c $(INCLUDEDIR)/interrupt.h $(INCLUDEDIR)/segment.h $(INCLUDEDIR)/types.h
 
-io.o:io.c $(INCLUDEDIR)/io.h $(INCLUDEDIR)/errno.h $(INCLUDEDIR)/utils.h
+io.o:io.c $(INCLUDEDIR)/io.h  
 
 sched.o:sched.c $(INCLUDEDIR)/sched.h
 

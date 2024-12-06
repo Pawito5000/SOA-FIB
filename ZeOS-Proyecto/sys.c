@@ -209,7 +209,7 @@ int sys_gotoXY(int posX, int posY)
 
 int sys_SetColor(int color, int background)
 {
-
+	return change_color(color, background);
 }
 
 extern int zeos_ticks;

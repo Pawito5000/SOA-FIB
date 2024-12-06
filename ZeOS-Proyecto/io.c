@@ -15,10 +15,16 @@
 #define NUM_ROWS    25
 
 Byte x, y=19;
+/*Color distribution:
+ *  0 black
+ *  1 blue
+ *  2 green 
+ *  14 orange
+ *  15 grey*/
+char c_col =  2;
+char bg_col = 0;
 
 #define CIRCULAR_BUFFER_SIZE 256
-
-int ac_posX, ac_posY; 
 
 struct c_buff {
 	char buff[CIRCULAR_BUFFER_SIZE];
@@ -54,12 +60,20 @@ int read_circular_buff(char *b){
 
 int move_cursor(int posX, int posY)
 {
-	if ((posX < 0) || (posX >= 80) || (posY < 0) || (posY >= 25)) return -EINVAL;
+	if ((posX < 0) || (posX > NUM_COLUMNS) || (posY < 0) || (posY > NUM_ROWS)) return -EINVAL;
 	//Set the actual cursor possition
-	ac_posX = posX;
-	ac_posY = posY;
+	x = posX;
+	y = posY;
 	return 0;
 }	
+
+int change_color(int color, int background)
+{
+	if((color < 0) || (color > 15) || (background < 0) || (background > 15)) return -EINVAL;
+	c_col = color;
+	bg_col = background;
+	return 0;
+}
 
 /* Read a byte from 'port' */
 Byte inb (unsigned short port)
@@ -80,7 +94,7 @@ void printc(char c)
   }
   else
   {
-    Word ch = (Word) (c & 0x00FF) | 0x0200;
+    Word ch = (Word) (c & 0x00FF) | (c_col << 8) | (bg_col << 12);
 	Word *screen = (Word *)0xb8000;
 	screen[(y * NUM_COLUMNS + x)] = ch;
     if (++x >= NUM_COLUMNS)
