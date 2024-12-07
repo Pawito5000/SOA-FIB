@@ -80,13 +80,13 @@ int sys_fork(void)
   int new_ph_pag, pag, i;
   page_table_entry *process_PT = get_PT(&uchild->task);
   
-  char *heap_start = current()->task.heap_srt_ptr;
-  char *heap_end = current()->task.heap_pointer;
+  char *heap_start = current()->heap_srt_ptr;
+  char *heap_end = current()->heap_pointer;
 
   // Calcular quants bytes s'han utilitzat en el heap
-  size_t heap_used_bytes = heap_end - heap_start;
+  unsigned int heap_used_bytes = heap_end - heap_start;
   // Calcular el nombre de pàgines utilitzades
-  size_t heap_used_pages = (heap_used_bytes + PAGE_SIZE - 1) / PAGE_SIZE;
+  unsigned int heap_used_pages = (heap_used_bytes + PAGE_SIZE - 1) / PAGE_SIZE;
   //fem alloc pages tant de data com heap (ja que son consecutius)
   for (pag=0; pag<NUM_PAG_DATA+heap_used_pages; pag++)
   {
@@ -121,7 +121,7 @@ int sys_fork(void)
   {
     set_ss_pag(process_PT, PAG_LOG_INIT_CODE+pag, get_frame(parent_PT, PAG_LOG_INIT_CODE+pag));
   }
-  /* Copy parent's DATA to child. We will use TOTAL_PAGES-1 as a temp logical page to map to */
+  /* Copy parent's DATA to child. We will use the code pages as a temp logical pages to map to */
   for (pag=NUM_PAG_KERNEL+NUM_PAG_CODE; pag<NUM_PAG_KERNEL+NUM_PAG_CODE+NUM_PAG_DATA+heap_used_pages; pag += 8)
   {
   	int pages_to_copy = 8;
@@ -132,18 +132,24 @@ int sys_fork(void)
 	{
     		/* Map one child page to parent's address space. */
     		set_ss_pag(parent_PT, PAG_LOG_INIT_CODE+i, get_frame(process_PT, pag+i));
-    		copy_data((void*)(pag+i<<12), (void*)((PAG_LOG_INIT_CODE+i)<<12), PAGE_SIZE);
+    		copy_data((void*)((pag+i)<<12), (void*)((PAG_LOG_INIT_CODE+i)<<12), PAGE_SIZE);
     		del_ss_pag(parent_PT, PAG_LOG_INIT_CODE+i);
   	}
   	/* Deny access to the child's memory space */
   	set_cr3(get_DIR(current()));
   }
+  /* Remap the code pages from the child to the parent */
+  for (pag=0; pag<NUM_PAG_CODE; pag++)
+  {
+    set_ss_pag(parent_PT, PAG_LOG_INIT_CODE+pag, get_frame(process_PT, PAG_LOG_INIT_CODE+pag));
+  }
+
   uchild->task.PID=++global_PID;
   uchild->task.state=ST_READY;
 
-  uchild->task.heap_pointer = current()->task.heap_pointer;
-  uchild->task.heap_srt_pointer = current()->task.heap_srt_ptr;
-  uchild->task.heap_end_pointer = current()->task.heap_end_ptr;
+  uchild->task.heap_pointer = current()->heap_pointer;
+  uchild->task.heap_srt_ptr = current()->heap_srt_ptr;
+  uchild->task.heap_end_ptr = current()->heap_end_ptr;
 
   int register_ebp;		/* frame pointer */
   /* Map Parent's ebp to child's stack */
@@ -207,12 +213,55 @@ int sys_getKey(char* b)
 
 char *sys_sbrk(int size)
 {
+	char *old_pointer = current()->heap_pointer;
 	if(size > 0) {
-	
+		char *new_heap_end = current()->heap_pointer + size;
+
+        	// Comprovar si el nou final del heap excedeix el límit
+        	if (new_heap_end > current()->heap_end_ptr) {
+            		// No podem assignar més memòria del límit
+            		return NULL;
+        	}	
+		int pages_needed = (size + PAGE_SIZE - 1) / PAGE_SIZE;
+		
+		// Assignar les pàgines
+        	for (int i = 0; i < pages_needed; i++) {
+            		int new_ph_pag = alloc_frame();
+            		if (new_ph_pag != -1) {
+                	// Mapejar la pàgina al heap
+                		set_ss_pag(get_PT(current()), (unsigned int)(current()->heap_pointer), new_ph_pag);
+                		current()->heap_pointer += PAGE_SIZE;
+            		} else {
+                		// Si no hi ha prou frames, alliberar les pàgines assignades fins ara
+                		for (int j = 0; j < i; j++) {
+					free_frame(get_frame(get_PT(current()), (unsigned int)(current()->heap_pointer - (j * PAGE_SIZE))));
+                    			del_ss_pag(get_PT(current()), (unsigned int)(current()->heap_pointer - (j * PAGE_SIZE)));
+                		}
+				current()->heap_pointer = old_pointer;
+                		return NULL;  // Error, no es poden assignar més pàgines
+            	
+			}
+        	}
+		return old_pointer;
 	} else if (size == 0) {
-		return current()->heap_end_ptr;
+		return current()->heap_pointer;
 	} else {
-		return 	(char*) NULL;
+		int pages_to_free = (-size + PAGE_SIZE - 1) / PAGE_SIZE;
+                // Comprovar si el nou final del heap excedeix el límit
+                if (current()->heap_pointer - pages_to_free * PAGE_SIZE < current()->heap_srt_ptr) {
+                        // No podem assignar més memòria del límit
+                        return NULL;
+                }
+		
+		for(int i = 0; i < pages_to_free; ++i)
+		{
+			current()->heap_pointer -= PAGE_SIZE;
+            		free_frame(get_frame(get_PT(current()), (unsigned int)current()->heap_pointer));
+            		del_ss_pag(get_PT(current()), (unsigned int)(current()->heap_pointer));
+
+		}
+
+		return old_pointer;
 	}
 }
 
@@ -244,8 +293,16 @@ void sys_exit()
 
   page_table_entry *process_PT = get_PT(current());
 
+  char *heap_start = current()->heap_srt_ptr;
+  char *heap_end = current()->heap_pointer;
+
+  // Calcular quants bytes s'han utilitzat en el heap
+  unsigned int heap_used_bytes = heap_end - heap_start;
+  // Calcular el nombre de pàgines utilitzades
+  unsigned int heap_used_pages = (heap_used_bytes + PAGE_SIZE - 1) / PAGE_SIZE;
+
   // Deallocate all the propietary physical pages
-  for (i=0; i<NUM_PAG_DATA; i++)
+  for (i=0; i<NUM_PAG_DATA+heap_used_pages; i++)
   {
     free_frame(get_frame(process_PT, PAG_LOG_INIT_DATA+i));
     del_ss_pag(process_PT, PAG_LOG_INIT_DATA+i);
