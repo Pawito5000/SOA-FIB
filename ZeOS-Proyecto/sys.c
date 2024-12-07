@@ -79,7 +79,16 @@ int sys_fork(void)
   /* Allocate pages for DATA+STACK */
   int new_ph_pag, pag, i;
   page_table_entry *process_PT = get_PT(&uchild->task);
-  for (pag=0; pag<NUM_PAG_DATA; pag++)
+  
+  char *heap_start = current()->task.heap_srt_ptr;
+  char *heap_end = current()->task.heap_pointer;
+
+  // Calcular quants bytes s'han utilitzat en el heap
+  size_t heap_used_bytes = heap_end - heap_start;
+  // Calcular el nombre de pàgines utilitzades
+  size_t heap_used_pages = (heap_used_bytes + PAGE_SIZE - 1) / PAGE_SIZE;
+  //fem alloc pages tant de data com heap (ja que son consecutius)
+  for (pag=0; pag<NUM_PAG_DATA+heap_used_pages; pag++)
   {
     new_ph_pag=alloc_frame();
     if (new_ph_pag!=-1) /* One page allocated */
@@ -113,18 +122,28 @@ int sys_fork(void)
     set_ss_pag(process_PT, PAG_LOG_INIT_CODE+pag, get_frame(parent_PT, PAG_LOG_INIT_CODE+pag));
   }
   /* Copy parent's DATA to child. We will use TOTAL_PAGES-1 as a temp logical page to map to */
-  for (pag=NUM_PAG_KERNEL+NUM_PAG_CODE; pag<NUM_PAG_KERNEL+NUM_PAG_CODE+NUM_PAG_DATA; pag++)
+  for (pag=NUM_PAG_KERNEL+NUM_PAG_CODE; pag<NUM_PAG_KERNEL+NUM_PAG_CODE+NUM_PAG_DATA+heap_used_pages; pag += 8)
   {
-    /* Map one child page to parent's address space. */
-    set_ss_pag(parent_PT, pag+NUM_PAG_DATA, get_frame(process_PT, pag));
-    copy_data((void*)(pag<<12), (void*)((pag+NUM_PAG_DATA)<<12), PAGE_SIZE);
-    del_ss_pag(parent_PT, pag+NUM_PAG_DATA);
+  	int pages_to_copy = 8;
+        if (pag + 8 > (NUM_PAG_KERNEL+NUM_PAG_CODE+NUM_PAG_DATA+heap_used_pages)) {
+            pages_to_copy = (NUM_PAG_KERNEL+NUM_PAG_CODE+NUM_PAG_DATA+heap_used_pages) - pag; // Si és l'últim tros, copiem el que queda
+        }
+	for (int i = 0; i < pages_to_copy; i++) 
+	{
+    		/* Map one child page to parent's address space. */
+    		set_ss_pag(parent_PT, PAG_LOG_INIT_CODE+i, get_frame(process_PT, pag+i));
+    		copy_data((void*)(pag+i<<12), (void*)((PAG_LOG_INIT_CODE+i)<<12), PAGE_SIZE);
+    		del_ss_pag(parent_PT, PAG_LOG_INIT_CODE+i);
+  	}
+  	/* Deny access to the child's memory space */
+  	set_cr3(get_DIR(current()));
   }
-  /* Deny access to the child's memory space */
-  set_cr3(get_DIR(current()));
-
   uchild->task.PID=++global_PID;
   uchild->task.state=ST_READY;
+
+  uchild->task.heap_pointer = current()->task.heap_pointer;
+  uchild->task.heap_srt_pointer = current()->task.heap_srt_ptr;
+  uchild->task.heap_end_pointer = current()->task.heap_end_ptr;
 
   int register_ebp;		/* frame pointer */
   /* Map Parent's ebp to child's stack */
