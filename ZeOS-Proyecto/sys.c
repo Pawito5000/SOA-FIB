@@ -215,6 +215,7 @@ char *sys_sbrk(int size)
 {
 	char *old_pointer = current()->heap_pointer;
 	if(size > 0) {
+		
 		char *new_heap_end = current()->heap_pointer + size;
 
         	// Comprovar si el nou final del heap excedeix el límit
@@ -222,14 +223,17 @@ char *sys_sbrk(int size)
             		// No podem assignar més memòria del límit
             		return NULL;
         	}	
+		
 		int pages_needed = (size + PAGE_SIZE - 1) / PAGE_SIZE;
 		
 		// Assignar les pàgines
-        	for (int i = 0; i < pages_needed; i++) {
-            		int new_ph_pag = alloc_frame();
+        	for (int i = 0; i < pages_needed; ++i) {
+            		
+			int new_ph_pag = alloc_frame();
             		if (new_ph_pag != -1) {
+			
                 	// Mapejar la pàgina al heap
-                		set_ss_pag(get_PT(current()), (unsigned int)(current()->heap_pointer), new_ph_pag);
+                		set_ss_pag(get_PT(current()), (unsigned int)(current()->heap_pointer)/PAGE_SIZE, new_ph_pag);
                 		current()->heap_pointer += PAGE_SIZE;
             		} else {
                 		// Si no hi ha prou frames, alliberar les pàgines assignades fins ara
@@ -242,6 +246,7 @@ char *sys_sbrk(int size)
             	
 			}
         	}
+		
 		return old_pointer;
 	} else if (size == 0) {
 		return current()->heap_pointer;
@@ -256,9 +261,8 @@ char *sys_sbrk(int size)
 		for(int i = 0; i < pages_to_free; ++i)
 		{
 			current()->heap_pointer -= PAGE_SIZE;
-            		free_frame(get_frame(get_PT(current()), (unsigned int)current()->heap_pointer));
-            		del_ss_pag(get_PT(current()), (unsigned int)(current()->heap_pointer));
-
+            		free_frame(get_frame(get_PT(current()), (unsigned int)(current()->heap_pointer)/PAGE_SIZE));
+			del_ss_pag(get_PT(current()), (unsigned int)(current()->heap_pointer)/PAGE_SIZE);
 		}
 
 		return old_pointer;
