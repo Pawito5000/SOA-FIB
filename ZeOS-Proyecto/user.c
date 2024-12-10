@@ -15,11 +15,11 @@ void print(char *msg)
 void clear_screen()
 {
 	gotoXY(0,0);
-	SetColor(1,14);
+	SetColor(2,0);
 	int i, j;
 	for (i = 0; i < 25; i++){	
 		for (j = 0; j < 80; j ++) { 
-			print("a");
+			print(" ");
 		}		
 		print("\n");
 	}
@@ -28,12 +28,23 @@ void clear_screen()
 
 void init_elems()
 {
-	Sprite *p1; //Aqui habria que asignarle memoria dinamica Sprite *p1 = (Sprite *)sbrk(sizeof(Sprite));
+	Sprite *c1 = (Sprite *)sbrk(sizeof(Sprite));
 	//Tratamiento de error con el sbrk
 	
-	p1->x = 3;
-	p1->y = 3;
-	p1->content = (char *) coin;
+	c1->x = 3;
+	c1->y = 3;
+	c1->content = (char *) coin;
+
+	spritePut(0,10,c1);
+
+	Sprite *c2 = (Sprite *)sbrk(sizeof(Sprite));
+        //Tratamiento de error con el sbrk
+
+        c2->x = 3;
+        c2->y = 3;
+        c2->content = (char *) coin;
+
+        spritePut(3,10,c2);
 }
 
 
@@ -42,8 +53,7 @@ int __attribute__ ((__section__(".text.main")))
 {
 	//Set the inicial view
 
-	clear_screen();	
-	//init_elems(); 
+	clear_screen(); 
 
 	
 	//PROVA SBRK
@@ -54,6 +64,13 @@ int __attribute__ ((__section__(".text.main")))
 	write(1, buffer, strlen(buffer)); 
 	write(1, "\n", 1);
 
+	init_elems();
+
+	write(1, "Heap final: ", 14);
+	itoa((int)sbrk(0), buffer);
+	write(1, buffer, strlen(buffer)); 
+
+	/*
 	char *new_brk = sbrk(2*4096);
 	if(new_brk == (void *)-1) write(1, "Error", 5); 
 	else {
@@ -103,7 +120,7 @@ int __attribute__ ((__section__(".text.main")))
 	} else {
 
 	}
-
+	*/
 	
 	while(1) {
 		
