@@ -191,12 +191,13 @@ struct list_head *l = list_first(&freequeue);
 
   c->PID=1;
 
-  /*
+  
   c->total_quantum=DEFAULT_QUANTUM;
-  c->heap_srt_ptr = PAG_LOG_INIT_HEAP;
+  c->heap_srt_ptr = PAG_LOG_INIT_DATA * PAGE_SIZE + NUM_PAG_DATA * PAGE_SIZE;
+  c->heap_end_ptr = END_PT;
   c->heap_pointer = c->heap_srt_ptr;
- 	*/
-
+ 
+ 
   c->state=ST_RUN;
 
   remaining_quantum=c->total_quantum;

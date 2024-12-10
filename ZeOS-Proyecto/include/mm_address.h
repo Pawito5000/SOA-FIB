@@ -25,8 +25,7 @@
 
 #define PH_PAGE(x) (x>>12)
 
-#define PAG_LOG_INIT_HEAP (PAG_LOG_INIT_DATA + NUM_PAG_DATA)
-
+#define END_PT L_USER_START+((TOTAL_PAGES-NUM_PAG_KERNEL)*PAGE_SIZE)
 
 #endif
 
