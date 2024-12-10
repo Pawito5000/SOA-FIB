@@ -15,7 +15,7 @@ void print(char *msg)
 void clear_screen()
 {
 	gotoXY(0,0);
-	SetColor(7,15);
+	SetColor(1,14);
 	int i, j;
 	for (i = 0; i < 25; i++){	
 		for (j = 0; j < 80; j ++) { 
@@ -42,7 +42,7 @@ int __attribute__ ((__section__(".text.main")))
 {
 	//Set the inicial view
 	clear_screen();	
-	init_elems(); 
+	//init_elems(); 
 	while(1) {
 		
 	}

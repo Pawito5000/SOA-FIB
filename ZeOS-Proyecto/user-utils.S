@@ -79,8 +79,8 @@ ENTRY(spritePut)
         pushl %ebx
         movl $6, %eax
         movl 0x8(%ebp), %ebx; //int posX
-	movl 0x12(%ebp), %ecx; //int posY
-	movl 0x16(%ebp), %edx; //Sprite* sp
+	movl 0xC(%ebp), %ecx; //int posY
+	movl 0x10(%ebp), %edx; //Sprite* sp
         call syscall_sysenter
         popl %ebx
         test %eax, %eax
@@ -94,7 +94,7 @@ ENTRY(gotoXY)
         pushl %ebx
         movl $7, %eax
         movl 0x8(%ebp), %ebx; //int posX
-	movl 0x12(%ebp), %ecx; //int posY
+	movl 0xC(%ebp), %ecx; //int posY
         call syscall_sysenter
         popl %ebx
         test %eax, %eax
@@ -108,7 +108,7 @@ ENTRY(SetColor)
         pushl %ebx
         movl $8, %eax
         movl 0x8(%ebp), %ebx; //int color
-	movl 0x12(%ebp), %ecx; //int background
+	movl 0xC(%ebp), %ecx; //int background
         call syscall_sysenter
         popl %ebx
         test %eax, %eax
