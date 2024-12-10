@@ -37,6 +37,10 @@ int gotoXY(int posX, int posY);
 
 int SetColor(int color, int background);
 
+int threadCreate(void (*function)(void* arg), void* parameter);
+
+void threadExit(void);
+
 int get_stats(int pid, struct stats *st);
 
 void SAVE_REGS(void);

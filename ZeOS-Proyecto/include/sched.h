@@ -13,8 +13,10 @@
 
 #define NR_TASKS      10
 #define KERNEL_STACK_SIZE	1024
+#define USER_STACK_SIZE		4096
 
 enum state_t { ST_RUN, ST_READY, ST_BLOCKED };
+
 
 struct task_struct {
   int PID;			/* Process ID. This MUST be the first field of the struct. */
@@ -28,6 +30,11 @@ struct task_struct {
   char *heap_srt_ptr;
   char *heap_end_ptr; 
   char *heap_pointer;
+
+  int TID;
+  int thread_quantum;
+  unsigned long user_stack[USER_STACK_SIZE];
+  int errno;
 };
 
 union task_union {

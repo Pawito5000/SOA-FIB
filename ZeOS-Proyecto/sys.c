@@ -284,6 +284,16 @@ int sys_SetColor(int color, int background)
 	return change_color(color, background);
 }
 
+int sys_threadCreate(void (*function)(void* arg), void* parameter)
+{
+
+}
+
+void sys_threadExit(void)
+{
+
+}
+
 extern int zeos_ticks;
 
 int sys_gettime()

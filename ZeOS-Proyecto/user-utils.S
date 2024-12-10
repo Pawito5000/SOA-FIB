@@ -116,6 +116,18 @@ ENTRY(SetColor)
         popl %ebp
         ret
 
+ENTRY(threadExit)
+        pushl %ebp
+        movl %esp, %ebp
+        pushl %ebx
+        movl $12, %eax
+        call syscall_sysenter
+        popl %ebx
+        test %eax, %eax
+        js nok  // if (eax < 0) -->
+        popl %ebp
+        ret
+
 
 /* int getpid() */
 ENTRY(getpid)
