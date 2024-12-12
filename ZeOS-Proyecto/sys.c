@@ -299,11 +299,11 @@ int sys_threadCreate(void (*function_wrap), void (*function)(void* arg), void* p
 
 	//Asignar task al thread
 	struct list_head *free_task = list_first(&freequeue);
-	struct th_task_struct *new_task = list_head_to_task_struct(free_task);
+	struct task_struct *new_task = list_head_to_task_struct(free_task);
 	list_del(free_task);
 
 	/*Encolar al thread en la lista de threads*/
-	list_add_tail(&new_task->thread_process, &new_task->threads_list);
+	list_add_tail(&new_task->threads_list, new_task->thread_process);
 
 	/*Asignar TID*/
 	new_task->TID = ++global_TID;
@@ -315,7 +315,7 @@ int sys_threadCreate(void (*function_wrap), void (*function)(void* arg), void* p
   	init_stats(&(new_task->p_stats));
 
 	/*Encolar el thread en la readyqueue*/
-	list_add_tail(&new_task->list, &readyqueue);
+	list_add_tail(&(new_task->list), &readyqueue);
 	return 0;
 }
 

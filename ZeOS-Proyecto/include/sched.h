@@ -23,7 +23,7 @@ struct task_struct {
   page_table_entry * dir_pages_baseAddr;
   struct list_head list;	/* Task struct enqueuing */
   int register_esp;		/* position in the stack */
-  enum state_t state;		/* State of the process */
+  enum state_t state;		/* State of the thread */
   int total_quantum;		/* Total quantum of the process */
   struct stats p_stats;		/* Process stats */
 
@@ -34,8 +34,7 @@ struct task_struct {
   struct list_head threads_list;
   struct list_head *thread_process; //Puntero a list_head
   
-  int TID;
-  enum state_t state;
+  int TID; 
   int thread_quantum;
   unsigned long user_stack[USER_STACK_SIZE];
   int errno;
