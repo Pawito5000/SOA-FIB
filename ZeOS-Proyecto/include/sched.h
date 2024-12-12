@@ -30,11 +30,16 @@ struct task_struct {
   char *heap_srt_ptr;
   char *heap_end_ptr; 
   char *heap_pointer;
-
+  
+  struct list_head threads_list;
+  struct list_head *thread_process; //Puntero a list_head
+  
   int TID;
+  enum state_t state;
   int thread_quantum;
   unsigned long user_stack[USER_STACK_SIZE];
   int errno;
+
 };
 
 union task_union {

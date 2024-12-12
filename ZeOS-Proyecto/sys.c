@@ -284,9 +284,39 @@ int sys_SetColor(int color, int background)
 	return change_color(color, background);
 }
 
-int sys_threadCreate(void (*function)(void* arg), void* parameter)
-{
+int global_TID=10000;
 
+int sys_threadCreate(void (*function_wrap), void (*function)(void* arg), void* parameter)
+{
+	//Control de la rutina wrap
+	if (function_wrap == NULL) return -EFAULT;
+
+	//Control de la funcion a ejecutar
+	if (function == NULL) return -EFAULT;
+
+	//Control memoria
+	if (list_empty(&freequeue)) return -ENOMEM;
+
+	//Asignar task al thread
+	struct list_head *free_task = list_first(&freequeue);
+	struct th_task_struct *new_task = list_head_to_task_struct(free_task);
+	list_del(free_task);
+
+	/*Encolar al thread en la lista de threads*/
+	list_add_tail(&new_task->thread_process, &new_task->threads_list);
+
+	/*Asignar TID*/
+	new_task->TID = ++global_TID;
+
+	/*Inicializar las estructuras del th_task_struct*/
+	new_task->state = ST_READY;
+	new_task->errno = 0;
+		/* Set stats to 0 */
+  	init_stats(&(new_task->p_stats));
+
+	/*Encolar el thread en la readyqueue*/
+	list_add_tail(&new_task->list, &readyqueue);
+	return 0;
 }
 
 void sys_threadExit(void)

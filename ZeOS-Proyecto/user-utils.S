@@ -116,6 +116,40 @@ ENTRY(SetColor)
         popl %ebp
         ret
 
+ENTRY(threadCreate)
+        pushl %ebp
+        movl %esp, %ebp
+        pushl %ebx
+        movl $11, %eax
+	leal thread_create_wrap , %ebx //injecta en 1r param la func wrap
+        movl 0x8(%ebp), %ecx; //void (*function)(void* arg)
+        movl 0xC(%ebp), %edx; //void* parameter
+        call syscall_sysenter
+        popl %ebx
+        test %eax, %eax
+        js nok  // if (eax < 0) -->
+        popl %ebp
+        ret
+
+ENTRY(thread_create_wrap)
+	pushl %ebp
+	movl %esp, %ebp
+	
+	pushl %ebx
+	//habria que considerar si guardar %esi i %edi (pero nosotros no los modificamos)	
+
+	movl 0x8(%ebp), %ebx //void (*function)(void* arg)
+	movl 0xC(%ebp), %esi //void* parameter
+	
+	call *%ebx
+
+	//Terminar el thread llamando al exit
+	call threadExit
+	
+	popl %ebp
+	ret
+
+
 ENTRY(threadExit)
         pushl %ebp
         movl %esp, %ebp
