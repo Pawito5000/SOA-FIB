@@ -301,9 +301,13 @@ int sys_threadCreate(void (*function_wrap), void (*function)(void* arg), void* p
 	struct list_head *free_task = list_first(&freequeue);
 	struct task_struct *new_task = list_head_to_task_struct(free_task);
 	list_del(free_task);
-
+	
+	union task_union* new_task_union = (union task_union*) new_task;
+	
 	/*Encolar al thread en la lista de threads*/
 	list_add_tail(&new_task->threads_list, new_task->thread_process);
+
+	/*Asigancion de memoria*/
 
 	/*Asignar TID*/
 	new_task->TID = ++global_TID;
@@ -313,7 +317,52 @@ int sys_threadCreate(void (*function_wrap), void (*function)(void* arg), void* p
 	new_task->errno = 0;
 		/* Set stats to 0 */
   	init_stats(&(new_task->p_stats));
+	
+	/*Preparar User Stack
+	 *Estado de la pila usr:
+	 		 0 o %ebp
+			----
+			@ret
+			----
+			@func
+			----
+			param
+	USER_STACK_SIZE->	
+	 * */
+	new_task->user_stack[USER_STACK_SIZE] = (unsigned long) &parameter;
+	new_task->user_stack[USER_STACK_SIZE-1] = (unsigned long) &function;
+	new_task->user_stack[USER_STACK_SIZE-2] = ;
+	new_task->user_stack[USER_STACK_SIZE-3] = 0;
 
+
+
+
+	/*Preparar en el System Stack, el contexto de ejecucion
+	 *Estado de la pila sys:
+	 		%ebp
+			----
+			@ret
+			----
+			CTX SW (11 regs)
+			----
+			CTX HW (6 regs) -> [EIP CS PSW ESP SS]
+KERNEL STACK SIZE ->
+	 *Añadir:
+		 ESP(user) [CTX HW] = pila de usuario - data de TCB 
+		 EIP [CTX HW] = func a ejecutar - func wrap
+		 ESP(sys) = ebp pila actual
+	 */
+
+	//ESP(user)
+	new_task_union->stack[KERNEL_STACK_SIZE-2] = (unsigned long)&new_task->user_stack;
+	
+	//EIP
+	new_task_union->stack[KERNEL_STACK_SIZE-5] = (unsigned long)function_wrap;
+
+	//ESP(sys)
+	new_task->register_esp = (int) &new_task_union->stack[KERNEL_STACK_SIZE-18];
+
+	
 	/*Encolar el thread en la readyqueue*/
 	list_add_tail(&(new_task->list), &readyqueue);
 	return 0;
