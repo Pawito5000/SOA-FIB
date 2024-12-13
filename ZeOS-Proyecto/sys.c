@@ -376,7 +376,26 @@ KERNEL STACK SIZE ->
 
 void sys_threadExit(void)
 {
+	if(current()->TID == 100) sys_exit();
+	else {
+		struct list_head *head;
+		struct task_struct thread_ts;
+		struct list_head *n;
+		list_for_each_safe(head, n, &(current()->threads_list)){
+			thread_ts = list_head_to_task_struct(head);
+			if(thread_ts->TID == current()->TID) list_del(head);
+		}
+	
+		current()->state = NULL;
 
+  		/* Free task_struct */
+  		list_add_tail(&(current()->list), &freequeue);
+
+  		current()->TID=-1;
+
+  		/* Restarts execution of the next process */
+  		sched_next_rr();
+	}
 }
 
 extern int zeos_ticks;
@@ -406,6 +425,7 @@ void sys_exit()
     free_frame(get_frame(process_PT, PAG_LOG_INIT_DATA+i));
     del_ss_pag(process_PT, PAG_LOG_INIT_DATA+i);
   }
+
   
   /* Free task_struct */
   list_add_tail(&(current()->list), &freequeue);
