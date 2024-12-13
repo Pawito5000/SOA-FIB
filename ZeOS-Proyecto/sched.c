@@ -165,9 +165,11 @@ void init_idle (void)
   union task_union *uc = (union task_union*)c;
 
   c->PID=0;
+  c->TID=1;
 
   c->total_quantum=DEFAULT_QUANTUM;
-  
+  c->thread_queantum=DEFAULT_QUANTUM_THREAD;
+
   init_stats(&c->p_stats);
 
   allocate_DIR(c);
@@ -256,7 +258,9 @@ void inner_task_switch(union task_union *new)
   setMSR(0x175, 0, (unsigned long)&(new->stack[KERNEL_STACK_SIZE]));
 
   /* TLB flush. New address space */
-  set_cr3(new_DIR);
+  if (get_DIR(current()) != new_DIR) {
+  	set_cr3(new_DIR);
+  }
 
   switch_stack(&current()->register_esp, new->task.register_esp);
 }

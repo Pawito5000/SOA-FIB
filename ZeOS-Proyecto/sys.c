@@ -307,7 +307,18 @@ int sys_threadCreate(void (*function_wrap), void (*function)(void* arg), void* p
 	/*Encolar al thread en la lista de threads*/
 	list_add_tail(&new_task->threads_list, new_task->thread_process);
 
-	/*Asigancion de memoria*/
+	/*Copia contenido proceso*/
+	copy_data(current(), new_task_union, sizeof(union task_union));
+
+	/*Asignacion de memoria*/
+	int new_ph_pag=alloc_frame();
+    	if (new_ph_pag!=-1) {
+		new_task->PID = -1;
+		list_add_tail(&(new_task->list), &freequeue);
+	}
+	
+	page_table_entry * sh_PT = get_PT(current());
+	//set_ss_pag(sh_PT, PAGINA LOGICA, new_php_pag);
 
 	/*Asignar TID*/
 	new_task->TID = ++global_TID;
@@ -320,9 +331,7 @@ int sys_threadCreate(void (*function_wrap), void (*function)(void* arg), void* p
 	
 	/*Preparar User Stack
 	 *Estado de la pila usr:
-	 		 0 o %ebp
-			----
-			@ret
+			@ret = 0
 			----
 			@func
 			----
@@ -331,10 +340,7 @@ int sys_threadCreate(void (*function_wrap), void (*function)(void* arg), void* p
 	 * */
 	new_task->user_stack[USER_STACK_SIZE] = (unsigned long) &parameter;
 	new_task->user_stack[USER_STACK_SIZE-1] = (unsigned long) &function;
-	new_task->user_stack[USER_STACK_SIZE-2] = ;
-	new_task->user_stack[USER_STACK_SIZE-3] = 0;
-
-
+	new_task->user_stack[USER_STACK_SIZE-2] = 0;
 
 
 	/*Preparar en el System Stack, el contexto de ejecucion
