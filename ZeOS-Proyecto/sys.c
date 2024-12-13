@@ -338,9 +338,9 @@ int sys_threadCreate(void (*function_wrap), void (*function)(void* arg), void* p
 			param
 	USER_STACK_SIZE->	
 	 * */
-	new_task->user_stack[USER_STACK_SIZE] = (unsigned long) &parameter;
-	new_task->user_stack[USER_STACK_SIZE-1] = (unsigned long) &function;
-	new_task->user_stack[USER_STACK_SIZE-2] = 0;
+	new_task->user_stack[USER_STACK_SIZE-1] = (unsigned long) &parameter;
+	new_task->user_stack[USER_STACK_SIZE-2] = (unsigned long) &function;
+	new_task->user_stack[USER_STACK_SIZE-3] = 0;
 
 
 	/*Preparar en el System Stack, el contexto de ejecucion
@@ -360,7 +360,7 @@ KERNEL STACK SIZE ->
 	 */
 
 	//ESP(user)
-	new_task_union->stack[KERNEL_STACK_SIZE-2] = (unsigned long)&new_task->user_stack;
+	new_task_union->stack[KERNEL_STACK_SIZE-2] = (unsigned long)&new_task->user_stack[USER_STACK_SIZE -3];
 	
 	//EIP
 	new_task_union->stack[KERNEL_STACK_SIZE-5] = (unsigned long)function_wrap;

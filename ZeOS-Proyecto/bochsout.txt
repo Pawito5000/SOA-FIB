@@ -1,0 +1,1967 @@
+00000000000i[      ] Bochs x86 Emulator 2.6.7
+00000000000i[      ]   Built from SVN snapshot on November 2, 2014
+00000000000i[      ] Compiled on Jun 28 2017 at 12:46:11
+00000000000i[      ] System configuration
+00000000000i[      ]   processors: 1 (cores=1, HT threads=1)
+00000000000i[      ]   A20 line support: yes
+00000000000i[      ] IPS is set to 4000000
+00000000000i[      ] CPU configuration
+00000000000i[      ]   SMP support: no
+00000000000i[      ]   level: 6
+00000000000i[      ]   APIC support: xapic
+00000000000i[      ]   FPU support: yes
+00000000000i[      ]   MMX support: yes
+00000000000i[      ]   3dnow! support: no
+00000000000i[      ]   SEP support: yes
+00000000000i[      ]   SIMD support: sse2
+00000000000i[      ]   XSAVE support: no 
+00000000000i[      ]   AES support: no
+00000000000i[      ]   SHA support: no
+00000000000i[      ]   MOVBE support: no
+00000000000i[      ]   ADX support: no
+00000000000i[      ]   x86-64 support: no
+00000000000i[      ]   MWAIT support: yes
+00000000000i[      ] Optimization configuration
+00000000000i[      ]   RepeatSpeedups support: no
+00000000000i[      ]   Fast function calls: no
+00000000000i[      ]   Handlers Chaining speedups: no
+00000000000i[      ] Devices configuration
+00000000000i[      ]   NE2000 support: no
+00000000000i[      ]   PCI support: yes, enabled=yes
+00000000000i[      ]   SB16 support: no
+00000000000i[      ]   USB support: no
+00000000000i[      ]   VGA extension support: vbe
+00000000000i[MEM0  ] allocated memory at 0x7f623cb80010. after alignment, vector=0x7f623cb81000
+00000000000i[MEM0  ] 16,00MB
+00000000000i[MEM0  ] mem block size = 0x00100000, blocks=16
+00000000000i[MEM0  ] rom at 0xfffe0000/131072 ('/opt/bochs_gdb/share/bochs/BIOS-bochs-latest')
+00000000000i[PLUGIN] init_dev of 'pci' plugin device by virtual method
+00000000000i[DEV   ] i440FX PMC present at device 0, function 0
+00000000000i[PLUGIN] init_dev of 'pci2isa' plugin device by virtual method
+00000000000i[DEV   ] PIIX3 PCI-to-ISA bridge present at device 1, function 0
+00000000000i[PLUGIN] init_dev of 'cmos' plugin device by virtual method
+00000000000i[CMOS  ] Using local time for initial clock
+00000000000i[CMOS  ] Setting initial clock to: Fri Dec 13 19:10:13 2024 (time0=1734113413)
+00000000000i[PLUGIN] init_dev of 'dma' plugin device by virtual method
+00000000000i[DMA   ] channel 4 used by cascade
+00000000000i[PLUGIN] init_dev of 'pic' plugin device by virtual method
+00000000000i[PLUGIN] init_dev of 'pit' plugin device by virtual method
+00000000000i[PLUGIN] init_dev of 'vga' plugin device by virtual method
+00000000000i[MEM0  ] Register memory access handlers: 0x0000000a0000 - 0x0000000bffff
+00000000000i[VGA   ] interval=200000
+00000000000i[MEM0  ] Register memory access handlers: 0x0000e0000000 - 0x0000e0ffffff
+00000000000i[BXVGA ] VBE Bochs Display Extension Enabled
+00000000000i[XGUI  ] test_alloc_colors: 16 colors available out of 16 colors tried
+00000000000i[XGUI  ] font 8 wide x 16 high, display depth = 24
+00000000000i[MEM0  ] rom at 0xc0000/41472 ('/opt/bochs_gdb/share/bochs/VGABIOS-lgpl-latest')
+00000000000i[PLUGIN] init_dev of 'floppy' plugin device by virtual method
+00000000000i[DMA   ] channel 2 used by Floppy Drive
+00000000000i[FLOPPY] fd0: './zeos.bin' ro=0, h=2,t=80,spt=18
+00000000000i[PLUGIN] init_dev of 'acpi' plugin device by virtual method
+00000000000i[DEV   ] ACPI Controller present at device 1, function 3
+00000000000i[PLUGIN] init_dev of 'ioapic' plugin device by virtual method
+00000000000i[IOAPIC] initializing I/O APIC
+00000000000i[MEM0  ] Register memory access handlers: 0x0000fec00000 - 0x0000fec00fff
+00000000000i[IOAPIC] IOAPIC enabled (base address = 0xfec00000)
+00000000000i[PLUGIN] init_dev of 'keyboard' plugin device by virtual method
+00000000000i[KBD   ] will paste characters every 400 keyboard ticks
+00000000000i[PLUGIN] init_dev of 'harddrv' plugin device by virtual method
+00000000000i[HD    ] Using boot sequence floppy, none, none
+00000000000i[HD    ] Floppy boot signature check is enabled
+00000000000i[PLUGIN] init_dev of 'pci_ide' plugin device by virtual method
+00000000000i[DEV   ] PIIX3 PCI IDE controller present at device 1, function 1
+00000000000i[PLUGIN] init_dev of 'unmapped' plugin device by virtual method
+00000000000i[PLUGIN] init_dev of 'biosdev' plugin device by virtual method
+00000000000i[PLUGIN] init_dev of 'speaker' plugin device by virtual method
+00000000000e[PCSPK ] Failed to open /dev/console: Permission denied
+00000000000e[PCSPK ] Deactivating beep on console
+00000000000i[PLUGIN] init_dev of 'extfpuirq' plugin device by virtual method
+00000000000i[PLUGIN] init_dev of 'parallel' plugin device by virtual method
+00000000000i[PAR   ] parallel port 1 at 0x0378 irq 7
+00000000000i[PLUGIN] init_dev of 'serial' plugin device by virtual method
+00000000000i[SER   ] com1 at 0x03f8 irq 4 (mode: null)
+00000000000i[PLUGIN] register state of 'pci' plugin device by virtual method
+00000000000i[PLUGIN] register state of 'pci2isa' plugin device by virtual method
+00000000000i[PLUGIN] register state of 'cmos' plugin device by virtual method
+00000000000i[PLUGIN] register state of 'dma' plugin device by virtual method
+00000000000i[PLUGIN] register state of 'pic' plugin device by virtual method
+00000000000i[PLUGIN] register state of 'pit' plugin device by virtual method
+00000000000i[PLUGIN] register state of 'vga' plugin device by virtual method
+00000000000i[PLUGIN] register state of 'floppy' plugin device by virtual method
+00000000000i[PLUGIN] register state of 'unmapped' plugin device by virtual method
+00000000000i[PLUGIN] register state of 'biosdev' plugin device by virtual method
+00000000000i[PLUGIN] register state of 'speaker' plugin device by virtual method
+00000000000i[PLUGIN] register state of 'extfpuirq' plugin device by virtual method
+00000000000i[PLUGIN] register state of 'parallel' plugin device by virtual method
+00000000000i[PLUGIN] register state of 'serial' plugin device by virtual method
+00000000000i[PLUGIN] register state of 'acpi' plugin device by virtual method
+00000000000i[PLUGIN] register state of 'ioapic' plugin device by virtual method
+00000000000i[PLUGIN] register state of 'keyboard' plugin device by virtual method
+00000000000i[PLUGIN] register state of 'harddrv' plugin device by virtual method
+00000000000i[PLUGIN] register state of 'pci_ide' plugin device by virtual method
+00000000000i[SYS   ] bx_pc_system_c::Reset(HARDWARE) called
+00000000000i[CPU0  ] cpu hardware reset
+00000000000i[APIC0 ] allocate APIC id=0 (MMIO enabled) to 0x0000fee00000
+00000000000i[CPU0  ] CPUID[0x00000000]: 00000005 756e6547 6c65746e 49656e69
+00000000000i[CPU0  ] CPUID[0x00000001]: 00000633 00010800 00000008 1fcbfbff
+00000000000i[CPU0  ] CPUID[0x00000002]: 00410601 00000000 00000000 00000000
+00000000000i[CPU0  ] CPUID[0x00000003]: 00000000 00000000 00000000 00000000
+00000000000i[CPU0  ] CPUID[0x00000004]: 00000000 00000000 00000000 00000000
+00000000000i[CPU0  ] CPUID[0x00000005]: 00000040 00000040 00000003 00000020
+00000000000i[PLUGIN] reset of 'pci' plugin device by virtual method
+00000000000i[PLUGIN] reset of 'pci2isa' plugin device by virtual method
+00000000000i[PLUGIN] reset of 'cmos' plugin device by virtual method
+00000000000i[PLUGIN] reset of 'dma' plugin device by virtual method
+00000000000i[PLUGIN] reset of 'pic' plugin device by virtual method
+00000000000i[PLUGIN] reset of 'pit' plugin device by virtual method
+00000000000i[PLUGIN] reset of 'vga' plugin device by virtual method
+00000000000i[PLUGIN] reset of 'floppy' plugin device by virtual method
+00000000000i[PLUGIN] reset of 'acpi' plugin device by virtual method
+00000000000i[PLUGIN] reset of 'ioapic' plugin device by virtual method
+00000000000i[PLUGIN] reset of 'keyboard' plugin device by virtual method
+00000000000i[PLUGIN] reset of 'harddrv' plugin device by virtual method
+00000000000i[PLUGIN] reset of 'pci_ide' plugin device by virtual method
+00000000000i[PLUGIN] reset of 'unmapped' plugin device by virtual method
+00000000000i[PLUGIN] reset of 'biosdev' plugin device by virtual method
+00000000000i[PLUGIN] reset of 'speaker' plugin device by virtual method
+00000000000i[PLUGIN] reset of 'extfpuirq' plugin device by virtual method
+00000000000i[PLUGIN] reset of 'parallel' plugin device by virtual method
+00000000000i[PLUGIN] reset of 'serial' plugin device by virtual method
+00000000000i[XGUI  ] Mouse capture off
+00000004661i[BIOS  ] $Revision: 12412 $ $Date: 2014-07-10 09:28:59 +0200 (Do, 10. Jul 2014) $
+00000318049i[KBD   ] reset-disable command received
+00000320818i[BIOS  ] Starting rombios32
+00000321256i[BIOS  ] Shutdown flag 0
+00000321840i[BIOS  ] ram_size=0x01000000
+00000322261i[BIOS  ] ram_end=16MB
+00000362771i[BIOS  ] Found 1 cpu(s)
+00000376975i[BIOS  ] bios_table_addr: 0x000fa498 end=0x000fcc00
+00000704770i[PCI   ] i440FX PMC write to PAM register 59 (TLB Flush)
+00001032699i[P2ISA ] PCI IRQ routing: PIRQA# set to 0x0b
+00001032718i[P2ISA ] PCI IRQ routing: PIRQB# set to 0x09
+00001032737i[P2ISA ] PCI IRQ routing: PIRQC# set to 0x0b
+00001032756i[P2ISA ] PCI IRQ routing: PIRQD# set to 0x09
+00001032766i[P2ISA ] write: ELCR2 = 0x0a
+00001033536i[BIOS  ] PIIX3/PIIX4 init: elcr=00 0a
+00001041217i[BIOS  ] PCI: bus=0 devfn=0x00: vendor_id=0x8086 device_id=0x1237 class=0x0600
+00001043496i[BIOS  ] PCI: bus=0 devfn=0x08: vendor_id=0x8086 device_id=0x7000 class=0x0601
+00001045614i[BIOS  ] PCI: bus=0 devfn=0x09: vendor_id=0x8086 device_id=0x7010 class=0x0101
+00001045839i[PIDE  ] new BM-DMA address: 0xc000
+00001046455i[BIOS  ] region 4: 0x0000c000
+00001048489i[BIOS  ] PCI: bus=0 devfn=0x0b: vendor_id=0x8086 device_id=0x7113 class=0x0680
+00001048721i[ACPI  ] new irq line = 11
+00001048733i[ACPI  ] new irq line = 9
+00001048758i[ACPI  ] new PM base address: 0xb000
+00001048772i[ACPI  ] new SM base address: 0xb100
+00001048800i[PCI   ] setting SMRAM control register to 0x4a
+00001212893i[CPU0  ] Enter to System Management Mode
+00001212904i[CPU0  ] RSM: Resuming from System Management Mode
+00001376925i[PCI   ] setting SMRAM control register to 0x0a
+00001391791i[BIOS  ] MP table addr=0x000fa570 MPC table addr=0x000fa4a0 size=0xc8
+00001393613i[BIOS  ] SMBIOS table addr=0x000fa580
+00001395781i[BIOS  ] ACPI tables: RSDP addr=0x000fa6a0 ACPI DATA addr=0x00ff0000 size=0xf72
+00001398970i[BIOS  ] Firmware waking vector 0xff00cc
+00001400765i[PCI   ] i440FX PMC write to PAM register 59 (TLB Flush)
+00001401488i[BIOS  ] bios_table_cur_addr: 0x000fa6c4
+00001529105i[VBIOS ] VGABios $Id: vgabios.c,v 1.76 2013/02/10 08:07:03 vruppert Exp $
+00001529176i[BXVGA ] VBE known Display Interface b0c0
+00001529208i[BXVGA ] VBE known Display Interface b0c5
+00001532133i[VBIOS ] VBE Bios $Id: vbe.c,v 1.65 2014/07/08 18:02:25 vruppert Exp $
+00014040191i[BIOS  ] Booting from 0000:7c00
+00028250700i[XGUI  ] charmap update. Font Height is 16
+00043276978i[FLOPPY] partial read() on floppy image returns 320/512
+00043321422i[FLOPPY] read() on floppy image returns 0
+00043365866i[FLOPPY] read() on floppy image returns 0
+00043410310i[FLOPPY] read() on floppy image returns 0
+00043454754i[FLOPPY] read() on floppy image returns 0
+00043499198i[FLOPPY] read() on floppy image returns 0
+00043543642i[FLOPPY] read() on floppy image returns 0
+00043588086i[FLOPPY] read() on floppy image returns 0
+00043632530i[FLOPPY] read() on floppy image returns 0
+00043678720i[FLOPPY] read() on floppy image returns 0
+00043723164i[FLOPPY] read() on floppy image returns 0
+00043767608i[FLOPPY] read() on floppy image returns 0
+00043812052i[FLOPPY] read() on floppy image returns 0
+00043856496i[FLOPPY] read() on floppy image returns 0
+00043900940i[FLOPPY] read() on floppy image returns 0
+00043945384i[FLOPPY] read() on floppy image returns 0
+00043989828i[FLOPPY] read() on floppy image returns 0
+00044034272i[FLOPPY] read() on floppy image returns 0
+00044078716i[FLOPPY] read() on floppy image returns 0
+00044123160i[FLOPPY] read() on floppy image returns 0
+00044167604i[FLOPPY] read() on floppy image returns 0
+00044212048i[FLOPPY] read() on floppy image returns 0
+00044256492i[FLOPPY] read() on floppy image returns 0
+00044300936i[FLOPPY] read() on floppy image returns 0
+00044345380i[FLOPPY] read() on floppy image returns 0
+00044389824i[FLOPPY] read() on floppy image returns 0
+00044434268i[FLOPPY] read() on floppy image returns 0
+00044480463i[FLOPPY] read() on floppy image returns 0
+00044524907i[FLOPPY] read() on floppy image returns 0
+00044569351i[FLOPPY] read() on floppy image returns 0
+00044613795i[FLOPPY] read() on floppy image returns 0
+00044658239i[FLOPPY] read() on floppy image returns 0
+00044702683i[FLOPPY] read() on floppy image returns 0
+00044747127i[FLOPPY] read() on floppy image returns 0
+00044791571i[FLOPPY] read() on floppy image returns 0
+00044836015i[FLOPPY] read() on floppy image returns 0
+00044880459i[FLOPPY] read() on floppy image returns 0
+00044924903i[FLOPPY] read() on floppy image returns 0
+00044969347i[FLOPPY] read() on floppy image returns 0
+00045013791i[FLOPPY] read() on floppy image returns 0
+00045058235i[FLOPPY] read() on floppy image returns 0
+00045102679i[FLOPPY] read() on floppy image returns 0
+00045147123i[FLOPPY] read() on floppy image returns 0
+00045191567i[FLOPPY] read() on floppy image returns 0
+00045236011i[FLOPPY] read() on floppy image returns 0
+00045282205i[FLOPPY] read() on floppy image returns 0
+00045326649i[FLOPPY] read() on floppy image returns 0
+00045371093i[FLOPPY] read() on floppy image returns 0
+00045415537i[FLOPPY] read() on floppy image returns 0
+00045459981i[FLOPPY] read() on floppy image returns 0
+00045504425i[FLOPPY] read() on floppy image returns 0
+00045548869i[FLOPPY] read() on floppy image returns 0
+00045593313i[FLOPPY] read() on floppy image returns 0
+00045637757i[FLOPPY] read() on floppy image returns 0
+00045682201i[FLOPPY] read() on floppy image returns 0
+00045726645i[FLOPPY] read() on floppy image returns 0
+00045771089i[FLOPPY] read() on floppy image returns 0
+00045815533i[FLOPPY] read() on floppy image returns 0
+00045859977i[FLOPPY] read() on floppy image returns 0
+00045904421i[FLOPPY] read() on floppy image returns 0
+00045948865i[FLOPPY] read() on floppy image returns 0
+00045993309i[FLOPPY] read() on floppy image returns 0
+00046037753i[FLOPPY] read() on floppy image returns 0
+00046083944i[FLOPPY] read() on floppy image returns 0
+00046128388i[FLOPPY] read() on floppy image returns 0
+00046172832i[FLOPPY] read() on floppy image returns 0
+00046217276i[FLOPPY] read() on floppy image returns 0
+00046261720i[FLOPPY] read() on floppy image returns 0
+00046306164i[FLOPPY] read() on floppy image returns 0
+00046350608i[FLOPPY] read() on floppy image returns 0
+00046395052i[FLOPPY] read() on floppy image returns 0
+00046439496i[FLOPPY] read() on floppy image returns 0
+00046483940i[FLOPPY] read() on floppy image returns 0
+00046528384i[FLOPPY] read() on floppy image returns 0
+00046572828i[FLOPPY] read() on floppy image returns 0
+00046617272i[FLOPPY] read() on floppy image returns 0
+00046661716i[FLOPPY] read() on floppy image returns 0
+00046706160i[FLOPPY] read() on floppy image returns 0
+00046750604i[FLOPPY] read() on floppy image returns 0
+00046795048i[FLOPPY] read() on floppy image returns 0
+00046839492i[FLOPPY] read() on floppy image returns 0
+00046885686i[FLOPPY] read() on floppy image returns 0
+00046930130i[FLOPPY] read() on floppy image returns 0
+00046974574i[FLOPPY] read() on floppy image returns 0
+00047019018i[FLOPPY] read() on floppy image returns 0
+00047063462i[FLOPPY] read() on floppy image returns 0
+00047107906i[FLOPPY] read() on floppy image returns 0
+00047152350i[FLOPPY] read() on floppy image returns 0
+00047196794i[FLOPPY] read() on floppy image returns 0
+00047241238i[FLOPPY] read() on floppy image returns 0
+00047285682i[FLOPPY] read() on floppy image returns 0
+00047330126i[FLOPPY] read() on floppy image returns 0
+00047374570i[FLOPPY] read() on floppy image returns 0
+00047419014i[FLOPPY] read() on floppy image returns 0
+00047463458i[FLOPPY] read() on floppy image returns 0
+00047507902i[FLOPPY] read() on floppy image returns 0
+00047552346i[FLOPPY] read() on floppy image returns 0
+00047596790i[FLOPPY] read() on floppy image returns 0
+00047641234i[FLOPPY] read() on floppy image returns 0
+00047687433i[FLOPPY] read() on floppy image returns 0
+00047731877i[FLOPPY] read() on floppy image returns 0
+00047776321i[FLOPPY] read() on floppy image returns 0
+00047820765i[FLOPPY] read() on floppy image returns 0
+00047865209i[FLOPPY] read() on floppy image returns 0
+00047909653i[FLOPPY] read() on floppy image returns 0
+00047954097i[FLOPPY] read() on floppy image returns 0
+00047998541i[FLOPPY] read() on floppy image returns 0
+00048042985i[FLOPPY] read() on floppy image returns 0
+00048087429i[FLOPPY] read() on floppy image returns 0
+00048131873i[FLOPPY] read() on floppy image returns 0
+00048176317i[FLOPPY] read() on floppy image returns 0
+00048220761i[FLOPPY] read() on floppy image returns 0
+00048344462i[CPU0  ] CPU is in protected mode (active)
+00048344462i[CPU0  ] CS.mode = 32 bit
+00048344462i[CPU0  ] SS.mode = 32 bit
+00048344462i[CPU0  ] EFER   = 0x00000000
+00048344462i[CPU0  ] | EAX=80000011  EBX=000140dc  ECX=0001905c  EDX=0004f460
+00048344462i[CPU0  ] | ESP=00029158  EBP=000291a0  ESI=000140e8  EDI=0004f460
+00048344462i[CPU0  ] | IOPL=0 id vip vif ac vm RF nt of df if tf SF zf af PF cf
+00048344462i[CPU0  ] | SEG sltr(index|ti|rpl)     base    limit G D
+00048344462i[CPU0  ] |  CS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00048344462i[CPU0  ] |  DS:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00048344462i[CPU0  ] |  SS:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00048344462i[CPU0  ] |  ES:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00048344462i[CPU0  ] |  FS:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00048344462i[CPU0  ] |  GS:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00048344462i[CPU0  ] | EIP=00011e23 (00011e23)
+00048344462i[CPU0  ] | CR0=0x80000011 CR2=0x00014180
+00048344462i[CPU0  ] | CR3=0x0004f460 CR4=0x00000000
+00048344462i[CPU0  ] 0x00011e23: (instruction unavailable) page not present
+00048344462e[CPU0  ] exception(): 3rd (14) exception with no resolution, shutdown status is 00h, resetting
+00048344462i[SYS   ] bx_pc_system_c::Reset(HARDWARE) called
+00048344462i[CPU0  ] cpu hardware reset
+00048344462i[APIC0 ] allocate APIC id=0 (MMIO enabled) to 0x0000fee00000
+00048344462i[CPU0  ] CPUID[0x00000000]: 00000005 756e6547 6c65746e 49656e69
+00048344462i[CPU0  ] CPUID[0x00000001]: 00000633 00010800 00000008 1fcbfbff
+00048344462i[CPU0  ] CPUID[0x00000002]: 00410601 00000000 00000000 00000000
+00048344462i[CPU0  ] CPUID[0x00000003]: 00000000 00000000 00000000 00000000
+00048344462i[CPU0  ] CPUID[0x00000004]: 00000000 00000000 00000000 00000000
+00048344462i[CPU0  ] CPUID[0x00000005]: 00000040 00000040 00000003 00000020
+00048344462i[PLUGIN] reset of 'pci' plugin device by virtual method
+00048344462i[PLUGIN] reset of 'pci2isa' plugin device by virtual method
+00048344462i[PLUGIN] reset of 'cmos' plugin device by virtual method
+00048344462i[PLUGIN] reset of 'dma' plugin device by virtual method
+00048344462i[PLUGIN] reset of 'pic' plugin device by virtual method
+00048344462i[PLUGIN] reset of 'pit' plugin device by virtual method
+00048344462i[PLUGIN] reset of 'vga' plugin device by virtual method
+00048344462i[PLUGIN] reset of 'floppy' plugin device by virtual method
+00048344462i[PLUGIN] reset of 'acpi' plugin device by virtual method
+00048344462i[PLUGIN] reset of 'ioapic' plugin device by virtual method
+00048344462i[PLUGIN] reset of 'keyboard' plugin device by virtual method
+00048344462i[PLUGIN] reset of 'harddrv' plugin device by virtual method
+00048344462i[PLUGIN] reset of 'pci_ide' plugin device by virtual method
+00048344462i[PLUGIN] reset of 'unmapped' plugin device by virtual method
+00048344462i[PLUGIN] reset of 'biosdev' plugin device by virtual method
+00048344462i[PLUGIN] reset of 'speaker' plugin device by virtual method
+00048344462i[PLUGIN] reset of 'extfpuirq' plugin device by virtual method
+00048344462i[PLUGIN] reset of 'parallel' plugin device by virtual method
+00048344462i[PLUGIN] reset of 'serial' plugin device by virtual method
+00048349124i[BIOS  ] $Revision: 12412 $ $Date: 2014-07-10 09:28:59 +0200 (Do, 10. Jul 2014) $
+00048663044i[KBD   ] reset-disable command received
+00048665813i[BIOS  ] Starting rombios32
+00048666251i[BIOS  ] Shutdown flag 0
+00048666835i[BIOS  ] ram_size=0x01000000
+00048667256i[BIOS  ] ram_end=16MB
+00048707766i[BIOS  ] Found 1 cpu(s)
+00048721970i[BIOS  ] bios_table_addr: 0x000fa498 end=0x000fcc00
+00049049765i[PCI   ] i440FX PMC write to PAM register 59 (TLB Flush)
+00049377694i[P2ISA ] PCI IRQ routing: PIRQA# set to 0x0b
+00049377713i[P2ISA ] PCI IRQ routing: PIRQB# set to 0x09
+00049377732i[P2ISA ] PCI IRQ routing: PIRQC# set to 0x0b
+00049377751i[P2ISA ] PCI IRQ routing: PIRQD# set to 0x09
+00049377761i[P2ISA ] write: ELCR2 = 0x0a
+00049378531i[BIOS  ] PIIX3/PIIX4 init: elcr=00 0a
+00049386212i[BIOS  ] PCI: bus=0 devfn=0x00: vendor_id=0x8086 device_id=0x1237 class=0x0600
+00049388491i[BIOS  ] PCI: bus=0 devfn=0x08: vendor_id=0x8086 device_id=0x7000 class=0x0601
+00049390609i[BIOS  ] PCI: bus=0 devfn=0x09: vendor_id=0x8086 device_id=0x7010 class=0x0101
+00049391450i[BIOS  ] region 4: 0x0000c000
+00049393484i[BIOS  ] PCI: bus=0 devfn=0x0b: vendor_id=0x8086 device_id=0x7113 class=0x0680
+00049393716i[ACPI  ] new irq line = 11
+00049393728i[ACPI  ] new irq line = 9
+00049393795i[PCI   ] setting SMRAM control register to 0x4a
+00049557888i[CPU0  ] Enter to System Management Mode
+00049557899i[CPU0  ] RSM: Resuming from System Management Mode
+00049721920i[PCI   ] setting SMRAM control register to 0x0a
+00049736786i[BIOS  ] MP table addr=0x000fa570 MPC table addr=0x000fa4a0 size=0xc8
+00049738608i[BIOS  ] SMBIOS table addr=0x000fa580
+00049740776i[BIOS  ] ACPI tables: RSDP addr=0x000fa6a0 ACPI DATA addr=0x00ff0000 size=0xf72
+00049743965i[BIOS  ] Firmware waking vector 0xff00cc
+00049745760i[PCI   ] i440FX PMC write to PAM register 59 (TLB Flush)
+00049746483i[BIOS  ] bios_table_cur_addr: 0x000fa6c4
+00049874100i[VBIOS ] VGABios $Id: vgabios.c,v 1.76 2013/02/10 08:07:03 vruppert Exp $
+00049874171i[BXVGA ] VBE known Display Interface b0c0
+00049874203i[BXVGA ] VBE known Display Interface b0c5
+00049877128i[VBIOS ] VBE Bios $Id: vbe.c,v 1.65 2014/07/08 18:02:25 vruppert Exp $
+00062384656i[BIOS  ] Booting from 0000:7c00
+00063697608i[XGUI  ] charmap update. Font Height is 16
+00091621443i[FLOPPY] partial read() on floppy image returns 320/512
+00091665887i[FLOPPY] read() on floppy image returns 0
+00091710331i[FLOPPY] read() on floppy image returns 0
+00091754775i[FLOPPY] read() on floppy image returns 0
+00091799219i[FLOPPY] read() on floppy image returns 0
+00091843663i[FLOPPY] read() on floppy image returns 0
+00091888107i[FLOPPY] read() on floppy image returns 0
+00091932551i[FLOPPY] read() on floppy image returns 0
+00091976995i[FLOPPY] read() on floppy image returns 0
+00092023185i[FLOPPY] read() on floppy image returns 0
+00092067629i[FLOPPY] read() on floppy image returns 0
+00092112073i[FLOPPY] read() on floppy image returns 0
+00092156517i[FLOPPY] read() on floppy image returns 0
+00092200961i[FLOPPY] read() on floppy image returns 0
+00092245405i[FLOPPY] read() on floppy image returns 0
+00092289849i[FLOPPY] read() on floppy image returns 0
+00092334293i[FLOPPY] read() on floppy image returns 0
+00092378737i[FLOPPY] read() on floppy image returns 0
+00092423181i[FLOPPY] read() on floppy image returns 0
+00092467625i[FLOPPY] read() on floppy image returns 0
+00092512069i[FLOPPY] read() on floppy image returns 0
+00092556513i[FLOPPY] read() on floppy image returns 0
+00092600957i[FLOPPY] read() on floppy image returns 0
+00092645401i[FLOPPY] read() on floppy image returns 0
+00092689845i[FLOPPY] read() on floppy image returns 0
+00092734289i[FLOPPY] read() on floppy image returns 0
+00092778733i[FLOPPY] read() on floppy image returns 0
+00092824928i[FLOPPY] read() on floppy image returns 0
+00092869372i[FLOPPY] read() on floppy image returns 0
+00092913816i[FLOPPY] read() on floppy image returns 0
+00092958260i[FLOPPY] read() on floppy image returns 0
+00093002704i[FLOPPY] read() on floppy image returns 0
+00093047148i[FLOPPY] read() on floppy image returns 0
+00093091592i[FLOPPY] read() on floppy image returns 0
+00093136036i[FLOPPY] read() on floppy image returns 0
+00093180480i[FLOPPY] read() on floppy image returns 0
+00093224924i[FLOPPY] read() on floppy image returns 0
+00093269368i[FLOPPY] read() on floppy image returns 0
+00093313812i[FLOPPY] read() on floppy image returns 0
+00093358256i[FLOPPY] read() on floppy image returns 0
+00093402700i[FLOPPY] read() on floppy image returns 0
+00093447144i[FLOPPY] read() on floppy image returns 0
+00093491588i[FLOPPY] read() on floppy image returns 0
+00093536032i[FLOPPY] read() on floppy image returns 0
+00093580476i[FLOPPY] read() on floppy image returns 0
+00093626670i[FLOPPY] read() on floppy image returns 0
+00093671114i[FLOPPY] read() on floppy image returns 0
+00093715558i[FLOPPY] read() on floppy image returns 0
+00093760002i[FLOPPY] read() on floppy image returns 0
+00093804446i[FLOPPY] read() on floppy image returns 0
+00093848890i[FLOPPY] read() on floppy image returns 0
+00093893334i[FLOPPY] read() on floppy image returns 0
+00093937778i[FLOPPY] read() on floppy image returns 0
+00093982222i[FLOPPY] read() on floppy image returns 0
+00094026666i[FLOPPY] read() on floppy image returns 0
+00094071110i[FLOPPY] read() on floppy image returns 0
+00094115554i[FLOPPY] read() on floppy image returns 0
+00094159998i[FLOPPY] read() on floppy image returns 0
+00094204442i[FLOPPY] read() on floppy image returns 0
+00094248886i[FLOPPY] read() on floppy image returns 0
+00094293330i[FLOPPY] read() on floppy image returns 0
+00094337774i[FLOPPY] read() on floppy image returns 0
+00094382218i[FLOPPY] read() on floppy image returns 0
+00094428409i[FLOPPY] read() on floppy image returns 0
+00094472853i[FLOPPY] read() on floppy image returns 0
+00094517297i[FLOPPY] read() on floppy image returns 0
+00094561741i[FLOPPY] read() on floppy image returns 0
+00094606185i[FLOPPY] read() on floppy image returns 0
+00094650629i[FLOPPY] read() on floppy image returns 0
+00094695073i[FLOPPY] read() on floppy image returns 0
+00094739517i[FLOPPY] read() on floppy image returns 0
+00094783961i[FLOPPY] read() on floppy image returns 0
+00094828405i[FLOPPY] read() on floppy image returns 0
+00094872849i[FLOPPY] read() on floppy image returns 0
+00094917293i[FLOPPY] read() on floppy image returns 0
+00094961737i[FLOPPY] read() on floppy image returns 0
+00095006181i[FLOPPY] read() on floppy image returns 0
+00095050625i[FLOPPY] read() on floppy image returns 0
+00095095069i[FLOPPY] read() on floppy image returns 0
+00095139513i[FLOPPY] read() on floppy image returns 0
+00095183957i[FLOPPY] read() on floppy image returns 0
+00095230151i[FLOPPY] read() on floppy image returns 0
+00095274595i[FLOPPY] read() on floppy image returns 0
+00095319039i[FLOPPY] read() on floppy image returns 0
+00095363483i[FLOPPY] read() on floppy image returns 0
+00095407927i[FLOPPY] read() on floppy image returns 0
+00095452371i[FLOPPY] read() on floppy image returns 0
+00095496815i[FLOPPY] read() on floppy image returns 0
+00095541259i[FLOPPY] read() on floppy image returns 0
+00095585703i[FLOPPY] read() on floppy image returns 0
+00095630147i[FLOPPY] read() on floppy image returns 0
+00095674591i[FLOPPY] read() on floppy image returns 0
+00095719035i[FLOPPY] read() on floppy image returns 0
+00095763479i[FLOPPY] read() on floppy image returns 0
+00095807923i[FLOPPY] read() on floppy image returns 0
+00095852367i[FLOPPY] read() on floppy image returns 0
+00095896811i[FLOPPY] read() on floppy image returns 0
+00095941255i[FLOPPY] read() on floppy image returns 0
+00095985699i[FLOPPY] read() on floppy image returns 0
+00096031898i[FLOPPY] read() on floppy image returns 0
+00096076342i[FLOPPY] read() on floppy image returns 0
+00096120786i[FLOPPY] read() on floppy image returns 0
+00096165230i[FLOPPY] read() on floppy image returns 0
+00096209674i[FLOPPY] read() on floppy image returns 0
+00096254118i[FLOPPY] read() on floppy image returns 0
+00096298562i[FLOPPY] read() on floppy image returns 0
+00096343006i[FLOPPY] read() on floppy image returns 0
+00096387450i[FLOPPY] read() on floppy image returns 0
+00096431894i[FLOPPY] read() on floppy image returns 0
+00096476338i[FLOPPY] read() on floppy image returns 0
+00096520782i[FLOPPY] read() on floppy image returns 0
+00096565226i[FLOPPY] read() on floppy image returns 0
+00096688927i[CPU0  ] CPU is in protected mode (active)
+00096688927i[CPU0  ] CS.mode = 32 bit
+00096688927i[CPU0  ] SS.mode = 32 bit
+00096688927i[CPU0  ] EFER   = 0x00000000
+00096688927i[CPU0  ] | EAX=80000011  EBX=000140dc  ECX=0001905c  EDX=0004f460
+00096688927i[CPU0  ] | ESP=00029158  EBP=000291a0  ESI=000140e8  EDI=0004f460
+00096688927i[CPU0  ] | IOPL=0 id vip vif ac vm RF nt of df if tf SF zf af PF cf
+00096688927i[CPU0  ] | SEG sltr(index|ti|rpl)     base    limit G D
+00096688927i[CPU0  ] |  CS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00096688927i[CPU0  ] |  DS:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00096688927i[CPU0  ] |  SS:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00096688927i[CPU0  ] |  ES:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00096688927i[CPU0  ] |  FS:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00096688927i[CPU0  ] |  GS:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00096688927i[CPU0  ] | EIP=00011e23 (00011e23)
+00096688927i[CPU0  ] | CR0=0x80000011 CR2=0x00014180
+00096688927i[CPU0  ] | CR3=0x0004f460 CR4=0x00000000
+00096688927i[CPU0  ] 0x00011e23: (instruction unavailable) page not present
+00096688927e[CPU0  ] exception(): 3rd (14) exception with no resolution, shutdown status is 00h, resetting
+00096688927i[SYS   ] bx_pc_system_c::Reset(HARDWARE) called
+00096688927i[CPU0  ] cpu hardware reset
+00096688927i[APIC0 ] allocate APIC id=0 (MMIO enabled) to 0x0000fee00000
+00096688927i[CPU0  ] CPUID[0x00000000]: 00000005 756e6547 6c65746e 49656e69
+00096688927i[CPU0  ] CPUID[0x00000001]: 00000633 00010800 00000008 1fcbfbff
+00096688927i[CPU0  ] CPUID[0x00000002]: 00410601 00000000 00000000 00000000
+00096688927i[CPU0  ] CPUID[0x00000003]: 00000000 00000000 00000000 00000000
+00096688927i[CPU0  ] CPUID[0x00000004]: 00000000 00000000 00000000 00000000
+00096688927i[CPU0  ] CPUID[0x00000005]: 00000040 00000040 00000003 00000020
+00096688927i[PLUGIN] reset of 'pci' plugin device by virtual method
+00096688927i[PLUGIN] reset of 'pci2isa' plugin device by virtual method
+00096688927i[PLUGIN] reset of 'cmos' plugin device by virtual method
+00096688927i[PLUGIN] reset of 'dma' plugin device by virtual method
+00096688927i[PLUGIN] reset of 'pic' plugin device by virtual method
+00096688927i[PLUGIN] reset of 'pit' plugin device by virtual method
+00096688927i[PLUGIN] reset of 'vga' plugin device by virtual method
+00096688927i[PLUGIN] reset of 'floppy' plugin device by virtual method
+00096688927i[PLUGIN] reset of 'acpi' plugin device by virtual method
+00096688927i[PLUGIN] reset of 'ioapic' plugin device by virtual method
+00096688927i[PLUGIN] reset of 'keyboard' plugin device by virtual method
+00096688927i[PLUGIN] reset of 'harddrv' plugin device by virtual method
+00096688927i[PLUGIN] reset of 'pci_ide' plugin device by virtual method
+00096688927i[PLUGIN] reset of 'unmapped' plugin device by virtual method
+00096688927i[PLUGIN] reset of 'biosdev' plugin device by virtual method
+00096688927i[PLUGIN] reset of 'speaker' plugin device by virtual method
+00096688927i[PLUGIN] reset of 'extfpuirq' plugin device by virtual method
+00096688927i[PLUGIN] reset of 'parallel' plugin device by virtual method
+00096688927i[PLUGIN] reset of 'serial' plugin device by virtual method
+00096693589i[BIOS  ] $Revision: 12412 $ $Date: 2014-07-10 09:28:59 +0200 (Do, 10. Jul 2014) $
+00097007053i[KBD   ] reset-disable command received
+00097009822i[BIOS  ] Starting rombios32
+00097010260i[BIOS  ] Shutdown flag 0
+00097010844i[BIOS  ] ram_size=0x01000000
+00097011265i[BIOS  ] ram_end=16MB
+00097051815i[BIOS  ] Found 1 cpu(s)
+00097066019i[BIOS  ] bios_table_addr: 0x000fa498 end=0x000fcc00
+00097393814i[PCI   ] i440FX PMC write to PAM register 59 (TLB Flush)
+00097721743i[P2ISA ] PCI IRQ routing: PIRQA# set to 0x0b
+00097721762i[P2ISA ] PCI IRQ routing: PIRQB# set to 0x09
+00097721781i[P2ISA ] PCI IRQ routing: PIRQC# set to 0x0b
+00097721800i[P2ISA ] PCI IRQ routing: PIRQD# set to 0x09
+00097721810i[P2ISA ] write: ELCR2 = 0x0a
+00097722580i[BIOS  ] PIIX3/PIIX4 init: elcr=00 0a
+00097730261i[BIOS  ] PCI: bus=0 devfn=0x00: vendor_id=0x8086 device_id=0x1237 class=0x0600
+00097732540i[BIOS  ] PCI: bus=0 devfn=0x08: vendor_id=0x8086 device_id=0x7000 class=0x0601
+00097734658i[BIOS  ] PCI: bus=0 devfn=0x09: vendor_id=0x8086 device_id=0x7010 class=0x0101
+00097735499i[BIOS  ] region 4: 0x0000c000
+00097737533i[BIOS  ] PCI: bus=0 devfn=0x0b: vendor_id=0x8086 device_id=0x7113 class=0x0680
+00097737765i[ACPI  ] new irq line = 11
+00097737777i[ACPI  ] new irq line = 9
+00097737844i[PCI   ] setting SMRAM control register to 0x4a
+00097901937i[CPU0  ] Enter to System Management Mode
+00097901948i[CPU0  ] RSM: Resuming from System Management Mode
+00098065969i[PCI   ] setting SMRAM control register to 0x0a
+00098080835i[BIOS  ] MP table addr=0x000fa570 MPC table addr=0x000fa4a0 size=0xc8
+00098082657i[BIOS  ] SMBIOS table addr=0x000fa580
+00098084825i[BIOS  ] ACPI tables: RSDP addr=0x000fa6a0 ACPI DATA addr=0x00ff0000 size=0xf72
+00098088014i[BIOS  ] Firmware waking vector 0xff00cc
+00098089809i[PCI   ] i440FX PMC write to PAM register 59 (TLB Flush)
+00098090532i[BIOS  ] bios_table_cur_addr: 0x000fa6c4
+00098218149i[VBIOS ] VGABios $Id: vgabios.c,v 1.76 2013/02/10 08:07:03 vruppert Exp $
+00098218220i[BXVGA ] VBE known Display Interface b0c0
+00098218252i[BXVGA ] VBE known Display Interface b0c5
+00098221177i[VBIOS ] VBE Bios $Id: vbe.c,v 1.65 2014/07/08 18:02:25 vruppert Exp $
+00110729125i[BIOS  ] Booting from 0000:7c00
+00122431520i[XGUI  ] charmap update. Font Height is 16
+00139965912i[FLOPPY] partial read() on floppy image returns 320/512
+00140010356i[FLOPPY] read() on floppy image returns 0
+00140054800i[FLOPPY] read() on floppy image returns 0
+00140099244i[FLOPPY] read() on floppy image returns 0
+00140143688i[FLOPPY] read() on floppy image returns 0
+00140188132i[FLOPPY] read() on floppy image returns 0
+00140232576i[FLOPPY] read() on floppy image returns 0
+00140277020i[FLOPPY] read() on floppy image returns 0
+00140321464i[FLOPPY] read() on floppy image returns 0
+00140367654i[FLOPPY] read() on floppy image returns 0
+00140412098i[FLOPPY] read() on floppy image returns 0
+00140456542i[FLOPPY] read() on floppy image returns 0
+00140500986i[FLOPPY] read() on floppy image returns 0
+00140545430i[FLOPPY] read() on floppy image returns 0
+00140589874i[FLOPPY] read() on floppy image returns 0
+00140634318i[FLOPPY] read() on floppy image returns 0
+00140678762i[FLOPPY] read() on floppy image returns 0
+00140723206i[FLOPPY] read() on floppy image returns 0
+00140767650i[FLOPPY] read() on floppy image returns 0
+00140812094i[FLOPPY] read() on floppy image returns 0
+00140856538i[FLOPPY] read() on floppy image returns 0
+00140900982i[FLOPPY] read() on floppy image returns 0
+00140945426i[FLOPPY] read() on floppy image returns 0
+00140989870i[FLOPPY] read() on floppy image returns 0
+00141034314i[FLOPPY] read() on floppy image returns 0
+00141078758i[FLOPPY] read() on floppy image returns 0
+00141123202i[FLOPPY] read() on floppy image returns 0
+00141169397i[FLOPPY] read() on floppy image returns 0
+00141213841i[FLOPPY] read() on floppy image returns 0
+00141258285i[FLOPPY] read() on floppy image returns 0
+00141302729i[FLOPPY] read() on floppy image returns 0
+00141347173i[FLOPPY] read() on floppy image returns 0
+00141391617i[FLOPPY] read() on floppy image returns 0
+00141436061i[FLOPPY] read() on floppy image returns 0
+00141480505i[FLOPPY] read() on floppy image returns 0
+00141524949i[FLOPPY] read() on floppy image returns 0
+00141569393i[FLOPPY] read() on floppy image returns 0
+00141613837i[FLOPPY] read() on floppy image returns 0
+00141658281i[FLOPPY] read() on floppy image returns 0
+00141702725i[FLOPPY] read() on floppy image returns 0
+00141747169i[FLOPPY] read() on floppy image returns 0
+00141791613i[FLOPPY] read() on floppy image returns 0
+00141836057i[FLOPPY] read() on floppy image returns 0
+00141880501i[FLOPPY] read() on floppy image returns 0
+00141924945i[FLOPPY] read() on floppy image returns 0
+00141971139i[FLOPPY] read() on floppy image returns 0
+00142015583i[FLOPPY] read() on floppy image returns 0
+00142060027i[FLOPPY] read() on floppy image returns 0
+00142104471i[FLOPPY] read() on floppy image returns 0
+00142148915i[FLOPPY] read() on floppy image returns 0
+00142193359i[FLOPPY] read() on floppy image returns 0
+00142237803i[FLOPPY] read() on floppy image returns 0
+00142282247i[FLOPPY] read() on floppy image returns 0
+00142326691i[FLOPPY] read() on floppy image returns 0
+00142371135i[FLOPPY] read() on floppy image returns 0
+00142415579i[FLOPPY] read() on floppy image returns 0
+00142460023i[FLOPPY] read() on floppy image returns 0
+00142504467i[FLOPPY] read() on floppy image returns 0
+00142548911i[FLOPPY] read() on floppy image returns 0
+00142593355i[FLOPPY] read() on floppy image returns 0
+00142637799i[FLOPPY] read() on floppy image returns 0
+00142682243i[FLOPPY] read() on floppy image returns 0
+00142726687i[FLOPPY] read() on floppy image returns 0
+00142772878i[FLOPPY] read() on floppy image returns 0
+00142817322i[FLOPPY] read() on floppy image returns 0
+00142861766i[FLOPPY] read() on floppy image returns 0
+00142906210i[FLOPPY] read() on floppy image returns 0
+00142950654i[FLOPPY] read() on floppy image returns 0
+00142995098i[FLOPPY] read() on floppy image returns 0
+00143039542i[FLOPPY] read() on floppy image returns 0
+00143083986i[FLOPPY] read() on floppy image returns 0
+00143128430i[FLOPPY] read() on floppy image returns 0
+00143172874i[FLOPPY] read() on floppy image returns 0
+00143217318i[FLOPPY] read() on floppy image returns 0
+00143261762i[FLOPPY] read() on floppy image returns 0
+00143306206i[FLOPPY] read() on floppy image returns 0
+00143350650i[FLOPPY] read() on floppy image returns 0
+00143395094i[FLOPPY] read() on floppy image returns 0
+00143439538i[FLOPPY] read() on floppy image returns 0
+00143483982i[FLOPPY] read() on floppy image returns 0
+00143528426i[FLOPPY] read() on floppy image returns 0
+00143574620i[FLOPPY] read() on floppy image returns 0
+00143619064i[FLOPPY] read() on floppy image returns 0
+00143663508i[FLOPPY] read() on floppy image returns 0
+00143707952i[FLOPPY] read() on floppy image returns 0
+00143752396i[FLOPPY] read() on floppy image returns 0
+00143796840i[FLOPPY] read() on floppy image returns 0
+00143841284i[FLOPPY] read() on floppy image returns 0
+00143885728i[FLOPPY] read() on floppy image returns 0
+00143930172i[FLOPPY] read() on floppy image returns 0
+00143974616i[FLOPPY] read() on floppy image returns 0
+00144019060i[FLOPPY] read() on floppy image returns 0
+00144063504i[FLOPPY] read() on floppy image returns 0
+00144107948i[FLOPPY] read() on floppy image returns 0
+00144152392i[FLOPPY] read() on floppy image returns 0
+00144196836i[FLOPPY] read() on floppy image returns 0
+00144241280i[FLOPPY] read() on floppy image returns 0
+00144285724i[FLOPPY] read() on floppy image returns 0
+00144330168i[FLOPPY] read() on floppy image returns 0
+00144376367i[FLOPPY] read() on floppy image returns 0
+00144420811i[FLOPPY] read() on floppy image returns 0
+00144465255i[FLOPPY] read() on floppy image returns 0
+00144509699i[FLOPPY] read() on floppy image returns 0
+00144554143i[FLOPPY] read() on floppy image returns 0
+00144598587i[FLOPPY] read() on floppy image returns 0
+00144643031i[FLOPPY] read() on floppy image returns 0
+00144687475i[FLOPPY] read() on floppy image returns 0
+00144731919i[FLOPPY] read() on floppy image returns 0
+00144776363i[FLOPPY] read() on floppy image returns 0
+00144820807i[FLOPPY] read() on floppy image returns 0
+00144865251i[FLOPPY] read() on floppy image returns 0
+00144909695i[FLOPPY] read() on floppy image returns 0
+00145033396i[CPU0  ] CPU is in protected mode (active)
+00145033396i[CPU0  ] CS.mode = 32 bit
+00145033396i[CPU0  ] SS.mode = 32 bit
+00145033396i[CPU0  ] EFER   = 0x00000000
+00145033396i[CPU0  ] | EAX=80000011  EBX=000140dc  ECX=0001905c  EDX=0004f460
+00145033396i[CPU0  ] | ESP=00029158  EBP=000291a0  ESI=000140e8  EDI=0004f460
+00145033396i[CPU0  ] | IOPL=0 id vip vif ac vm RF nt of df if tf SF zf af PF cf
+00145033396i[CPU0  ] | SEG sltr(index|ti|rpl)     base    limit G D
+00145033396i[CPU0  ] |  CS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00145033396i[CPU0  ] |  DS:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00145033396i[CPU0  ] |  SS:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00145033396i[CPU0  ] |  ES:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00145033396i[CPU0  ] |  FS:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00145033396i[CPU0  ] |  GS:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00145033396i[CPU0  ] | EIP=00011e23 (00011e23)
+00145033396i[CPU0  ] | CR0=0x80000011 CR2=0x00014180
+00145033396i[CPU0  ] | CR3=0x0004f460 CR4=0x00000000
+00145033396i[CPU0  ] 0x00011e23: (instruction unavailable) page not present
+00145033396e[CPU0  ] exception(): 3rd (14) exception with no resolution, shutdown status is 00h, resetting
+00145033396i[SYS   ] bx_pc_system_c::Reset(HARDWARE) called
+00145033396i[CPU0  ] cpu hardware reset
+00145033396i[APIC0 ] allocate APIC id=0 (MMIO enabled) to 0x0000fee00000
+00145033396i[CPU0  ] CPUID[0x00000000]: 00000005 756e6547 6c65746e 49656e69
+00145033396i[CPU0  ] CPUID[0x00000001]: 00000633 00010800 00000008 1fcbfbff
+00145033396i[CPU0  ] CPUID[0x00000002]: 00410601 00000000 00000000 00000000
+00145033396i[CPU0  ] CPUID[0x00000003]: 00000000 00000000 00000000 00000000
+00145033396i[CPU0  ] CPUID[0x00000004]: 00000000 00000000 00000000 00000000
+00145033396i[CPU0  ] CPUID[0x00000005]: 00000040 00000040 00000003 00000020
+00145033396i[PLUGIN] reset of 'pci' plugin device by virtual method
+00145033396i[PLUGIN] reset of 'pci2isa' plugin device by virtual method
+00145033396i[PLUGIN] reset of 'cmos' plugin device by virtual method
+00145033396i[PLUGIN] reset of 'dma' plugin device by virtual method
+00145033396i[PLUGIN] reset of 'pic' plugin device by virtual method
+00145033396i[PLUGIN] reset of 'pit' plugin device by virtual method
+00145033396i[PLUGIN] reset of 'vga' plugin device by virtual method
+00145033396i[PLUGIN] reset of 'floppy' plugin device by virtual method
+00145033396i[PLUGIN] reset of 'acpi' plugin device by virtual method
+00145033396i[PLUGIN] reset of 'ioapic' plugin device by virtual method
+00145033396i[PLUGIN] reset of 'keyboard' plugin device by virtual method
+00145033396i[PLUGIN] reset of 'harddrv' plugin device by virtual method
+00145033396i[PLUGIN] reset of 'pci_ide' plugin device by virtual method
+00145033396i[PLUGIN] reset of 'unmapped' plugin device by virtual method
+00145033396i[PLUGIN] reset of 'biosdev' plugin device by virtual method
+00145033396i[PLUGIN] reset of 'speaker' plugin device by virtual method
+00145033396i[PLUGIN] reset of 'extfpuirq' plugin device by virtual method
+00145033396i[PLUGIN] reset of 'parallel' plugin device by virtual method
+00145033396i[PLUGIN] reset of 'serial' plugin device by virtual method
+00145038058i[BIOS  ] $Revision: 12412 $ $Date: 2014-07-10 09:28:59 +0200 (Do, 10. Jul 2014) $
+00145352054i[KBD   ] reset-disable command received
+00145354823i[BIOS  ] Starting rombios32
+00145355261i[BIOS  ] Shutdown flag 0
+00145355845i[BIOS  ] ram_size=0x01000000
+00145356266i[BIOS  ] ram_end=16MB
+00145396806i[BIOS  ] Found 1 cpu(s)
+00145411010i[BIOS  ] bios_table_addr: 0x000fa498 end=0x000fcc00
+00145738805i[PCI   ] i440FX PMC write to PAM register 59 (TLB Flush)
+00146066734i[P2ISA ] PCI IRQ routing: PIRQA# set to 0x0b
+00146066753i[P2ISA ] PCI IRQ routing: PIRQB# set to 0x09
+00146066772i[P2ISA ] PCI IRQ routing: PIRQC# set to 0x0b
+00146066791i[P2ISA ] PCI IRQ routing: PIRQD# set to 0x09
+00146066801i[P2ISA ] write: ELCR2 = 0x0a
+00146067571i[BIOS  ] PIIX3/PIIX4 init: elcr=00 0a
+00146075252i[BIOS  ] PCI: bus=0 devfn=0x00: vendor_id=0x8086 device_id=0x1237 class=0x0600
+00146077531i[BIOS  ] PCI: bus=0 devfn=0x08: vendor_id=0x8086 device_id=0x7000 class=0x0601
+00146079649i[BIOS  ] PCI: bus=0 devfn=0x09: vendor_id=0x8086 device_id=0x7010 class=0x0101
+00146080490i[BIOS  ] region 4: 0x0000c000
+00146082524i[BIOS  ] PCI: bus=0 devfn=0x0b: vendor_id=0x8086 device_id=0x7113 class=0x0680
+00146082756i[ACPI  ] new irq line = 11
+00146082768i[ACPI  ] new irq line = 9
+00146082835i[PCI   ] setting SMRAM control register to 0x4a
+00146246928i[CPU0  ] Enter to System Management Mode
+00146246939i[CPU0  ] RSM: Resuming from System Management Mode
+00146410960i[PCI   ] setting SMRAM control register to 0x0a
+00146425826i[BIOS  ] MP table addr=0x000fa570 MPC table addr=0x000fa4a0 size=0xc8
+00146427648i[BIOS  ] SMBIOS table addr=0x000fa580
+00146429816i[BIOS  ] ACPI tables: RSDP addr=0x000fa6a0 ACPI DATA addr=0x00ff0000 size=0xf72
+00146433005i[BIOS  ] Firmware waking vector 0xff00cc
+00146434800i[PCI   ] i440FX PMC write to PAM register 59 (TLB Flush)
+00146435523i[BIOS  ] bios_table_cur_addr: 0x000fa6c4
+00146563140i[VBIOS ] VGABios $Id: vgabios.c,v 1.76 2013/02/10 08:07:03 vruppert Exp $
+00146563211i[BXVGA ] VBE known Display Interface b0c0
+00146563243i[BXVGA ] VBE known Display Interface b0c5
+00146566168i[VBIOS ] VBE Bios $Id: vbe.c,v 1.65 2014/07/08 18:02:25 vruppert Exp $
+00159073586i[BIOS  ] Booting from 0000:7c00
+00164394912i[XGUI  ] charmap update. Font Height is 16
+00188310373i[FLOPPY] partial read() on floppy image returns 320/512
+00188354817i[FLOPPY] read() on floppy image returns 0
+00188399261i[FLOPPY] read() on floppy image returns 0
+00188443705i[FLOPPY] read() on floppy image returns 0
+00188488149i[FLOPPY] read() on floppy image returns 0
+00188532593i[FLOPPY] read() on floppy image returns 0
+00188577037i[FLOPPY] read() on floppy image returns 0
+00188621481i[FLOPPY] read() on floppy image returns 0
+00188665925i[FLOPPY] read() on floppy image returns 0
+00188712115i[FLOPPY] read() on floppy image returns 0
+00188756559i[FLOPPY] read() on floppy image returns 0
+00188801003i[FLOPPY] read() on floppy image returns 0
+00188845447i[FLOPPY] read() on floppy image returns 0
+00188889891i[FLOPPY] read() on floppy image returns 0
+00188934335i[FLOPPY] read() on floppy image returns 0
+00188978779i[FLOPPY] read() on floppy image returns 0
+00189023223i[FLOPPY] read() on floppy image returns 0
+00189067667i[FLOPPY] read() on floppy image returns 0
+00189112111i[FLOPPY] read() on floppy image returns 0
+00189156555i[FLOPPY] read() on floppy image returns 0
+00189200999i[FLOPPY] read() on floppy image returns 0
+00189245443i[FLOPPY] read() on floppy image returns 0
+00189289887i[FLOPPY] read() on floppy image returns 0
+00189334331i[FLOPPY] read() on floppy image returns 0
+00189378775i[FLOPPY] read() on floppy image returns 0
+00189423219i[FLOPPY] read() on floppy image returns 0
+00189467663i[FLOPPY] read() on floppy image returns 0
+00189513858i[FLOPPY] read() on floppy image returns 0
+00189558302i[FLOPPY] read() on floppy image returns 0
+00189602746i[FLOPPY] read() on floppy image returns 0
+00189647190i[FLOPPY] read() on floppy image returns 0
+00189691634i[FLOPPY] read() on floppy image returns 0
+00189736078i[FLOPPY] read() on floppy image returns 0
+00189780522i[FLOPPY] read() on floppy image returns 0
+00189824966i[FLOPPY] read() on floppy image returns 0
+00189869410i[FLOPPY] read() on floppy image returns 0
+00189913854i[FLOPPY] read() on floppy image returns 0
+00189958298i[FLOPPY] read() on floppy image returns 0
+00190002742i[FLOPPY] read() on floppy image returns 0
+00190047186i[FLOPPY] read() on floppy image returns 0
+00190091630i[FLOPPY] read() on floppy image returns 0
+00190136074i[FLOPPY] read() on floppy image returns 0
+00190180518i[FLOPPY] read() on floppy image returns 0
+00190224962i[FLOPPY] read() on floppy image returns 0
+00190269406i[FLOPPY] read() on floppy image returns 0
+00190315600i[FLOPPY] read() on floppy image returns 0
+00190360044i[FLOPPY] read() on floppy image returns 0
+00190404488i[FLOPPY] read() on floppy image returns 0
+00190448932i[FLOPPY] read() on floppy image returns 0
+00190493376i[FLOPPY] read() on floppy image returns 0
+00190537820i[FLOPPY] read() on floppy image returns 0
+00190582264i[FLOPPY] read() on floppy image returns 0
+00190626708i[FLOPPY] read() on floppy image returns 0
+00190671152i[FLOPPY] read() on floppy image returns 0
+00190715596i[FLOPPY] read() on floppy image returns 0
+00190760040i[FLOPPY] read() on floppy image returns 0
+00190804484i[FLOPPY] read() on floppy image returns 0
+00190848928i[FLOPPY] read() on floppy image returns 0
+00190893372i[FLOPPY] read() on floppy image returns 0
+00190937816i[FLOPPY] read() on floppy image returns 0
+00190982260i[FLOPPY] read() on floppy image returns 0
+00191026704i[FLOPPY] read() on floppy image returns 0
+00191071148i[FLOPPY] read() on floppy image returns 0
+00191117339i[FLOPPY] read() on floppy image returns 0
+00191161783i[FLOPPY] read() on floppy image returns 0
+00191206227i[FLOPPY] read() on floppy image returns 0
+00191250671i[FLOPPY] read() on floppy image returns 0
+00191295115i[FLOPPY] read() on floppy image returns 0
+00191339559i[FLOPPY] read() on floppy image returns 0
+00191384003i[FLOPPY] read() on floppy image returns 0
+00191428447i[FLOPPY] read() on floppy image returns 0
+00191472891i[FLOPPY] read() on floppy image returns 0
+00191517335i[FLOPPY] read() on floppy image returns 0
+00191561779i[FLOPPY] read() on floppy image returns 0
+00191606223i[FLOPPY] read() on floppy image returns 0
+00191650667i[FLOPPY] read() on floppy image returns 0
+00191695111i[FLOPPY] read() on floppy image returns 0
+00191739555i[FLOPPY] read() on floppy image returns 0
+00191783999i[FLOPPY] read() on floppy image returns 0
+00191828443i[FLOPPY] read() on floppy image returns 0
+00191872887i[FLOPPY] read() on floppy image returns 0
+00191919081i[FLOPPY] read() on floppy image returns 0
+00191963525i[FLOPPY] read() on floppy image returns 0
+00192007969i[FLOPPY] read() on floppy image returns 0
+00192052413i[FLOPPY] read() on floppy image returns 0
+00192096857i[FLOPPY] read() on floppy image returns 0
+00192141301i[FLOPPY] read() on floppy image returns 0
+00192185745i[FLOPPY] read() on floppy image returns 0
+00192230189i[FLOPPY] read() on floppy image returns 0
+00192274633i[FLOPPY] read() on floppy image returns 0
+00192319077i[FLOPPY] read() on floppy image returns 0
+00192363521i[FLOPPY] read() on floppy image returns 0
+00192407965i[FLOPPY] read() on floppy image returns 0
+00192452409i[FLOPPY] read() on floppy image returns 0
+00192496853i[FLOPPY] read() on floppy image returns 0
+00192541297i[FLOPPY] read() on floppy image returns 0
+00192585741i[FLOPPY] read() on floppy image returns 0
+00192630185i[FLOPPY] read() on floppy image returns 0
+00192674629i[FLOPPY] read() on floppy image returns 0
+00192720828i[FLOPPY] read() on floppy image returns 0
+00192765272i[FLOPPY] read() on floppy image returns 0
+00192809716i[FLOPPY] read() on floppy image returns 0
+00192854160i[FLOPPY] read() on floppy image returns 0
+00192898604i[FLOPPY] read() on floppy image returns 0
+00192943048i[FLOPPY] read() on floppy image returns 0
+00192987492i[FLOPPY] read() on floppy image returns 0
+00193031936i[FLOPPY] read() on floppy image returns 0
+00193076380i[FLOPPY] read() on floppy image returns 0
+00193120824i[FLOPPY] read() on floppy image returns 0
+00193165268i[FLOPPY] read() on floppy image returns 0
+00193209712i[FLOPPY] read() on floppy image returns 0
+00193254156i[FLOPPY] read() on floppy image returns 0
+00193377857i[CPU0  ] CPU is in protected mode (active)
+00193377857i[CPU0  ] CS.mode = 32 bit
+00193377857i[CPU0  ] SS.mode = 32 bit
+00193377857i[CPU0  ] EFER   = 0x00000000
+00193377857i[CPU0  ] | EAX=80000011  EBX=000140dc  ECX=0001905c  EDX=0004f460
+00193377857i[CPU0  ] | ESP=00029158  EBP=000291a0  ESI=000140e8  EDI=0004f460
+00193377857i[CPU0  ] | IOPL=0 id vip vif ac vm RF nt of df if tf SF zf af PF cf
+00193377857i[CPU0  ] | SEG sltr(index|ti|rpl)     base    limit G D
+00193377857i[CPU0  ] |  CS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00193377857i[CPU0  ] |  DS:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00193377857i[CPU0  ] |  SS:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00193377857i[CPU0  ] |  ES:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00193377857i[CPU0  ] |  FS:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00193377857i[CPU0  ] |  GS:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00193377857i[CPU0  ] | EIP=00011e23 (00011e23)
+00193377857i[CPU0  ] | CR0=0x80000011 CR2=0x00014180
+00193377857i[CPU0  ] | CR3=0x0004f460 CR4=0x00000000
+00193377857i[CPU0  ] 0x00011e23: (instruction unavailable) page not present
+00193377857e[CPU0  ] exception(): 3rd (14) exception with no resolution, shutdown status is 00h, resetting
+00193377857i[SYS   ] bx_pc_system_c::Reset(HARDWARE) called
+00193377857i[CPU0  ] cpu hardware reset
+00193377857i[APIC0 ] allocate APIC id=0 (MMIO enabled) to 0x0000fee00000
+00193377857i[CPU0  ] CPUID[0x00000000]: 00000005 756e6547 6c65746e 49656e69
+00193377857i[CPU0  ] CPUID[0x00000001]: 00000633 00010800 00000008 1fcbfbff
+00193377857i[CPU0  ] CPUID[0x00000002]: 00410601 00000000 00000000 00000000
+00193377857i[CPU0  ] CPUID[0x00000003]: 00000000 00000000 00000000 00000000
+00193377857i[CPU0  ] CPUID[0x00000004]: 00000000 00000000 00000000 00000000
+00193377857i[CPU0  ] CPUID[0x00000005]: 00000040 00000040 00000003 00000020
+00193377857i[PLUGIN] reset of 'pci' plugin device by virtual method
+00193377857i[PLUGIN] reset of 'pci2isa' plugin device by virtual method
+00193377857i[PLUGIN] reset of 'cmos' plugin device by virtual method
+00193377857i[PLUGIN] reset of 'dma' plugin device by virtual method
+00193377857i[PLUGIN] reset of 'pic' plugin device by virtual method
+00193377857i[PLUGIN] reset of 'pit' plugin device by virtual method
+00193377857i[PLUGIN] reset of 'vga' plugin device by virtual method
+00193377857i[PLUGIN] reset of 'floppy' plugin device by virtual method
+00193377857i[PLUGIN] reset of 'acpi' plugin device by virtual method
+00193377857i[PLUGIN] reset of 'ioapic' plugin device by virtual method
+00193377857i[PLUGIN] reset of 'keyboard' plugin device by virtual method
+00193377857i[PLUGIN] reset of 'harddrv' plugin device by virtual method
+00193377857i[PLUGIN] reset of 'pci_ide' plugin device by virtual method
+00193377857i[PLUGIN] reset of 'unmapped' plugin device by virtual method
+00193377857i[PLUGIN] reset of 'biosdev' plugin device by virtual method
+00193377857i[PLUGIN] reset of 'speaker' plugin device by virtual method
+00193377857i[PLUGIN] reset of 'extfpuirq' plugin device by virtual method
+00193377857i[PLUGIN] reset of 'parallel' plugin device by virtual method
+00193377857i[PLUGIN] reset of 'serial' plugin device by virtual method
+00193382519i[BIOS  ] $Revision: 12412 $ $Date: 2014-07-10 09:28:59 +0200 (Do, 10. Jul 2014) $
+00193696059i[KBD   ] reset-disable command received
+00193698828i[BIOS  ] Starting rombios32
+00193699266i[BIOS  ] Shutdown flag 0
+00193699850i[BIOS  ] ram_size=0x01000000
+00193700271i[BIOS  ] ram_end=16MB
+00193740791i[BIOS  ] Found 1 cpu(s)
+00193754995i[BIOS  ] bios_table_addr: 0x000fa498 end=0x000fcc00
+00194082790i[PCI   ] i440FX PMC write to PAM register 59 (TLB Flush)
+00194410719i[P2ISA ] PCI IRQ routing: PIRQA# set to 0x0b
+00194410738i[P2ISA ] PCI IRQ routing: PIRQB# set to 0x09
+00194410757i[P2ISA ] PCI IRQ routing: PIRQC# set to 0x0b
+00194410776i[P2ISA ] PCI IRQ routing: PIRQD# set to 0x09
+00194410786i[P2ISA ] write: ELCR2 = 0x0a
+00194411556i[BIOS  ] PIIX3/PIIX4 init: elcr=00 0a
+00194419237i[BIOS  ] PCI: bus=0 devfn=0x00: vendor_id=0x8086 device_id=0x1237 class=0x0600
+00194421516i[BIOS  ] PCI: bus=0 devfn=0x08: vendor_id=0x8086 device_id=0x7000 class=0x0601
+00194423634i[BIOS  ] PCI: bus=0 devfn=0x09: vendor_id=0x8086 device_id=0x7010 class=0x0101
+00194424475i[BIOS  ] region 4: 0x0000c000
+00194426509i[BIOS  ] PCI: bus=0 devfn=0x0b: vendor_id=0x8086 device_id=0x7113 class=0x0680
+00194426741i[ACPI  ] new irq line = 11
+00194426753i[ACPI  ] new irq line = 9
+00194426820i[PCI   ] setting SMRAM control register to 0x4a
+00194590913i[CPU0  ] Enter to System Management Mode
+00194590924i[CPU0  ] RSM: Resuming from System Management Mode
+00194754945i[PCI   ] setting SMRAM control register to 0x0a
+00194769811i[BIOS  ] MP table addr=0x000fa570 MPC table addr=0x000fa4a0 size=0xc8
+00194771633i[BIOS  ] SMBIOS table addr=0x000fa580
+00194773801i[BIOS  ] ACPI tables: RSDP addr=0x000fa6a0 ACPI DATA addr=0x00ff0000 size=0xf72
+00194776990i[BIOS  ] Firmware waking vector 0xff00cc
+00194778785i[PCI   ] i440FX PMC write to PAM register 59 (TLB Flush)
+00194779508i[BIOS  ] bios_table_cur_addr: 0x000fa6c4
+00194907125i[VBIOS ] VGABios $Id: vgabios.c,v 1.76 2013/02/10 08:07:03 vruppert Exp $
+00194907196i[BXVGA ] VBE known Display Interface b0c0
+00194907228i[BXVGA ] VBE known Display Interface b0c5
+00194910153i[VBIOS ] VBE Bios $Id: vbe.c,v 1.65 2014/07/08 18:02:25 vruppert Exp $
+00207418061i[BIOS  ] Booting from 0000:7c00
+00230618964i[XGUI  ] charmap update. Font Height is 16
+00236654848i[FLOPPY] partial read() on floppy image returns 320/512
+00236699292i[FLOPPY] read() on floppy image returns 0
+00236743736i[FLOPPY] read() on floppy image returns 0
+00236788180i[FLOPPY] read() on floppy image returns 0
+00236832624i[FLOPPY] read() on floppy image returns 0
+00236877068i[FLOPPY] read() on floppy image returns 0
+00236921512i[FLOPPY] read() on floppy image returns 0
+00236965956i[FLOPPY] read() on floppy image returns 0
+00237010400i[FLOPPY] read() on floppy image returns 0
+00237056590i[FLOPPY] read() on floppy image returns 0
+00237101034i[FLOPPY] read() on floppy image returns 0
+00237145478i[FLOPPY] read() on floppy image returns 0
+00237189922i[FLOPPY] read() on floppy image returns 0
+00237234366i[FLOPPY] read() on floppy image returns 0
+00237278810i[FLOPPY] read() on floppy image returns 0
+00237323254i[FLOPPY] read() on floppy image returns 0
+00237367698i[FLOPPY] read() on floppy image returns 0
+00237412142i[FLOPPY] read() on floppy image returns 0
+00237456586i[FLOPPY] read() on floppy image returns 0
+00237501030i[FLOPPY] read() on floppy image returns 0
+00237545474i[FLOPPY] read() on floppy image returns 0
+00237589918i[FLOPPY] read() on floppy image returns 0
+00237634362i[FLOPPY] read() on floppy image returns 0
+00237678806i[FLOPPY] read() on floppy image returns 0
+00237723250i[FLOPPY] read() on floppy image returns 0
+00237767694i[FLOPPY] read() on floppy image returns 0
+00237812138i[FLOPPY] read() on floppy image returns 0
+00237858333i[FLOPPY] read() on floppy image returns 0
+00237902777i[FLOPPY] read() on floppy image returns 0
+00237947221i[FLOPPY] read() on floppy image returns 0
+00237991665i[FLOPPY] read() on floppy image returns 0
+00238036109i[FLOPPY] read() on floppy image returns 0
+00238080553i[FLOPPY] read() on floppy image returns 0
+00238124997i[FLOPPY] read() on floppy image returns 0
+00238169441i[FLOPPY] read() on floppy image returns 0
+00238213885i[FLOPPY] read() on floppy image returns 0
+00238258329i[FLOPPY] read() on floppy image returns 0
+00238302773i[FLOPPY] read() on floppy image returns 0
+00238347217i[FLOPPY] read() on floppy image returns 0
+00238391661i[FLOPPY] read() on floppy image returns 0
+00238436105i[FLOPPY] read() on floppy image returns 0
+00238480549i[FLOPPY] read() on floppy image returns 0
+00238524993i[FLOPPY] read() on floppy image returns 0
+00238569437i[FLOPPY] read() on floppy image returns 0
+00238613881i[FLOPPY] read() on floppy image returns 0
+00238660075i[FLOPPY] read() on floppy image returns 0
+00238704519i[FLOPPY] read() on floppy image returns 0
+00238748963i[FLOPPY] read() on floppy image returns 0
+00238793407i[FLOPPY] read() on floppy image returns 0
+00238837851i[FLOPPY] read() on floppy image returns 0
+00238882295i[FLOPPY] read() on floppy image returns 0
+00238926739i[FLOPPY] read() on floppy image returns 0
+00238971183i[FLOPPY] read() on floppy image returns 0
+00239015627i[FLOPPY] read() on floppy image returns 0
+00239060071i[FLOPPY] read() on floppy image returns 0
+00239104515i[FLOPPY] read() on floppy image returns 0
+00239148959i[FLOPPY] read() on floppy image returns 0
+00239193403i[FLOPPY] read() on floppy image returns 0
+00239237847i[FLOPPY] read() on floppy image returns 0
+00239282291i[FLOPPY] read() on floppy image returns 0
+00239326735i[FLOPPY] read() on floppy image returns 0
+00239371179i[FLOPPY] read() on floppy image returns 0
+00239415623i[FLOPPY] read() on floppy image returns 0
+00239461814i[FLOPPY] read() on floppy image returns 0
+00239506258i[FLOPPY] read() on floppy image returns 0
+00239550702i[FLOPPY] read() on floppy image returns 0
+00239595146i[FLOPPY] read() on floppy image returns 0
+00239639590i[FLOPPY] read() on floppy image returns 0
+00239684034i[FLOPPY] read() on floppy image returns 0
+00239728478i[FLOPPY] read() on floppy image returns 0
+00239772922i[FLOPPY] read() on floppy image returns 0
+00239817366i[FLOPPY] read() on floppy image returns 0
+00239861810i[FLOPPY] read() on floppy image returns 0
+00239906254i[FLOPPY] read() on floppy image returns 0
+00239950698i[FLOPPY] read() on floppy image returns 0
+00239995142i[FLOPPY] read() on floppy image returns 0
+00240039586i[FLOPPY] read() on floppy image returns 0
+00240084030i[FLOPPY] read() on floppy image returns 0
+00240128474i[FLOPPY] read() on floppy image returns 0
+00240172918i[FLOPPY] read() on floppy image returns 0
+00240217362i[FLOPPY] read() on floppy image returns 0
+00240263556i[FLOPPY] read() on floppy image returns 0
+00240308000i[FLOPPY] read() on floppy image returns 0
+00240352444i[FLOPPY] read() on floppy image returns 0
+00240396888i[FLOPPY] read() on floppy image returns 0
+00240441332i[FLOPPY] read() on floppy image returns 0
+00240485776i[FLOPPY] read() on floppy image returns 0
+00240530220i[FLOPPY] read() on floppy image returns 0
+00240574664i[FLOPPY] read() on floppy image returns 0
+00240619108i[FLOPPY] read() on floppy image returns 0
+00240663552i[FLOPPY] read() on floppy image returns 0
+00240707996i[FLOPPY] read() on floppy image returns 0
+00240752440i[FLOPPY] read() on floppy image returns 0
+00240796884i[FLOPPY] read() on floppy image returns 0
+00240841328i[FLOPPY] read() on floppy image returns 0
+00240885772i[FLOPPY] read() on floppy image returns 0
+00240930216i[FLOPPY] read() on floppy image returns 0
+00240974660i[FLOPPY] read() on floppy image returns 0
+00241019104i[FLOPPY] read() on floppy image returns 0
+00241065303i[FLOPPY] read() on floppy image returns 0
+00241109747i[FLOPPY] read() on floppy image returns 0
+00241154191i[FLOPPY] read() on floppy image returns 0
+00241198635i[FLOPPY] read() on floppy image returns 0
+00241243079i[FLOPPY] read() on floppy image returns 0
+00241287523i[FLOPPY] read() on floppy image returns 0
+00241331967i[FLOPPY] read() on floppy image returns 0
+00241376411i[FLOPPY] read() on floppy image returns 0
+00241420855i[FLOPPY] read() on floppy image returns 0
+00241465299i[FLOPPY] read() on floppy image returns 0
+00241509743i[FLOPPY] read() on floppy image returns 0
+00241554187i[FLOPPY] read() on floppy image returns 0
+00241598631i[FLOPPY] read() on floppy image returns 0
+00241722332i[CPU0  ] CPU is in protected mode (active)
+00241722332i[CPU0  ] CS.mode = 32 bit
+00241722332i[CPU0  ] SS.mode = 32 bit
+00241722332i[CPU0  ] EFER   = 0x00000000
+00241722332i[CPU0  ] | EAX=80000011  EBX=000140dc  ECX=0001905c  EDX=0004f460
+00241722332i[CPU0  ] | ESP=00029158  EBP=000291a0  ESI=000140e8  EDI=0004f460
+00241722332i[CPU0  ] | IOPL=0 id vip vif ac vm RF nt of df if tf SF zf af PF cf
+00241722332i[CPU0  ] | SEG sltr(index|ti|rpl)     base    limit G D
+00241722332i[CPU0  ] |  CS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00241722332i[CPU0  ] |  DS:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00241722332i[CPU0  ] |  SS:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00241722332i[CPU0  ] |  ES:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00241722332i[CPU0  ] |  FS:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00241722332i[CPU0  ] |  GS:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00241722332i[CPU0  ] | EIP=00011e23 (00011e23)
+00241722332i[CPU0  ] | CR0=0x80000011 CR2=0x00014180
+00241722332i[CPU0  ] | CR3=0x0004f460 CR4=0x00000000
+00241722332i[CPU0  ] 0x00011e23: (instruction unavailable) page not present
+00241722332e[CPU0  ] exception(): 3rd (14) exception with no resolution, shutdown status is 00h, resetting
+00241722332i[SYS   ] bx_pc_system_c::Reset(HARDWARE) called
+00241722332i[CPU0  ] cpu hardware reset
+00241722332i[APIC0 ] allocate APIC id=0 (MMIO enabled) to 0x0000fee00000
+00241722332i[CPU0  ] CPUID[0x00000000]: 00000005 756e6547 6c65746e 49656e69
+00241722332i[CPU0  ] CPUID[0x00000001]: 00000633 00010800 00000008 1fcbfbff
+00241722332i[CPU0  ] CPUID[0x00000002]: 00410601 00000000 00000000 00000000
+00241722332i[CPU0  ] CPUID[0x00000003]: 00000000 00000000 00000000 00000000
+00241722332i[CPU0  ] CPUID[0x00000004]: 00000000 00000000 00000000 00000000
+00241722332i[CPU0  ] CPUID[0x00000005]: 00000040 00000040 00000003 00000020
+00241722332i[PLUGIN] reset of 'pci' plugin device by virtual method
+00241722332i[PLUGIN] reset of 'pci2isa' plugin device by virtual method
+00241722332i[PLUGIN] reset of 'cmos' plugin device by virtual method
+00241722332i[PLUGIN] reset of 'dma' plugin device by virtual method
+00241722332i[PLUGIN] reset of 'pic' plugin device by virtual method
+00241722332i[PLUGIN] reset of 'pit' plugin device by virtual method
+00241722332i[PLUGIN] reset of 'vga' plugin device by virtual method
+00241722332i[PLUGIN] reset of 'floppy' plugin device by virtual method
+00241722332i[PLUGIN] reset of 'acpi' plugin device by virtual method
+00241722332i[PLUGIN] reset of 'ioapic' plugin device by virtual method
+00241722332i[PLUGIN] reset of 'keyboard' plugin device by virtual method
+00241722332i[PLUGIN] reset of 'harddrv' plugin device by virtual method
+00241722332i[PLUGIN] reset of 'pci_ide' plugin device by virtual method
+00241722332i[PLUGIN] reset of 'unmapped' plugin device by virtual method
+00241722332i[PLUGIN] reset of 'biosdev' plugin device by virtual method
+00241722332i[PLUGIN] reset of 'speaker' plugin device by virtual method
+00241722332i[PLUGIN] reset of 'extfpuirq' plugin device by virtual method
+00241722332i[PLUGIN] reset of 'parallel' plugin device by virtual method
+00241722332i[PLUGIN] reset of 'serial' plugin device by virtual method
+00241726994i[BIOS  ] $Revision: 12412 $ $Date: 2014-07-10 09:28:59 +0200 (Do, 10. Jul 2014) $
+00242040040i[KBD   ] reset-disable command received
+00242042809i[BIOS  ] Starting rombios32
+00242043247i[BIOS  ] Shutdown flag 0
+00242043831i[BIOS  ] ram_size=0x01000000
+00242044252i[BIOS  ] ram_end=16MB
+00242084772i[BIOS  ] Found 1 cpu(s)
+00242098976i[BIOS  ] bios_table_addr: 0x000fa498 end=0x000fcc00
+00242426771i[PCI   ] i440FX PMC write to PAM register 59 (TLB Flush)
+00242754700i[P2ISA ] PCI IRQ routing: PIRQA# set to 0x0b
+00242754719i[P2ISA ] PCI IRQ routing: PIRQB# set to 0x09
+00242754738i[P2ISA ] PCI IRQ routing: PIRQC# set to 0x0b
+00242754757i[P2ISA ] PCI IRQ routing: PIRQD# set to 0x09
+00242754767i[P2ISA ] write: ELCR2 = 0x0a
+00242755537i[BIOS  ] PIIX3/PIIX4 init: elcr=00 0a
+00242763218i[BIOS  ] PCI: bus=0 devfn=0x00: vendor_id=0x8086 device_id=0x1237 class=0x0600
+00242765497i[BIOS  ] PCI: bus=0 devfn=0x08: vendor_id=0x8086 device_id=0x7000 class=0x0601
+00242767615i[BIOS  ] PCI: bus=0 devfn=0x09: vendor_id=0x8086 device_id=0x7010 class=0x0101
+00242768456i[BIOS  ] region 4: 0x0000c000
+00242770490i[BIOS  ] PCI: bus=0 devfn=0x0b: vendor_id=0x8086 device_id=0x7113 class=0x0680
+00242770722i[ACPI  ] new irq line = 11
+00242770734i[ACPI  ] new irq line = 9
+00242770801i[PCI   ] setting SMRAM control register to 0x4a
+00242934894i[CPU0  ] Enter to System Management Mode
+00242934905i[CPU0  ] RSM: Resuming from System Management Mode
+00243098926i[PCI   ] setting SMRAM control register to 0x0a
+00243113792i[BIOS  ] MP table addr=0x000fa570 MPC table addr=0x000fa4a0 size=0xc8
+00243115614i[BIOS  ] SMBIOS table addr=0x000fa580
+00243117782i[BIOS  ] ACPI tables: RSDP addr=0x000fa6a0 ACPI DATA addr=0x00ff0000 size=0xf72
+00243120971i[BIOS  ] Firmware waking vector 0xff00cc
+00243122766i[PCI   ] i440FX PMC write to PAM register 59 (TLB Flush)
+00243123489i[BIOS  ] bios_table_cur_addr: 0x000fa6c4
+00243251106i[VBIOS ] VGABios $Id: vgabios.c,v 1.76 2013/02/10 08:07:03 vruppert Exp $
+00243251177i[BXVGA ] VBE known Display Interface b0c0
+00243251209i[BXVGA ] VBE known Display Interface b0c5
+00243254134i[VBIOS ] VBE Bios $Id: vbe.c,v 1.65 2014/07/08 18:02:25 vruppert Exp $
+00255762532i[BIOS  ] Booting from 0000:7c00
+00284999319i[FLOPPY] partial read() on floppy image returns 320/512
+00285013960i[XGUI  ] charmap update. Font Height is 16
+00285043763i[FLOPPY] read() on floppy image returns 0
+00285088207i[FLOPPY] read() on floppy image returns 0
+00285132651i[FLOPPY] read() on floppy image returns 0
+00285177095i[FLOPPY] read() on floppy image returns 0
+00285221539i[FLOPPY] read() on floppy image returns 0
+00285265983i[FLOPPY] read() on floppy image returns 0
+00285310427i[FLOPPY] read() on floppy image returns 0
+00285354871i[FLOPPY] read() on floppy image returns 0
+00285401061i[FLOPPY] read() on floppy image returns 0
+00285445505i[FLOPPY] read() on floppy image returns 0
+00285489949i[FLOPPY] read() on floppy image returns 0
+00285534393i[FLOPPY] read() on floppy image returns 0
+00285578837i[FLOPPY] read() on floppy image returns 0
+00285623281i[FLOPPY] read() on floppy image returns 0
+00285667725i[FLOPPY] read() on floppy image returns 0
+00285712169i[FLOPPY] read() on floppy image returns 0
+00285756613i[FLOPPY] read() on floppy image returns 0
+00285801057i[FLOPPY] read() on floppy image returns 0
+00285845501i[FLOPPY] read() on floppy image returns 0
+00285889945i[FLOPPY] read() on floppy image returns 0
+00285934389i[FLOPPY] read() on floppy image returns 0
+00285978833i[FLOPPY] read() on floppy image returns 0
+00286023277i[FLOPPY] read() on floppy image returns 0
+00286067721i[FLOPPY] read() on floppy image returns 0
+00286112165i[FLOPPY] read() on floppy image returns 0
+00286156609i[FLOPPY] read() on floppy image returns 0
+00286202804i[FLOPPY] read() on floppy image returns 0
+00286247248i[FLOPPY] read() on floppy image returns 0
+00286291692i[FLOPPY] read() on floppy image returns 0
+00286336136i[FLOPPY] read() on floppy image returns 0
+00286380580i[FLOPPY] read() on floppy image returns 0
+00286425024i[FLOPPY] read() on floppy image returns 0
+00286469468i[FLOPPY] read() on floppy image returns 0
+00286513912i[FLOPPY] read() on floppy image returns 0
+00286558356i[FLOPPY] read() on floppy image returns 0
+00286602800i[FLOPPY] read() on floppy image returns 0
+00286647244i[FLOPPY] read() on floppy image returns 0
+00286691688i[FLOPPY] read() on floppy image returns 0
+00286736132i[FLOPPY] read() on floppy image returns 0
+00286780576i[FLOPPY] read() on floppy image returns 0
+00286825020i[FLOPPY] read() on floppy image returns 0
+00286869464i[FLOPPY] read() on floppy image returns 0
+00286913908i[FLOPPY] read() on floppy image returns 0
+00286958352i[FLOPPY] read() on floppy image returns 0
+00287004546i[FLOPPY] read() on floppy image returns 0
+00287048990i[FLOPPY] read() on floppy image returns 0
+00287093434i[FLOPPY] read() on floppy image returns 0
+00287137878i[FLOPPY] read() on floppy image returns 0
+00287182322i[FLOPPY] read() on floppy image returns 0
+00287226766i[FLOPPY] read() on floppy image returns 0
+00287271210i[FLOPPY] read() on floppy image returns 0
+00287315654i[FLOPPY] read() on floppy image returns 0
+00287360098i[FLOPPY] read() on floppy image returns 0
+00287404542i[FLOPPY] read() on floppy image returns 0
+00287448986i[FLOPPY] read() on floppy image returns 0
+00287493430i[FLOPPY] read() on floppy image returns 0
+00287537874i[FLOPPY] read() on floppy image returns 0
+00287582318i[FLOPPY] read() on floppy image returns 0
+00287626762i[FLOPPY] read() on floppy image returns 0
+00287671206i[FLOPPY] read() on floppy image returns 0
+00287715650i[FLOPPY] read() on floppy image returns 0
+00287760094i[FLOPPY] read() on floppy image returns 0
+00287806285i[FLOPPY] read() on floppy image returns 0
+00287850729i[FLOPPY] read() on floppy image returns 0
+00287895173i[FLOPPY] read() on floppy image returns 0
+00287939617i[FLOPPY] read() on floppy image returns 0
+00287984061i[FLOPPY] read() on floppy image returns 0
+00288028505i[FLOPPY] read() on floppy image returns 0
+00288072949i[FLOPPY] read() on floppy image returns 0
+00288117393i[FLOPPY] read() on floppy image returns 0
+00288161837i[FLOPPY] read() on floppy image returns 0
+00288206281i[FLOPPY] read() on floppy image returns 0
+00288250725i[FLOPPY] read() on floppy image returns 0
+00288295169i[FLOPPY] read() on floppy image returns 0
+00288339613i[FLOPPY] read() on floppy image returns 0
+00288384057i[FLOPPY] read() on floppy image returns 0
+00288428501i[FLOPPY] read() on floppy image returns 0
+00288472945i[FLOPPY] read() on floppy image returns 0
+00288517389i[FLOPPY] read() on floppy image returns 0
+00288561833i[FLOPPY] read() on floppy image returns 0
+00288608027i[FLOPPY] read() on floppy image returns 0
+00288652471i[FLOPPY] read() on floppy image returns 0
+00288696915i[FLOPPY] read() on floppy image returns 0
+00288741359i[FLOPPY] read() on floppy image returns 0
+00288785803i[FLOPPY] read() on floppy image returns 0
+00288830247i[FLOPPY] read() on floppy image returns 0
+00288874691i[FLOPPY] read() on floppy image returns 0
+00288919135i[FLOPPY] read() on floppy image returns 0
+00288963579i[FLOPPY] read() on floppy image returns 0
+00289008023i[FLOPPY] read() on floppy image returns 0
+00289052467i[FLOPPY] read() on floppy image returns 0
+00289096911i[FLOPPY] read() on floppy image returns 0
+00289141355i[FLOPPY] read() on floppy image returns 0
+00289185799i[FLOPPY] read() on floppy image returns 0
+00289230243i[FLOPPY] read() on floppy image returns 0
+00289274687i[FLOPPY] read() on floppy image returns 0
+00289319131i[FLOPPY] read() on floppy image returns 0
+00289363575i[FLOPPY] read() on floppy image returns 0
+00289409774i[FLOPPY] read() on floppy image returns 0
+00289454218i[FLOPPY] read() on floppy image returns 0
+00289498662i[FLOPPY] read() on floppy image returns 0
+00289543106i[FLOPPY] read() on floppy image returns 0
+00289587550i[FLOPPY] read() on floppy image returns 0
+00289631994i[FLOPPY] read() on floppy image returns 0
+00289676438i[FLOPPY] read() on floppy image returns 0
+00289720882i[FLOPPY] read() on floppy image returns 0
+00289765326i[FLOPPY] read() on floppy image returns 0
+00289809770i[FLOPPY] read() on floppy image returns 0
+00289854214i[FLOPPY] read() on floppy image returns 0
+00289898658i[FLOPPY] read() on floppy image returns 0
+00289943102i[FLOPPY] read() on floppy image returns 0
+00290066803i[CPU0  ] CPU is in protected mode (active)
+00290066803i[CPU0  ] CS.mode = 32 bit
+00290066803i[CPU0  ] SS.mode = 32 bit
+00290066803i[CPU0  ] EFER   = 0x00000000
+00290066803i[CPU0  ] | EAX=80000011  EBX=000140dc  ECX=0001905c  EDX=0004f460
+00290066803i[CPU0  ] | ESP=00029158  EBP=000291a0  ESI=000140e8  EDI=0004f460
+00290066803i[CPU0  ] | IOPL=0 id vip vif ac vm RF nt of df if tf SF zf af PF cf
+00290066803i[CPU0  ] | SEG sltr(index|ti|rpl)     base    limit G D
+00290066803i[CPU0  ] |  CS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00290066803i[CPU0  ] |  DS:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00290066803i[CPU0  ] |  SS:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00290066803i[CPU0  ] |  ES:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00290066803i[CPU0  ] |  FS:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00290066803i[CPU0  ] |  GS:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00290066803i[CPU0  ] | EIP=00011e23 (00011e23)
+00290066803i[CPU0  ] | CR0=0x80000011 CR2=0x00014180
+00290066803i[CPU0  ] | CR3=0x0004f460 CR4=0x00000000
+00290066803i[CPU0  ] 0x00011e23: (instruction unavailable) page not present
+00290066803e[CPU0  ] exception(): 3rd (14) exception with no resolution, shutdown status is 00h, resetting
+00290066803i[SYS   ] bx_pc_system_c::Reset(HARDWARE) called
+00290066803i[CPU0  ] cpu hardware reset
+00290066803i[APIC0 ] allocate APIC id=0 (MMIO enabled) to 0x0000fee00000
+00290066803i[CPU0  ] CPUID[0x00000000]: 00000005 756e6547 6c65746e 49656e69
+00290066803i[CPU0  ] CPUID[0x00000001]: 00000633 00010800 00000008 1fcbfbff
+00290066803i[CPU0  ] CPUID[0x00000002]: 00410601 00000000 00000000 00000000
+00290066803i[CPU0  ] CPUID[0x00000003]: 00000000 00000000 00000000 00000000
+00290066803i[CPU0  ] CPUID[0x00000004]: 00000000 00000000 00000000 00000000
+00290066803i[CPU0  ] CPUID[0x00000005]: 00000040 00000040 00000003 00000020
+00290066803i[PLUGIN] reset of 'pci' plugin device by virtual method
+00290066803i[PLUGIN] reset of 'pci2isa' plugin device by virtual method
+00290066803i[PLUGIN] reset of 'cmos' plugin device by virtual method
+00290066803i[PLUGIN] reset of 'dma' plugin device by virtual method
+00290066803i[PLUGIN] reset of 'pic' plugin device by virtual method
+00290066803i[PLUGIN] reset of 'pit' plugin device by virtual method
+00290066803i[PLUGIN] reset of 'vga' plugin device by virtual method
+00290066803i[PLUGIN] reset of 'floppy' plugin device by virtual method
+00290066803i[PLUGIN] reset of 'acpi' plugin device by virtual method
+00290066803i[PLUGIN] reset of 'ioapic' plugin device by virtual method
+00290066803i[PLUGIN] reset of 'keyboard' plugin device by virtual method
+00290066803i[PLUGIN] reset of 'harddrv' plugin device by virtual method
+00290066803i[PLUGIN] reset of 'pci_ide' plugin device by virtual method
+00290066803i[PLUGIN] reset of 'unmapped' plugin device by virtual method
+00290066803i[PLUGIN] reset of 'biosdev' plugin device by virtual method
+00290066803i[PLUGIN] reset of 'speaker' plugin device by virtual method
+00290066803i[PLUGIN] reset of 'extfpuirq' plugin device by virtual method
+00290066803i[PLUGIN] reset of 'parallel' plugin device by virtual method
+00290066803i[PLUGIN] reset of 'serial' plugin device by virtual method
+00290071465i[BIOS  ] $Revision: 12412 $ $Date: 2014-07-10 09:28:59 +0200 (Do, 10. Jul 2014) $
+00290385043i[KBD   ] reset-disable command received
+00290387812i[BIOS  ] Starting rombios32
+00290388250i[BIOS  ] Shutdown flag 0
+00290388834i[BIOS  ] ram_size=0x01000000
+00290389255i[BIOS  ] ram_end=16MB
+00290429775i[BIOS  ] Found 1 cpu(s)
+00290443979i[BIOS  ] bios_table_addr: 0x000fa498 end=0x000fcc00
+00290771774i[PCI   ] i440FX PMC write to PAM register 59 (TLB Flush)
+00291099703i[P2ISA ] PCI IRQ routing: PIRQA# set to 0x0b
+00291099722i[P2ISA ] PCI IRQ routing: PIRQB# set to 0x09
+00291099741i[P2ISA ] PCI IRQ routing: PIRQC# set to 0x0b
+00291099760i[P2ISA ] PCI IRQ routing: PIRQD# set to 0x09
+00291099770i[P2ISA ] write: ELCR2 = 0x0a
+00291100540i[BIOS  ] PIIX3/PIIX4 init: elcr=00 0a
+00291108221i[BIOS  ] PCI: bus=0 devfn=0x00: vendor_id=0x8086 device_id=0x1237 class=0x0600
+00291110500i[BIOS  ] PCI: bus=0 devfn=0x08: vendor_id=0x8086 device_id=0x7000 class=0x0601
+00291112618i[BIOS  ] PCI: bus=0 devfn=0x09: vendor_id=0x8086 device_id=0x7010 class=0x0101
+00291113459i[BIOS  ] region 4: 0x0000c000
+00291115493i[BIOS  ] PCI: bus=0 devfn=0x0b: vendor_id=0x8086 device_id=0x7113 class=0x0680
+00291115725i[ACPI  ] new irq line = 11
+00291115737i[ACPI  ] new irq line = 9
+00291115804i[PCI   ] setting SMRAM control register to 0x4a
+00291279897i[CPU0  ] Enter to System Management Mode
+00291279908i[CPU0  ] RSM: Resuming from System Management Mode
+00291443929i[PCI   ] setting SMRAM control register to 0x0a
+00291458795i[BIOS  ] MP table addr=0x000fa570 MPC table addr=0x000fa4a0 size=0xc8
+00291460617i[BIOS  ] SMBIOS table addr=0x000fa580
+00291462785i[BIOS  ] ACPI tables: RSDP addr=0x000fa6a0 ACPI DATA addr=0x00ff0000 size=0xf72
+00291465974i[BIOS  ] Firmware waking vector 0xff00cc
+00291467769i[PCI   ] i440FX PMC write to PAM register 59 (TLB Flush)
+00291468492i[BIOS  ] bios_table_cur_addr: 0x000fa6c4
+00291596109i[VBIOS ] VGABios $Id: vgabios.c,v 1.76 2013/02/10 08:07:03 vruppert Exp $
+00291596180i[BXVGA ] VBE known Display Interface b0c0
+00291596212i[BXVGA ] VBE known Display Interface b0c5
+00291599137i[VBIOS ] VBE Bios $Id: vbe.c,v 1.65 2014/07/08 18:02:25 vruppert Exp $
+00304106995i[BIOS  ] Booting from 0000:7c00
+00319253976i[XGUI  ] charmap update. Font Height is 16
+00333343782i[FLOPPY] partial read() on floppy image returns 320/512
+00333388226i[FLOPPY] read() on floppy image returns 0
+00333432670i[FLOPPY] read() on floppy image returns 0
+00333477114i[FLOPPY] read() on floppy image returns 0
+00333521558i[FLOPPY] read() on floppy image returns 0
+00333566002i[FLOPPY] read() on floppy image returns 0
+00333610446i[FLOPPY] read() on floppy image returns 0
+00333654890i[FLOPPY] read() on floppy image returns 0
+00333699334i[FLOPPY] read() on floppy image returns 0
+00333745524i[FLOPPY] read() on floppy image returns 0
+00333789968i[FLOPPY] read() on floppy image returns 0
+00333834412i[FLOPPY] read() on floppy image returns 0
+00333878856i[FLOPPY] read() on floppy image returns 0
+00333923300i[FLOPPY] read() on floppy image returns 0
+00333967744i[FLOPPY] read() on floppy image returns 0
+00334012188i[FLOPPY] read() on floppy image returns 0
+00334056632i[FLOPPY] read() on floppy image returns 0
+00334101076i[FLOPPY] read() on floppy image returns 0
+00334145520i[FLOPPY] read() on floppy image returns 0
+00334189964i[FLOPPY] read() on floppy image returns 0
+00334234408i[FLOPPY] read() on floppy image returns 0
+00334278852i[FLOPPY] read() on floppy image returns 0
+00334323296i[FLOPPY] read() on floppy image returns 0
+00334367740i[FLOPPY] read() on floppy image returns 0
+00334412184i[FLOPPY] read() on floppy image returns 0
+00334456628i[FLOPPY] read() on floppy image returns 0
+00334501072i[FLOPPY] read() on floppy image returns 0
+00334547267i[FLOPPY] read() on floppy image returns 0
+00334591711i[FLOPPY] read() on floppy image returns 0
+00334636155i[FLOPPY] read() on floppy image returns 0
+00334680599i[FLOPPY] read() on floppy image returns 0
+00334725043i[FLOPPY] read() on floppy image returns 0
+00334769487i[FLOPPY] read() on floppy image returns 0
+00334813931i[FLOPPY] read() on floppy image returns 0
+00334858375i[FLOPPY] read() on floppy image returns 0
+00334902819i[FLOPPY] read() on floppy image returns 0
+00334947263i[FLOPPY] read() on floppy image returns 0
+00334991707i[FLOPPY] read() on floppy image returns 0
+00335036151i[FLOPPY] read() on floppy image returns 0
+00335080595i[FLOPPY] read() on floppy image returns 0
+00335125039i[FLOPPY] read() on floppy image returns 0
+00335169483i[FLOPPY] read() on floppy image returns 0
+00335213927i[FLOPPY] read() on floppy image returns 0
+00335258371i[FLOPPY] read() on floppy image returns 0
+00335302815i[FLOPPY] read() on floppy image returns 0
+00335349009i[FLOPPY] read() on floppy image returns 0
+00335393453i[FLOPPY] read() on floppy image returns 0
+00335437897i[FLOPPY] read() on floppy image returns 0
+00335482341i[FLOPPY] read() on floppy image returns 0
+00335526785i[FLOPPY] read() on floppy image returns 0
+00335571229i[FLOPPY] read() on floppy image returns 0
+00335615673i[FLOPPY] read() on floppy image returns 0
+00335660117i[FLOPPY] read() on floppy image returns 0
+00335704561i[FLOPPY] read() on floppy image returns 0
+00335749005i[FLOPPY] read() on floppy image returns 0
+00335793449i[FLOPPY] read() on floppy image returns 0
+00335837893i[FLOPPY] read() on floppy image returns 0
+00335882337i[FLOPPY] read() on floppy image returns 0
+00335926781i[FLOPPY] read() on floppy image returns 0
+00335971225i[FLOPPY] read() on floppy image returns 0
+00336015669i[FLOPPY] read() on floppy image returns 0
+00336060113i[FLOPPY] read() on floppy image returns 0
+00336104557i[FLOPPY] read() on floppy image returns 0
+00336150748i[FLOPPY] read() on floppy image returns 0
+00336195192i[FLOPPY] read() on floppy image returns 0
+00336239636i[FLOPPY] read() on floppy image returns 0
+00336284080i[FLOPPY] read() on floppy image returns 0
+00336328524i[FLOPPY] read() on floppy image returns 0
+00336372968i[FLOPPY] read() on floppy image returns 0
+00336417412i[FLOPPY] read() on floppy image returns 0
+00336461856i[FLOPPY] read() on floppy image returns 0
+00336506300i[FLOPPY] read() on floppy image returns 0
+00336550744i[FLOPPY] read() on floppy image returns 0
+00336595188i[FLOPPY] read() on floppy image returns 0
+00336639632i[FLOPPY] read() on floppy image returns 0
+00336684076i[FLOPPY] read() on floppy image returns 0
+00336728520i[FLOPPY] read() on floppy image returns 0
+00336772964i[FLOPPY] read() on floppy image returns 0
+00336817408i[FLOPPY] read() on floppy image returns 0
+00336861852i[FLOPPY] read() on floppy image returns 0
+00336906296i[FLOPPY] read() on floppy image returns 0
+00336952490i[FLOPPY] read() on floppy image returns 0
+00336996934i[FLOPPY] read() on floppy image returns 0
+00337041378i[FLOPPY] read() on floppy image returns 0
+00337085822i[FLOPPY] read() on floppy image returns 0
+00337130266i[FLOPPY] read() on floppy image returns 0
+00337174710i[FLOPPY] read() on floppy image returns 0
+00337219154i[FLOPPY] read() on floppy image returns 0
+00337263598i[FLOPPY] read() on floppy image returns 0
+00337308042i[FLOPPY] read() on floppy image returns 0
+00337352486i[FLOPPY] read() on floppy image returns 0
+00337396930i[FLOPPY] read() on floppy image returns 0
+00337441374i[FLOPPY] read() on floppy image returns 0
+00337485818i[FLOPPY] read() on floppy image returns 0
+00337530262i[FLOPPY] read() on floppy image returns 0
+00337574706i[FLOPPY] read() on floppy image returns 0
+00337619150i[FLOPPY] read() on floppy image returns 0
+00337663594i[FLOPPY] read() on floppy image returns 0
+00337708038i[FLOPPY] read() on floppy image returns 0
+00337754237i[FLOPPY] read() on floppy image returns 0
+00337798681i[FLOPPY] read() on floppy image returns 0
+00337843125i[FLOPPY] read() on floppy image returns 0
+00337887569i[FLOPPY] read() on floppy image returns 0
+00337932013i[FLOPPY] read() on floppy image returns 0
+00337976457i[FLOPPY] read() on floppy image returns 0
+00338020901i[FLOPPY] read() on floppy image returns 0
+00338065345i[FLOPPY] read() on floppy image returns 0
+00338109789i[FLOPPY] read() on floppy image returns 0
+00338154233i[FLOPPY] read() on floppy image returns 0
+00338198677i[FLOPPY] read() on floppy image returns 0
+00338243121i[FLOPPY] read() on floppy image returns 0
+00338287565i[FLOPPY] read() on floppy image returns 0
+00338411266i[CPU0  ] CPU is in protected mode (active)
+00338411266i[CPU0  ] CS.mode = 32 bit
+00338411266i[CPU0  ] SS.mode = 32 bit
+00338411266i[CPU0  ] EFER   = 0x00000000
+00338411266i[CPU0  ] | EAX=80000011  EBX=000140dc  ECX=0001905c  EDX=0004f460
+00338411266i[CPU0  ] | ESP=00029158  EBP=000291a0  ESI=000140e8  EDI=0004f460
+00338411266i[CPU0  ] | IOPL=0 id vip vif ac vm RF nt of df if tf SF zf af PF cf
+00338411266i[CPU0  ] | SEG sltr(index|ti|rpl)     base    limit G D
+00338411266i[CPU0  ] |  CS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00338411266i[CPU0  ] |  DS:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00338411266i[CPU0  ] |  SS:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00338411266i[CPU0  ] |  ES:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00338411266i[CPU0  ] |  FS:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00338411266i[CPU0  ] |  GS:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00338411266i[CPU0  ] | EIP=00011e23 (00011e23)
+00338411266i[CPU0  ] | CR0=0x80000011 CR2=0x00014180
+00338411266i[CPU0  ] | CR3=0x0004f460 CR4=0x00000000
+00338411266i[CPU0  ] 0x00011e23: (instruction unavailable) page not present
+00338411266e[CPU0  ] exception(): 3rd (14) exception with no resolution, shutdown status is 00h, resetting
+00338411266i[SYS   ] bx_pc_system_c::Reset(HARDWARE) called
+00338411266i[CPU0  ] cpu hardware reset
+00338411266i[APIC0 ] allocate APIC id=0 (MMIO enabled) to 0x0000fee00000
+00338411266i[CPU0  ] CPUID[0x00000000]: 00000005 756e6547 6c65746e 49656e69
+00338411266i[CPU0  ] CPUID[0x00000001]: 00000633 00010800 00000008 1fcbfbff
+00338411266i[CPU0  ] CPUID[0x00000002]: 00410601 00000000 00000000 00000000
+00338411266i[CPU0  ] CPUID[0x00000003]: 00000000 00000000 00000000 00000000
+00338411266i[CPU0  ] CPUID[0x00000004]: 00000000 00000000 00000000 00000000
+00338411266i[CPU0  ] CPUID[0x00000005]: 00000040 00000040 00000003 00000020
+00338411266i[PLUGIN] reset of 'pci' plugin device by virtual method
+00338411266i[PLUGIN] reset of 'pci2isa' plugin device by virtual method
+00338411266i[PLUGIN] reset of 'cmos' plugin device by virtual method
+00338411266i[PLUGIN] reset of 'dma' plugin device by virtual method
+00338411266i[PLUGIN] reset of 'pic' plugin device by virtual method
+00338411266i[PLUGIN] reset of 'pit' plugin device by virtual method
+00338411266i[PLUGIN] reset of 'vga' plugin device by virtual method
+00338411266i[PLUGIN] reset of 'floppy' plugin device by virtual method
+00338411266i[PLUGIN] reset of 'acpi' plugin device by virtual method
+00338411266i[PLUGIN] reset of 'ioapic' plugin device by virtual method
+00338411266i[PLUGIN] reset of 'keyboard' plugin device by virtual method
+00338411266i[PLUGIN] reset of 'harddrv' plugin device by virtual method
+00338411266i[PLUGIN] reset of 'pci_ide' plugin device by virtual method
+00338411266i[PLUGIN] reset of 'unmapped' plugin device by virtual method
+00338411266i[PLUGIN] reset of 'biosdev' plugin device by virtual method
+00338411266i[PLUGIN] reset of 'speaker' plugin device by virtual method
+00338411266i[PLUGIN] reset of 'extfpuirq' plugin device by virtual method
+00338411266i[PLUGIN] reset of 'parallel' plugin device by virtual method
+00338411266i[PLUGIN] reset of 'serial' plugin device by virtual method
+00338415928i[BIOS  ] $Revision: 12412 $ $Date: 2014-07-10 09:28:59 +0200 (Do, 10. Jul 2014) $
+00338729050i[KBD   ] reset-disable command received
+00338731819i[BIOS  ] Starting rombios32
+00338732257i[BIOS  ] Shutdown flag 0
+00338732841i[BIOS  ] ram_size=0x01000000
+00338733262i[BIOS  ] ram_end=16MB
+00338773812i[BIOS  ] Found 1 cpu(s)
+00338788016i[BIOS  ] bios_table_addr: 0x000fa498 end=0x000fcc00
+00339115811i[PCI   ] i440FX PMC write to PAM register 59 (TLB Flush)
+00339443740i[P2ISA ] PCI IRQ routing: PIRQA# set to 0x0b
+00339443759i[P2ISA ] PCI IRQ routing: PIRQB# set to 0x09
+00339443778i[P2ISA ] PCI IRQ routing: PIRQC# set to 0x0b
+00339443797i[P2ISA ] PCI IRQ routing: PIRQD# set to 0x09
+00339443807i[P2ISA ] write: ELCR2 = 0x0a
+00339444577i[BIOS  ] PIIX3/PIIX4 init: elcr=00 0a
+00339452258i[BIOS  ] PCI: bus=0 devfn=0x00: vendor_id=0x8086 device_id=0x1237 class=0x0600
+00339454537i[BIOS  ] PCI: bus=0 devfn=0x08: vendor_id=0x8086 device_id=0x7000 class=0x0601
+00339456655i[BIOS  ] PCI: bus=0 devfn=0x09: vendor_id=0x8086 device_id=0x7010 class=0x0101
+00339457496i[BIOS  ] region 4: 0x0000c000
+00339459530i[BIOS  ] PCI: bus=0 devfn=0x0b: vendor_id=0x8086 device_id=0x7113 class=0x0680
+00339459762i[ACPI  ] new irq line = 11
+00339459774i[ACPI  ] new irq line = 9
+00339459841i[PCI   ] setting SMRAM control register to 0x4a
+00339623934i[CPU0  ] Enter to System Management Mode
+00339623945i[CPU0  ] RSM: Resuming from System Management Mode
+00339787966i[PCI   ] setting SMRAM control register to 0x0a
+00339802832i[BIOS  ] MP table addr=0x000fa570 MPC table addr=0x000fa4a0 size=0xc8
+00339804654i[BIOS  ] SMBIOS table addr=0x000fa580
+00339806822i[BIOS  ] ACPI tables: RSDP addr=0x000fa6a0 ACPI DATA addr=0x00ff0000 size=0xf72
+00339810011i[BIOS  ] Firmware waking vector 0xff00cc
+00339811806i[PCI   ] i440FX PMC write to PAM register 59 (TLB Flush)
+00339812529i[BIOS  ] bios_table_cur_addr: 0x000fa6c4
+00339940146i[VBIOS ] VGABios $Id: vgabios.c,v 1.76 2013/02/10 08:07:03 vruppert Exp $
+00339940217i[BXVGA ] VBE known Display Interface b0c0
+00339940249i[BXVGA ] VBE known Display Interface b0c5
+00339943174i[VBIOS ] VBE Bios $Id: vbe.c,v 1.65 2014/07/08 18:02:25 vruppert Exp $
+00348505164i[XGUI  ] charmap update. Font Height is 16
+00352451462i[BIOS  ] Booting from 0000:7c00
+00381688249i[FLOPPY] partial read() on floppy image returns 320/512
+00381732693i[FLOPPY] read() on floppy image returns 0
+00381777137i[FLOPPY] read() on floppy image returns 0
+00381821581i[FLOPPY] read() on floppy image returns 0
+00381866025i[FLOPPY] read() on floppy image returns 0
+00381910469i[FLOPPY] read() on floppy image returns 0
+00381954913i[FLOPPY] read() on floppy image returns 0
+00381999357i[FLOPPY] read() on floppy image returns 0
+00382043801i[FLOPPY] read() on floppy image returns 0
+00382089991i[FLOPPY] read() on floppy image returns 0
+00382134435i[FLOPPY] read() on floppy image returns 0
+00382178879i[FLOPPY] read() on floppy image returns 0
+00382223323i[FLOPPY] read() on floppy image returns 0
+00382267767i[FLOPPY] read() on floppy image returns 0
+00382312211i[FLOPPY] read() on floppy image returns 0
+00382356655i[FLOPPY] read() on floppy image returns 0
+00382401099i[FLOPPY] read() on floppy image returns 0
+00382445543i[FLOPPY] read() on floppy image returns 0
+00382489987i[FLOPPY] read() on floppy image returns 0
+00382534431i[FLOPPY] read() on floppy image returns 0
+00382578875i[FLOPPY] read() on floppy image returns 0
+00382623319i[FLOPPY] read() on floppy image returns 0
+00382667763i[FLOPPY] read() on floppy image returns 0
+00382712207i[FLOPPY] read() on floppy image returns 0
+00382756651i[FLOPPY] read() on floppy image returns 0
+00382801095i[FLOPPY] read() on floppy image returns 0
+00382845539i[FLOPPY] read() on floppy image returns 0
+00382891734i[FLOPPY] read() on floppy image returns 0
+00382936178i[FLOPPY] read() on floppy image returns 0
+00382980622i[FLOPPY] read() on floppy image returns 0
+00383025066i[FLOPPY] read() on floppy image returns 0
+00383069510i[FLOPPY] read() on floppy image returns 0
+00383113954i[FLOPPY] read() on floppy image returns 0
+00383158398i[FLOPPY] read() on floppy image returns 0
+00383202842i[FLOPPY] read() on floppy image returns 0
+00383247286i[FLOPPY] read() on floppy image returns 0
+00383291730i[FLOPPY] read() on floppy image returns 0
+00383336174i[FLOPPY] read() on floppy image returns 0
+00383380618i[FLOPPY] read() on floppy image returns 0
+00383425062i[FLOPPY] read() on floppy image returns 0
+00383469506i[FLOPPY] read() on floppy image returns 0
+00383513950i[FLOPPY] read() on floppy image returns 0
+00383558394i[FLOPPY] read() on floppy image returns 0
+00383602838i[FLOPPY] read() on floppy image returns 0
+00383647282i[FLOPPY] read() on floppy image returns 0
+00383693476i[FLOPPY] read() on floppy image returns 0
+00383737920i[FLOPPY] read() on floppy image returns 0
+00383782364i[FLOPPY] read() on floppy image returns 0
+00383826808i[FLOPPY] read() on floppy image returns 0
+00383871252i[FLOPPY] read() on floppy image returns 0
+00383915696i[FLOPPY] read() on floppy image returns 0
+00383960140i[FLOPPY] read() on floppy image returns 0
+00384004584i[FLOPPY] read() on floppy image returns 0
+00384049028i[FLOPPY] read() on floppy image returns 0
+00384093472i[FLOPPY] read() on floppy image returns 0
+00384137916i[FLOPPY] read() on floppy image returns 0
+00384182360i[FLOPPY] read() on floppy image returns 0
+00384226804i[FLOPPY] read() on floppy image returns 0
+00384271248i[FLOPPY] read() on floppy image returns 0
+00384315692i[FLOPPY] read() on floppy image returns 0
+00384360136i[FLOPPY] read() on floppy image returns 0
+00384404580i[FLOPPY] read() on floppy image returns 0
+00384449024i[FLOPPY] read() on floppy image returns 0
+00384495215i[FLOPPY] read() on floppy image returns 0
+00384539659i[FLOPPY] read() on floppy image returns 0
+00384584103i[FLOPPY] read() on floppy image returns 0
+00384628547i[FLOPPY] read() on floppy image returns 0
+00384672991i[FLOPPY] read() on floppy image returns 0
+00384717435i[FLOPPY] read() on floppy image returns 0
+00384761879i[FLOPPY] read() on floppy image returns 0
+00384806323i[FLOPPY] read() on floppy image returns 0
+00384850767i[FLOPPY] read() on floppy image returns 0
+00384895211i[FLOPPY] read() on floppy image returns 0
+00384939655i[FLOPPY] read() on floppy image returns 0
+00384984099i[FLOPPY] read() on floppy image returns 0
+00385028543i[FLOPPY] read() on floppy image returns 0
+00385072987i[FLOPPY] read() on floppy image returns 0
+00385117431i[FLOPPY] read() on floppy image returns 0
+00385161875i[FLOPPY] read() on floppy image returns 0
+00385206319i[FLOPPY] read() on floppy image returns 0
+00385250763i[FLOPPY] read() on floppy image returns 0
+00385296957i[FLOPPY] read() on floppy image returns 0
+00385341401i[FLOPPY] read() on floppy image returns 0
+00385385845i[FLOPPY] read() on floppy image returns 0
+00385430289i[FLOPPY] read() on floppy image returns 0
+00385474733i[FLOPPY] read() on floppy image returns 0
+00385519177i[FLOPPY] read() on floppy image returns 0
+00385563621i[FLOPPY] read() on floppy image returns 0
+00385608065i[FLOPPY] read() on floppy image returns 0
+00385652509i[FLOPPY] read() on floppy image returns 0
+00385696953i[FLOPPY] read() on floppy image returns 0
+00385741397i[FLOPPY] read() on floppy image returns 0
+00385785841i[FLOPPY] read() on floppy image returns 0
+00385830285i[FLOPPY] read() on floppy image returns 0
+00385874729i[FLOPPY] read() on floppy image returns 0
+00385919173i[FLOPPY] read() on floppy image returns 0
+00385963617i[FLOPPY] read() on floppy image returns 0
+00386008061i[FLOPPY] read() on floppy image returns 0
+00386052505i[FLOPPY] read() on floppy image returns 0
+00386098704i[FLOPPY] read() on floppy image returns 0
+00386143148i[FLOPPY] read() on floppy image returns 0
+00386187592i[FLOPPY] read() on floppy image returns 0
+00386232036i[FLOPPY] read() on floppy image returns 0
+00386276480i[FLOPPY] read() on floppy image returns 0
+00386320924i[FLOPPY] read() on floppy image returns 0
+00386365368i[FLOPPY] read() on floppy image returns 0
+00386409812i[FLOPPY] read() on floppy image returns 0
+00386454256i[FLOPPY] read() on floppy image returns 0
+00386498700i[FLOPPY] read() on floppy image returns 0
+00386543144i[FLOPPY] read() on floppy image returns 0
+00386587588i[FLOPPY] read() on floppy image returns 0
+00386632032i[FLOPPY] read() on floppy image returns 0
+00386755733i[CPU0  ] CPU is in protected mode (active)
+00386755733i[CPU0  ] CS.mode = 32 bit
+00386755733i[CPU0  ] SS.mode = 32 bit
+00386755733i[CPU0  ] EFER   = 0x00000000
+00386755733i[CPU0  ] | EAX=80000011  EBX=000140dc  ECX=0001905c  EDX=0004f460
+00386755733i[CPU0  ] | ESP=00029158  EBP=000291a0  ESI=000140e8  EDI=0004f460
+00386755733i[CPU0  ] | IOPL=0 id vip vif ac vm RF nt of df if tf SF zf af PF cf
+00386755733i[CPU0  ] | SEG sltr(index|ti|rpl)     base    limit G D
+00386755733i[CPU0  ] |  CS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00386755733i[CPU0  ] |  DS:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00386755733i[CPU0  ] |  SS:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00386755733i[CPU0  ] |  ES:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00386755733i[CPU0  ] |  FS:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00386755733i[CPU0  ] |  GS:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00386755733i[CPU0  ] | EIP=00011e23 (00011e23)
+00386755733i[CPU0  ] | CR0=0x80000011 CR2=0x00014180
+00386755733i[CPU0  ] | CR3=0x0004f460 CR4=0x00000000
+00386755733i[CPU0  ] 0x00011e23: (instruction unavailable) page not present
+00386755733e[CPU0  ] exception(): 3rd (14) exception with no resolution, shutdown status is 00h, resetting
+00386755733i[SYS   ] bx_pc_system_c::Reset(HARDWARE) called
+00386755733i[CPU0  ] cpu hardware reset
+00386755733i[APIC0 ] allocate APIC id=0 (MMIO enabled) to 0x0000fee00000
+00386755733i[CPU0  ] CPUID[0x00000000]: 00000005 756e6547 6c65746e 49656e69
+00386755733i[CPU0  ] CPUID[0x00000001]: 00000633 00010800 00000008 1fcbfbff
+00386755733i[CPU0  ] CPUID[0x00000002]: 00410601 00000000 00000000 00000000
+00386755733i[CPU0  ] CPUID[0x00000003]: 00000000 00000000 00000000 00000000
+00386755733i[CPU0  ] CPUID[0x00000004]: 00000000 00000000 00000000 00000000
+00386755733i[CPU0  ] CPUID[0x00000005]: 00000040 00000040 00000003 00000020
+00386755733i[PLUGIN] reset of 'pci' plugin device by virtual method
+00386755733i[PLUGIN] reset of 'pci2isa' plugin device by virtual method
+00386755733i[PLUGIN] reset of 'cmos' plugin device by virtual method
+00386755733i[PLUGIN] reset of 'dma' plugin device by virtual method
+00386755733i[PLUGIN] reset of 'pic' plugin device by virtual method
+00386755733i[PLUGIN] reset of 'pit' plugin device by virtual method
+00386755733i[PLUGIN] reset of 'vga' plugin device by virtual method
+00386755733i[PLUGIN] reset of 'floppy' plugin device by virtual method
+00386755733i[PLUGIN] reset of 'acpi' plugin device by virtual method
+00386755733i[PLUGIN] reset of 'ioapic' plugin device by virtual method
+00386755733i[PLUGIN] reset of 'keyboard' plugin device by virtual method
+00386755733i[PLUGIN] reset of 'harddrv' plugin device by virtual method
+00386755733i[PLUGIN] reset of 'pci_ide' plugin device by virtual method
+00386755733i[PLUGIN] reset of 'unmapped' plugin device by virtual method
+00386755733i[PLUGIN] reset of 'biosdev' plugin device by virtual method
+00386755733i[PLUGIN] reset of 'speaker' plugin device by virtual method
+00386755733i[PLUGIN] reset of 'extfpuirq' plugin device by virtual method
+00386755733i[PLUGIN] reset of 'parallel' plugin device by virtual method
+00386755733i[PLUGIN] reset of 'serial' plugin device by virtual method
+00386760395i[BIOS  ] $Revision: 12412 $ $Date: 2014-07-10 09:28:59 +0200 (Do, 10. Jul 2014) $
+00387074049i[KBD   ] reset-disable command received
+00387076818i[BIOS  ] Starting rombios32
+00387077256i[BIOS  ] Shutdown flag 0
+00387077840i[BIOS  ] ram_size=0x01000000
+00387078261i[BIOS  ] ram_end=16MB
+00387118811i[BIOS  ] Found 1 cpu(s)
+00387133015i[BIOS  ] bios_table_addr: 0x000fa498 end=0x000fcc00
+00387460810i[PCI   ] i440FX PMC write to PAM register 59 (TLB Flush)
+00387788739i[P2ISA ] PCI IRQ routing: PIRQA# set to 0x0b
+00387788758i[P2ISA ] PCI IRQ routing: PIRQB# set to 0x09
+00387788777i[P2ISA ] PCI IRQ routing: PIRQC# set to 0x0b
+00387788796i[P2ISA ] PCI IRQ routing: PIRQD# set to 0x09
+00387788806i[P2ISA ] write: ELCR2 = 0x0a
+00387789576i[BIOS  ] PIIX3/PIIX4 init: elcr=00 0a
+00387797257i[BIOS  ] PCI: bus=0 devfn=0x00: vendor_id=0x8086 device_id=0x1237 class=0x0600
+00387799536i[BIOS  ] PCI: bus=0 devfn=0x08: vendor_id=0x8086 device_id=0x7000 class=0x0601
+00387801654i[BIOS  ] PCI: bus=0 devfn=0x09: vendor_id=0x8086 device_id=0x7010 class=0x0101
+00387802495i[BIOS  ] region 4: 0x0000c000
+00387804529i[BIOS  ] PCI: bus=0 devfn=0x0b: vendor_id=0x8086 device_id=0x7113 class=0x0680
+00387804761i[ACPI  ] new irq line = 11
+00387804773i[ACPI  ] new irq line = 9
+00387804840i[PCI   ] setting SMRAM control register to 0x4a
+00387968933i[CPU0  ] Enter to System Management Mode
+00387968944i[CPU0  ] RSM: Resuming from System Management Mode
+00388132965i[PCI   ] setting SMRAM control register to 0x0a
+00388147831i[BIOS  ] MP table addr=0x000fa570 MPC table addr=0x000fa4a0 size=0xc8
+00388149653i[BIOS  ] SMBIOS table addr=0x000fa580
+00388151821i[BIOS  ] ACPI tables: RSDP addr=0x000fa6a0 ACPI DATA addr=0x00ff0000 size=0xf72
+00388155010i[BIOS  ] Firmware waking vector 0xff00cc
+00388156805i[PCI   ] i440FX PMC write to PAM register 59 (TLB Flush)
+00388157528i[BIOS  ] bios_table_cur_addr: 0x000fa6c4
+00388285145i[VBIOS ] VGABios $Id: vgabios.c,v 1.76 2013/02/10 08:07:03 vruppert Exp $
+00388285216i[BXVGA ] VBE known Display Interface b0c0
+00388285248i[BXVGA ] VBE known Display Interface b0c5
+00388288173i[VBIOS ] VBE Bios $Id: vbe.c,v 1.65 2014/07/08 18:02:25 vruppert Exp $
+00398184332i[XGUI  ] charmap update. Font Height is 16
+00400795931i[BIOS  ] Booting from 0000:7c00
+00430032718i[FLOPPY] partial read() on floppy image returns 320/512
+00430077162i[FLOPPY] read() on floppy image returns 0
+00430121606i[FLOPPY] read() on floppy image returns 0
+00430166050i[FLOPPY] read() on floppy image returns 0
+00430210494i[FLOPPY] read() on floppy image returns 0
+00430254938i[FLOPPY] read() on floppy image returns 0
+00430299382i[FLOPPY] read() on floppy image returns 0
+00430343826i[FLOPPY] read() on floppy image returns 0
+00430388270i[FLOPPY] read() on floppy image returns 0
+00430434460i[FLOPPY] read() on floppy image returns 0
+00430478904i[FLOPPY] read() on floppy image returns 0
+00430523348i[FLOPPY] read() on floppy image returns 0
+00430567792i[FLOPPY] read() on floppy image returns 0
+00430612236i[FLOPPY] read() on floppy image returns 0
+00430656680i[FLOPPY] read() on floppy image returns 0
+00430701124i[FLOPPY] read() on floppy image returns 0
+00430745568i[FLOPPY] read() on floppy image returns 0
+00430790012i[FLOPPY] read() on floppy image returns 0
+00430834456i[FLOPPY] read() on floppy image returns 0
+00430878900i[FLOPPY] read() on floppy image returns 0
+00430923344i[FLOPPY] read() on floppy image returns 0
+00430967788i[FLOPPY] read() on floppy image returns 0
+00431012232i[FLOPPY] read() on floppy image returns 0
+00431056676i[FLOPPY] read() on floppy image returns 0
+00431101120i[FLOPPY] read() on floppy image returns 0
+00431145564i[FLOPPY] read() on floppy image returns 0
+00431190008i[FLOPPY] read() on floppy image returns 0
+00431236203i[FLOPPY] read() on floppy image returns 0
+00431280647i[FLOPPY] read() on floppy image returns 0
+00431325091i[FLOPPY] read() on floppy image returns 0
+00431369535i[FLOPPY] read() on floppy image returns 0
+00431413979i[FLOPPY] read() on floppy image returns 0
+00431458423i[FLOPPY] read() on floppy image returns 0
+00431502867i[FLOPPY] read() on floppy image returns 0
+00431547311i[FLOPPY] read() on floppy image returns 0
+00431591755i[FLOPPY] read() on floppy image returns 0
+00431636199i[FLOPPY] read() on floppy image returns 0
+00431680643i[FLOPPY] read() on floppy image returns 0
+00431725087i[FLOPPY] read() on floppy image returns 0
+00431769531i[FLOPPY] read() on floppy image returns 0
+00431813975i[FLOPPY] read() on floppy image returns 0
+00431858419i[FLOPPY] read() on floppy image returns 0
+00431902863i[FLOPPY] read() on floppy image returns 0
+00431947307i[FLOPPY] read() on floppy image returns 0
+00431991751i[FLOPPY] read() on floppy image returns 0
+00432037945i[FLOPPY] read() on floppy image returns 0
+00432082389i[FLOPPY] read() on floppy image returns 0
+00432126833i[FLOPPY] read() on floppy image returns 0
+00432171277i[FLOPPY] read() on floppy image returns 0
+00432215721i[FLOPPY] read() on floppy image returns 0
+00432260165i[FLOPPY] read() on floppy image returns 0
+00432304609i[FLOPPY] read() on floppy image returns 0
+00432349053i[FLOPPY] read() on floppy image returns 0
+00432393497i[FLOPPY] read() on floppy image returns 0
+00432437941i[FLOPPY] read() on floppy image returns 0
+00432482385i[FLOPPY] read() on floppy image returns 0
+00432526829i[FLOPPY] read() on floppy image returns 0
+00432571273i[FLOPPY] read() on floppy image returns 0
+00432615717i[FLOPPY] read() on floppy image returns 0
+00432660161i[FLOPPY] read() on floppy image returns 0
+00432704605i[FLOPPY] read() on floppy image returns 0
+00432749049i[FLOPPY] read() on floppy image returns 0
+00432793493i[FLOPPY] read() on floppy image returns 0
+00432839684i[FLOPPY] read() on floppy image returns 0
+00432884128i[FLOPPY] read() on floppy image returns 0
+00432928572i[FLOPPY] read() on floppy image returns 0
+00432973016i[FLOPPY] read() on floppy image returns 0
+00433017460i[FLOPPY] read() on floppy image returns 0
+00433061904i[FLOPPY] read() on floppy image returns 0
+00433106348i[FLOPPY] read() on floppy image returns 0
+00433150792i[FLOPPY] read() on floppy image returns 0
+00433195236i[FLOPPY] read() on floppy image returns 0
+00433239680i[FLOPPY] read() on floppy image returns 0
+00433284124i[FLOPPY] read() on floppy image returns 0
+00433328568i[FLOPPY] read() on floppy image returns 0
+00433373012i[FLOPPY] read() on floppy image returns 0
+00433417456i[FLOPPY] read() on floppy image returns 0
+00433461900i[FLOPPY] read() on floppy image returns 0
+00433506344i[FLOPPY] read() on floppy image returns 0
+00433550788i[FLOPPY] read() on floppy image returns 0
+00433595232i[FLOPPY] read() on floppy image returns 0
+00433641426i[FLOPPY] read() on floppy image returns 0
+00433685870i[FLOPPY] read() on floppy image returns 0
+00433730314i[FLOPPY] read() on floppy image returns 0
+00433774758i[FLOPPY] read() on floppy image returns 0
+00433819202i[FLOPPY] read() on floppy image returns 0
+00433863646i[FLOPPY] read() on floppy image returns 0
+00433908090i[FLOPPY] read() on floppy image returns 0
+00433952534i[FLOPPY] read() on floppy image returns 0
+00433996978i[FLOPPY] read() on floppy image returns 0
+00434041422i[FLOPPY] read() on floppy image returns 0
+00434085866i[FLOPPY] read() on floppy image returns 0
+00434130310i[FLOPPY] read() on floppy image returns 0
+00434174754i[FLOPPY] read() on floppy image returns 0
+00434219198i[FLOPPY] read() on floppy image returns 0
+00434263642i[FLOPPY] read() on floppy image returns 0
+00434308086i[FLOPPY] read() on floppy image returns 0
+00434352530i[FLOPPY] read() on floppy image returns 0
+00434396974i[FLOPPY] read() on floppy image returns 0
+00434443173i[FLOPPY] read() on floppy image returns 0
+00434487617i[FLOPPY] read() on floppy image returns 0
+00434532061i[FLOPPY] read() on floppy image returns 0
+00434576505i[FLOPPY] read() on floppy image returns 0
+00434620949i[FLOPPY] read() on floppy image returns 0
+00434665393i[FLOPPY] read() on floppy image returns 0
+00434709837i[FLOPPY] read() on floppy image returns 0
+00434754281i[FLOPPY] read() on floppy image returns 0
+00434798725i[FLOPPY] read() on floppy image returns 0
+00434843169i[FLOPPY] read() on floppy image returns 0
+00434887613i[FLOPPY] read() on floppy image returns 0
+00434932057i[FLOPPY] read() on floppy image returns 0
+00434976501i[FLOPPY] read() on floppy image returns 0
+00435100202i[CPU0  ] CPU is in protected mode (active)
+00435100202i[CPU0  ] CS.mode = 32 bit
+00435100202i[CPU0  ] SS.mode = 32 bit
+00435100202i[CPU0  ] EFER   = 0x00000000
+00435100202i[CPU0  ] | EAX=80000011  EBX=000140dc  ECX=0001905c  EDX=0004f460
+00435100202i[CPU0  ] | ESP=00029158  EBP=000291a0  ESI=000140e8  EDI=0004f460
+00435100202i[CPU0  ] | IOPL=0 id vip vif ac vm RF nt of df if tf SF zf af PF cf
+00435100202i[CPU0  ] | SEG sltr(index|ti|rpl)     base    limit G D
+00435100202i[CPU0  ] |  CS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00435100202i[CPU0  ] |  DS:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00435100202i[CPU0  ] |  SS:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00435100202i[CPU0  ] |  ES:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00435100202i[CPU0  ] |  FS:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00435100202i[CPU0  ] |  GS:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+00435100202i[CPU0  ] | EIP=00011e23 (00011e23)
+00435100202i[CPU0  ] | CR0=0x80000011 CR2=0x00014180
+00435100202i[CPU0  ] | CR3=0x0004f460 CR4=0x00000000
+00435100202i[CPU0  ] 0x00011e23: (instruction unavailable) page not present
+00435100202e[CPU0  ] exception(): 3rd (14) exception with no resolution, shutdown status is 00h, resetting
+00435100202i[SYS   ] bx_pc_system_c::Reset(HARDWARE) called
+00435100202i[CPU0  ] cpu hardware reset
+00435100202i[APIC0 ] allocate APIC id=0 (MMIO enabled) to 0x0000fee00000
+00435100202i[CPU0  ] CPUID[0x00000000]: 00000005 756e6547 6c65746e 49656e69
+00435100202i[CPU0  ] CPUID[0x00000001]: 00000633 00010800 00000008 1fcbfbff
+00435100202i[CPU0  ] CPUID[0x00000002]: 00410601 00000000 00000000 00000000
+00435100202i[CPU0  ] CPUID[0x00000003]: 00000000 00000000 00000000 00000000
+00435100202i[CPU0  ] CPUID[0x00000004]: 00000000 00000000 00000000 00000000
+00435100202i[CPU0  ] CPUID[0x00000005]: 00000040 00000040 00000003 00000020
+00435100202i[PLUGIN] reset of 'pci' plugin device by virtual method
+00435100202i[PLUGIN] reset of 'pci2isa' plugin device by virtual method
+00435100202i[PLUGIN] reset of 'cmos' plugin device by virtual method
+00435100202i[PLUGIN] reset of 'dma' plugin device by virtual method
+00435100202i[PLUGIN] reset of 'pic' plugin device by virtual method
+00435100202i[PLUGIN] reset of 'pit' plugin device by virtual method
+00435100202i[PLUGIN] reset of 'vga' plugin device by virtual method
+00435100202i[PLUGIN] reset of 'floppy' plugin device by virtual method
+00435100202i[PLUGIN] reset of 'acpi' plugin device by virtual method
+00435100202i[PLUGIN] reset of 'ioapic' plugin device by virtual method
+00435100202i[PLUGIN] reset of 'keyboard' plugin device by virtual method
+00435100202i[PLUGIN] reset of 'harddrv' plugin device by virtual method
+00435100202i[PLUGIN] reset of 'pci_ide' plugin device by virtual method
+00435100202i[PLUGIN] reset of 'unmapped' plugin device by virtual method
+00435100202i[PLUGIN] reset of 'biosdev' plugin device by virtual method
+00435100202i[PLUGIN] reset of 'speaker' plugin device by virtual method
+00435100202i[PLUGIN] reset of 'extfpuirq' plugin device by virtual method
+00435100202i[PLUGIN] reset of 'parallel' plugin device by virtual method
+00435100202i[PLUGIN] reset of 'serial' plugin device by virtual method
+00435104864i[BIOS  ] $Revision: 12412 $ $Date: 2014-07-10 09:28:59 +0200 (Do, 10. Jul 2014) $
+00435418062i[KBD   ] reset-disable command received
+00435420793i[BIOS  ] Starting rombios32
+00435421231i[BIOS  ] Shutdown flag 0
+00435421815i[BIOS  ] ram_size=0x01000000
+00435422236i[BIOS  ] ram_end=16MB
+00435462786i[BIOS  ] Found 1 cpu(s)
+00435476990i[BIOS  ] bios_table_addr: 0x000fa498 end=0x000fcc00
+00435804785i[PCI   ] i440FX PMC write to PAM register 59 (TLB Flush)
+00436132714i[P2ISA ] PCI IRQ routing: PIRQA# set to 0x0b
+00436132733i[P2ISA ] PCI IRQ routing: PIRQB# set to 0x09
+00436132752i[P2ISA ] PCI IRQ routing: PIRQC# set to 0x0b
+00436132771i[P2ISA ] PCI IRQ routing: PIRQD# set to 0x09
+00436132781i[P2ISA ] write: ELCR2 = 0x0a
+00436133551i[BIOS  ] PIIX3/PIIX4 init: elcr=00 0a
+00436141232i[BIOS  ] PCI: bus=0 devfn=0x00: vendor_id=0x8086 device_id=0x1237 class=0x0600
+00436143511i[BIOS  ] PCI: bus=0 devfn=0x08: vendor_id=0x8086 device_id=0x7000 class=0x0601
+00436145629i[BIOS  ] PCI: bus=0 devfn=0x09: vendor_id=0x8086 device_id=0x7010 class=0x0101
+00436146470i[BIOS  ] region 4: 0x0000c000
+00436148504i[BIOS  ] PCI: bus=0 devfn=0x0b: vendor_id=0x8086 device_id=0x7113 class=0x0680
+00436148736i[ACPI  ] new irq line = 11
+00436148748i[ACPI  ] new irq line = 9
+00436148815i[PCI   ] setting SMRAM control register to 0x4a
+00436312908i[CPU0  ] Enter to System Management Mode
+00436312919i[CPU0  ] RSM: Resuming from System Management Mode
+00436476940i[PCI   ] setting SMRAM control register to 0x0a
+00436491806i[BIOS  ] MP table addr=0x000fa570 MPC table addr=0x000fa4a0 size=0xc8
+00436493628i[BIOS  ] SMBIOS table addr=0x000fa580
+00436495796i[BIOS  ] ACPI tables: RSDP addr=0x000fa6a0 ACPI DATA addr=0x00ff0000 size=0xf72
+00436498985i[BIOS  ] Firmware waking vector 0xff00cc
+00436500780i[PCI   ] i440FX PMC write to PAM register 59 (TLB Flush)
+00436501503i[BIOS  ] bios_table_cur_addr: 0x000fa6c4
+00436629120i[VBIOS ] VGABios $Id: vgabios.c,v 1.76 2013/02/10 08:07:03 vruppert Exp $
+00436629191i[BXVGA ] VBE known Display Interface b0c0
+00436629223i[BXVGA ] VBE known Display Interface b0c5
+00436632148i[VBIOS ] VBE Bios $Id: vbe.c,v 1.65 2014/07/08 18:02:25 vruppert Exp $
+00449140396i[BIOS  ] Booting from 0000:7c00
+00463397704i[XGUI  ] charmap update. Font Height is 16
+00473328000i[      ] cpu loop quit, shutting down simulator
+00473328000i[CPU0  ] CPU is in real mode (active)
+00473328000i[CPU0  ] CS.mode = 16 bit
+00473328000i[CPU0  ] SS.mode = 16 bit
+00473328000i[CPU0  ] EFER   = 0x00000000
+00473328000i[CPU0  ] | EAX=00000300  EBX=00000090  ECX=00090200  EDX=00000000
+00473328000i[CPU0  ] | ESP=00003f98  EBP=00003fba  ESI=000e0200  EDI=00003ff4
+00473328000i[CPU0  ] | IOPL=0 id vip vif ac vm rf nt of df IF tf sf ZF af PF cf
+00473328000i[CPU0  ] | SEG sltr(index|ti|rpl)     base    limit G D
+00473328000i[CPU0  ] |  CS:f000( 0004| 0|  0) 000f0000 0000ffff 0 0
+00473328000i[CPU0  ] |  DS:0040( 0005| 0|  0) 00000400 0000ffff 0 0
+00473328000i[CPU0  ] |  SS:9000( 0005| 0|  0) 00090000 0000ffff 0 0
+00473328000i[CPU0  ] |  ES:5000( 0005| 0|  0) 00050000 0000ffff 0 0
+00473328000i[CPU0  ] |  FS:0000( 0005| 0|  0) 00000000 0000ffff 0 0
+00473328000i[CPU0  ] |  GS:0000( 0005| 0|  0) 00000000 0000ffff 0 0
+00473328000i[CPU0  ] | EIP=000081ca (000081ca)
+00473328000i[CPU0  ] | CR0=0x60000010 CR2=0x00000000
+00473328000i[CPU0  ] | CR3=0x00000000 CR4=0x00000000
+00473328000i[CPU0  ] 0x000081ca>> jz .-73 (0x000f8183) : 74B7
+00473328000i[CMOS  ] Last time is 1734113530 (Fri Dec 13 19:12:10 2024)
+00473328000i[XGUI  ] Exit
+00473328000i[      ] restoring default signal behavior
+00473328000i[SIM   ] quit_sim called with exit code 1

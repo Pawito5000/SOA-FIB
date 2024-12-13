@@ -168,7 +168,6 @@ void init_idle (void)
   c->TID=1;
 
   c->total_quantum=DEFAULT_QUANTUM;
-  c->thread_queantum=DEFAULT_QUANTUM_THREAD;
 
   init_stats(&c->p_stats);
 
@@ -192,19 +191,22 @@ struct list_head *l = list_first(&freequeue);
   union task_union *uc = (union task_union*)c;
 
   c->PID=1;
-
+  c->TID=1;
   
   c->total_quantum=DEFAULT_QUANTUM;
   c->heap_srt_ptr = PAG_LOG_INIT_DATA * PAGE_SIZE + NUM_PAG_DATA * PAGE_SIZE;
   c->heap_end_ptr = END_PT;
   c->heap_pointer = c->heap_srt_ptr;
  
- 
   c->state=ST_RUN;
 
   remaining_quantum=c->total_quantum;
 
   init_stats(&c->p_stats);
+
+  /*Lista de threads*/
+  INIT_LIST_HEAD(&(c->threads_list));
+  list_add_tail(&(c->threads_list),c->thread_process);
 
   allocate_DIR(c);
 
