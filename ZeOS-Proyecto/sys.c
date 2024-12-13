@@ -374,12 +374,14 @@ KERNEL STACK SIZE ->
 	return 0;
 }
 
+void sys_exit();
+
 void sys_threadExit(void)
 {
-	if(current()->TID == 100) sys_exit();
+	if((current()->PID == 1) && (current()->TID == 1)) sys_exit();
 	else {
 		struct list_head *head;
-		struct task_struct thread_ts;
+		struct task_struct *thread_ts;
 		struct list_head *n;
 		list_for_each_safe(head, n, &(current()->threads_list)){
 			thread_ts = list_head_to_task_struct(head);
