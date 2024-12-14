@@ -23,10 +23,10 @@ ENTRY (sys_call_table)
 	.long sys_sbrk  	//18
 	.long sys_ni_syscall	//19
 	.long sys_getpid	//20	
-	.long sys_ni_syscall	//21
-	.long sys_ni_syscall	//22
-	.long sys_ni_syscall	//23
-	.long sys_ni_syscall	//24
+	.long sys_semCreate	//21
+	.long sys_semWait	//22
+	.long sys_semSignal	//23
+	.long sys_semDestroy	//24
 	.long sys_ni_syscall	//25
 	.long sys_ni_syscall	//26
 	.long sys_ni_syscall	//27

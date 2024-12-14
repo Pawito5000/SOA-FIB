@@ -465,3 +465,24 @@ int sys_get_stats(int pid, struct stats *st)
   }
   return -ESRCH; /*ESRCH */
 }
+
+int sys_semCreate(int initial_value)
+{
+
+}
+
+int sys_semWait(int semid)
+{
+
+}
+
+int sys_semSignal(int semid)
+{
+
+}
+
+int sys_semDestroy(int semid)
+{
+
+}
+

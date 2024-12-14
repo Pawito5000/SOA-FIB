@@ -43,6 +43,14 @@ void threadExit(void);
 
 int get_stats(int pid, struct stats *st);
 
+int semCreate(int initial_value);
+
+int semWait(int semid);
+
+int semSignal(int semid);
+
+int semDestroy(int semid);
+
 void SAVE_REGS(void);
 void RESTORE_REGS(void);
 

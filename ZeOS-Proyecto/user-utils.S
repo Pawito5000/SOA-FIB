@@ -163,6 +163,59 @@ ENTRY(threadExit)
         ret
 
 
+ENTRY(semCreate)
+        pushl %ebp
+        movl %esp, %ebp
+        pushl %ebx
+        movl $21, %eax
+        movl 0x8(%ebp), %ebx; //int initial_value
+        call syscall_sysenter
+        popl %ebx
+        test %eax, %eax
+        js nok  // if (eax < 0) -->
+        popl %ebp
+        ret
+
+ENTRY(semWait)
+        pushl %ebp
+        movl %esp, %ebp
+        pushl %ebx
+        movl $22, %eax
+        movl 0x8(%ebp), %ebx; //int semid
+        call syscall_sysenter
+        popl %ebx
+        test %eax, %eax
+        js nok  // if (eax < 0) -->
+        popl %ebp
+        ret
+
+ENTRY(semSignal)
+        pushl %ebp
+        movl %esp, %ebp
+        pushl %ebx
+        movl $23, %eax
+        movl 0x8(%ebp), %ebx; //int semid
+        call syscall_sysenter
+        popl %ebx
+        test %eax, %eax
+        js nok  // if (eax < 0) -->
+        popl %ebp
+        ret
+
+ENTRY(semDestroy)
+        pushl %ebp
+        movl %esp, %ebp
+        pushl %ebx
+        movl $24, %eax
+        movl 0x8(%ebp), %ebx; //int semid
+        call syscall_sysenter
+        popl %ebx
+        test %eax, %eax
+        js nok  // if (eax < 0) -->
+        popl %ebp
+        ret
+
+
 /* int getpid() */
 ENTRY(getpid)
 	pushl %ebp

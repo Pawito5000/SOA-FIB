@@ -14,9 +14,15 @@
 #define NR_TASKS      10
 #define KERNEL_STACK_SIZE	1024
 #define USER_STACK_SIZE		4096
+#define SEM_T_VECTOR_SIZE	10
 
 enum state_t { ST_RUN, ST_READY, ST_BLOCKED };
 
+struct sem_t {
+  int id;
+  int count;
+  struct list_head bloqued_queue;
+};
 
 struct task_struct {
   int PID;			/* Process ID. This MUST be the first field of the struct. */
@@ -38,13 +44,15 @@ struct task_struct {
   int thread_quantum;
   unsigned long user_stack[USER_STACK_SIZE];
   int errno;
-
+  
+  struct sem_t v_sem[SEM_T_VECTOR_SIZE]; 
 };
 
 union task_union {
   struct task_struct task;
   unsigned long stack[KERNEL_STACK_SIZE];    /* pila de sistema, per procés */
 };
+
 
 extern union task_union protected_tasks[NR_TASKS+2];
 extern union task_union *task; /* Vector de tasques */
