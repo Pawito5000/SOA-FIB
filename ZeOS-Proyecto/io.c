@@ -61,7 +61,7 @@ int draw_sprite(int posX, int posY, Sprite *sp){
 	if ((posX < 0) || (posX > NUM_COLUMNS) || (posY < 0) || (posY > NUM_ROWS)) return -EINVAL;
 	if ((posX + sp->x) > NUM_COLUMNS || (posY + sp->y) > NUM_ROWS) return -EINVAL;
 	if (!access_ok(VERIFY_WRITE, sp, sizeof(Sprite))) return -EFAULT;
-	if (!access_ok(VERIFY_WRITE, sp->content, sizeof(sp->y + sp->x))) return -EFAULT;
+	if (!access_ok(VERIFY_WRITE, sp->content, sizeof(sp->y * sp->x))) return -EFAULT;
 	for(int i = 0; i < sp->x; i++){
 		for(int j = 0; j < sp->y; j++){
 			printc_xy(posX+i, posY+j,sp->content[i*sp->y+j]);
