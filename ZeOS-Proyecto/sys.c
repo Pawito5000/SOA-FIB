@@ -319,6 +319,7 @@ int sys_threadCreate(void (*function_wrap), void (*function)(void* arg), void* p
 	
 	page_table_entry * sh_PT = get_PT(current());
 	//set_ss_pag(sh_PT, PAGINA LOGICA, new_php_pag);
+	unsigned long *user_stack = @pagina logica
 
 	/*Asignar TID*/
 	new_task->TID = ++global_TID;
@@ -338,10 +339,10 @@ int sys_threadCreate(void (*function_wrap), void (*function)(void* arg), void* p
 			param
 	USER_STACK_SIZE->	
 	 * */
-	new_task->user_stack[USER_STACK_SIZE-1] = (unsigned long) &parameter;
-	new_task->user_stack[USER_STACK_SIZE-2] = (unsigned long) &function;
-	new_task->user_stack[USER_STACK_SIZE-3] = 0;
-
+	user_stack[USER_STACK_SIZE-1] = (unsigned long) &parameter;
+	user_stack[USER_STACK_SIZE-2] = (unsigned long) &function;
+	user_stack[USER_STACK_SIZE-3] = 0;
+	
 
 	/*Preparar en el System Stack, el contexto de ejecucion
 	 *Estado de la pila sys:
@@ -360,7 +361,7 @@ KERNEL STACK SIZE ->
 	 */
 
 	//ESP(user)
-	new_task_union->stack[KERNEL_STACK_SIZE-2] = (unsigned long)&new_task->user_stack[USER_STACK_SIZE -3];
+	new_task_union->stack[KERNEL_STACK_SIZE-2] = (unsigned long)&user_stack[USER_STACK_SIZE -3];
 	
 	//EIP
 	new_task_union->stack[KERNEL_STACK_SIZE-5] = (unsigned long)function_wrap;

@@ -42,7 +42,6 @@ struct task_struct {
   
   int TID; 
   int thread_quantum;
-  unsigned long user_stack[USER_STACK_SIZE];
   int errno;
   
   struct sem_t v_sem[SEM_T_VECTOR_SIZE]; 
