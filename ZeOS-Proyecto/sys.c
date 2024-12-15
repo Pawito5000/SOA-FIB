@@ -20,6 +20,10 @@
 #define LECTURA 0
 #define ESCRIPTURA 1
 
+#define THREAD_PAGES {1022, 1021, 1020, 1019, 1018, 1017, 1016, 1015, 1014, 1013}
+
+int free_pages[10] = THREAD_PAGES;
+
 void * get_ebp();
 
 int check_fd(int fd, int permissions)
@@ -246,7 +250,12 @@ char *sys_sbrk(int size)
             	
 			}
         	}
-		
+		//Actualitzar el punter per totesels threads del process
+		struct list_head *pos;
+		list_for_each(pos, &(current()->threads_list)){
+                        struct task_struct *ts = list_head_to_task_struct(pos);
+                        ts->heap_pointer = current()->heap_pointer;
+                }	
 		return old_pointer;
 	} else if (size == 0) {
 		return current()->heap_pointer;
@@ -264,7 +273,12 @@ char *sys_sbrk(int size)
             		free_frame(get_frame(get_PT(current()), (unsigned int)(current()->heap_pointer)/PAGE_SIZE));
 			del_ss_pag(get_PT(current()), (unsigned int)(current()->heap_pointer)/PAGE_SIZE);
 		}
-
+		//Actualitzar el punter per totesels threads del process
+                struct list_head *pos;                        
+                list_for_each(pos, &(current()->threads_list)){
+                        struct task_struct *ts = list_head_to_task_struct(pos);
+                        ts->heap_pointer = current()->heap_pointer;
+                } 
 		return old_pointer;
 	}
 }
@@ -317,8 +331,29 @@ int sys_threadCreate(void (*function_wrap), void (*function)(void* arg), void* p
 		list_add_tail(&(new_task->list), &freequeue);
 	}
 	
-	page_table_entry * sh_PT = get_PT(current());
-	//set_ss_pag(sh_PT, PAGINA LOGICA, new_php_pag);
+	int free = -1;
+	for(int i = 0; i < 10 && free == -1; ++i) {
+		if(free_pages[i] != -1) free = i;
+	}	
+	unsigned long *new_user_stack;
+	if(free != -1){
+		//comprovar que no superisbrk
+		if(current()->heap_pointer >= (char *)(free_pages[free] << 12)) return -ENOMEM;
+		page_table_entry * sh_PT = get_PT(current());
+        	set_ss_pag(sh_PT, free_pages[free], new_ph_pag);
+		if(current()->heap_end_ptr > (char *)(free_pages[free] << 12)) {
+			current()->heap_end_ptr = (char *)(free_pages[free] << 12);
+			//for per tots els threads del process per actualitzar
+			struct list_head *pos;
+                        list_for_each(pos, &(current()->threads_list)){
+                                struct task_struct *ts = list_head_to_task_struct(pos);
+                                ts->heap_end_ptr = (char *)(free_pages[free] << 12);
+                        }
+		}
+		new_user_stack = (unsigned long *)(free_pages[free] <<12);
+		new_task->user_stack = new_user_stack;
+		free_pages[free] = -1;	
+	} else return -ENOMEM;
 
 	/*Asignar TID*/
 	new_task->TID = ++global_TID;
@@ -338,9 +373,9 @@ int sys_threadCreate(void (*function_wrap), void (*function)(void* arg), void* p
 			param
 	USER_STACK_SIZE->	
 	 * */
-	new_task->user_stack[USER_STACK_SIZE-1] = (unsigned long) &parameter;
-	new_task->user_stack[USER_STACK_SIZE-2] = (unsigned long) &function;
-	new_task->user_stack[USER_STACK_SIZE-3] = 0;
+	new_user_stack[USER_STACK_SIZE-1] = (unsigned long) &parameter;
+	new_user_stack[USER_STACK_SIZE-2] = (unsigned long) &function;
+	new_user_stack[USER_STACK_SIZE-3] = 0;
 
 
 	/*Preparar en el System Stack, el contexto de ejecucion
@@ -360,7 +395,7 @@ KERNEL STACK SIZE ->
 	 */
 
 	//ESP(user)
-	new_task_union->stack[KERNEL_STACK_SIZE-2] = (unsigned long)&new_task->user_stack[USER_STACK_SIZE -3];
+	new_task_union->stack[KERNEL_STACK_SIZE-2] = (unsigned long)&(new_user_stack[USER_STACK_SIZE -3]);
 	
 	//EIP
 	new_task_union->stack[KERNEL_STACK_SIZE-5] = (unsigned long)function_wrap;
@@ -380,6 +415,19 @@ void sys_threadExit(void)
 {
 	if((current()->PID == 1) && (current()->TID == 1)) sys_exit();
 	else {
+		int free = 1022 - (current()->user_stack >> 12);
+		free_frame(get_frame(get_PT(current()), (current()->user_stack >> 12)));
+		del_ss_pag(get_PT(current()), (current()->user_stack >> 12));
+		free_pages[free] = -1;
+		if(current()->heap_end_ptr == current()->user_stack){
+			//for per modificar tots els currents stacks a +1 page
+			struct list_head *pos;
+			list_for_each(pos, &(current()->threads_list)){
+				struct task_struct *ts = list_head_to_task_struct(pos);
+				ts->heap_end_ptr += PAGE_SIZE;
+			}
+		}
+		
 		struct list_head *head;
 		struct task_struct *thread_ts;
 		struct list_head *n;
