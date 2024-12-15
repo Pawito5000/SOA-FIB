@@ -21,7 +21,7 @@ enum state_t { ST_RUN, ST_READY, ST_BLOCKED };
 struct sem_t {
   int id;
   int count;
-  struct list_head bloqued_queue;
+  struct list_head blocked_queue;
 };
 
 struct task_struct {
@@ -44,7 +44,7 @@ struct task_struct {
   int thread_quantum;
   int errno;
   
-  struct sem_t v_sem[SEM_T_VECTOR_SIZE]; 
+  struct sem_t *v_sem; 
 };
 
 union task_union {

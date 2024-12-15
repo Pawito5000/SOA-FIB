@@ -56,6 +56,9 @@ int ret_from_fork()
   return 0;
 }
 
+//Avoid implicit declaration
+char *sys_sbrk(int size);
+
 int sys_fork(void)
 {
   struct list_head *lhcurrent = NULL;
@@ -164,6 +167,10 @@ int sys_fork(void)
   *(DWord*)(uchild->task.register_esp)=(DWord)&ret_from_fork;
   uchild->task.register_esp-=sizeof(DWord);
   *(DWord*)(uchild->task.register_esp)=temp_ebp;
+
+  /* Reinitialize the sem_t vector*/
+  uchild->task.v_sem = (struct sem_t *)sys_sbrk(10*sizeof(struct sem_t));
+  for(int i = 0; i < SEM_T_VECTOR_SIZE; i++) uchild->task.v_sem[i].id = -1;
 
   /* Set stats to 0 */
   init_stats(&(uchild->task.p_stats));
@@ -319,7 +326,7 @@ int sys_threadCreate(void (*function_wrap), void (*function)(void* arg), void* p
 	
 	page_table_entry * sh_PT = get_PT(current());
 	//set_ss_pag(sh_PT, PAGINA LOGICA, new_php_pag);
-	unsigned long *user_stack = @pagina logica
+	//unsigned long *user_stack = @pagina logica
 
 	/*Asignar TID*/
 	new_task->TID = ++global_TID;
@@ -339,10 +346,10 @@ int sys_threadCreate(void (*function_wrap), void (*function)(void* arg), void* p
 			param
 	USER_STACK_SIZE->	
 	 * */
-	user_stack[USER_STACK_SIZE-1] = (unsigned long) &parameter;
+	/*user_stack[USER_STACK_SIZE-1] = (unsigned long) &parameter;
 	user_stack[USER_STACK_SIZE-2] = (unsigned long) &function;
 	user_stack[USER_STACK_SIZE-3] = 0;
-	
+	*/
 
 	/*Preparar en el System Stack, el contexto de ejecucion
 	 *Estado de la pila sys:
@@ -361,7 +368,7 @@ KERNEL STACK SIZE ->
 	 */
 
 	//ESP(user)
-	new_task_union->stack[KERNEL_STACK_SIZE-2] = (unsigned long)&user_stack[USER_STACK_SIZE -3];
+	//new_task_union->stack[KERNEL_STACK_SIZE-2] = (unsigned long)&user_stack[USER_STACK_SIZE -3];
 	
 	//EIP
 	new_task_union->stack[KERNEL_STACK_SIZE-5] = (unsigned long)function_wrap;
@@ -375,6 +382,7 @@ KERNEL STACK SIZE ->
 	return 0;
 }
 
+//Avoid implicit declaration
 void sys_exit();
 
 void sys_threadExit(void)
@@ -469,17 +477,59 @@ int sys_get_stats(int pid, struct stats *st)
 
 int sys_semCreate(int initial_value)
 {
+	int i;
+	int max_id = 1;
+	
+	if (current()->v_sem == NULL) {
+		return -ENOMEM;
+	}
 
+	for (i = 0; i < SEM_T_VECTOR_SIZE; i++){
+		struct sem_t *c_sem = &(current()->v_sem[i]);
+		if(c_sem->id == -1){
+			c_sem->count = initial_value;
+			INIT_LIST_HEAD(&(c_sem->blocked_queue));
+			c_sem->id = max_id;
+			return c_sem->id;
+		} else {
+			max_id = (max_id < c_sem->id) ? c_sem->id : max_id;
+		}
+
+	}
+	return -ENOSPC;
 }
 
 int sys_semWait(int semid)
 {
-
+	struct sem_t *c_sem = &(current()->v_sem[semid]);
+	
+	if (c_sem->id == -1) return -EINVAL;
+	
+	c_sem->count--;
+	if (c_sem->count < 0) {
+		current()->state = ST_BLOCKED;
+		list_add_tail(&(current()->list),&(c_sem->blocked_queue));
+		sched_next_rr();	
+	}
+	return 0;
 }
 
 int sys_semSignal(int semid)
 {
+	struct sem_t *c_sem = &(current()->v_sem[semid]);
 
+        if (c_sem->id == -1) return -EINVAL;
+
+        c_sem->count++;
+        if (c_sem->count <= 0) {
+		struct list_head *aux = list_first(&(c_sem->blocked_queue));
+		struct task_struct *ready_th = list_head_to_task_struct(aux);
+		list_del(&(ready_th->list));
+
+		current()->state = ST_READY;
+		list_add_tail(&(current()->list),&readyqueue);
+	}
+	return 0;
 }
 
 int sys_semDestroy(int semid)
