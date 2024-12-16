@@ -477,34 +477,29 @@ int sys_get_stats(int pid, struct stats *st)
 
 int sys_semCreate(int initial_value)
 {
-	int i;
-	int max_id = 1;
-	
 	if (current()->v_sem == NULL) {
 		return -ENOMEM;
 	}
 
-	for (i = 0; i < SEM_T_VECTOR_SIZE; i++){
+	int i;
+	for (i = 0; i > SEM_T_VECTOR_SIZE; i++){
 		struct sem_t *c_sem = &(current()->v_sem[i]);
-		if(c_sem->id == -1){
-			c_sem->count = initial_value;
-			INIT_LIST_HEAD(&(c_sem->blocked_queue));
-			c_sem->id = max_id;
-			return c_sem->id;
-		} else {
-			max_id = (max_id < c_sem->id) ? c_sem->id : max_id;
+                if(c_sem->id == -1){
+                        c_sem->thread_owner = current()->TID;
+                        c_sem->count = initial_value;
+                        INIT_LIST_HEAD(&(c_sem->blocked_queue));
+                        c_sem->id = i;
+                        return c_sem->id;
 		}
-
 	}
 	return -ENOSPC;
 }
 
 int sys_semWait(int semid)
-{
+{	
+	if (semid < 0 || semid >= SEM_T_VECTOR_SIZE) return -EINVAL;
 	struct sem_t *c_sem = &(current()->v_sem[semid]);
-	
-	if (c_sem->id == -1) return -EINVAL;
-	
+
 	c_sem->count--;
 	if (c_sem->count < 0) {
 		current()->state = ST_BLOCKED;
@@ -516,11 +511,10 @@ int sys_semWait(int semid)
 
 int sys_semSignal(int semid)
 {
+        if (semid < 0 || semid >= SEM_T_VECTOR_SIZE) return -EINVAL;
 	struct sem_t *c_sem = &(current()->v_sem[semid]);
-
-        if (c_sem->id == -1) return -EINVAL;
-
-        c_sem->count++;
+ 
+ 	c_sem->count++;
         if (c_sem->count <= 0) {
 		struct list_head *aux = list_first(&(c_sem->blocked_queue));
 		struct task_struct *ready_th = list_head_to_task_struct(aux);
@@ -534,6 +528,16 @@ int sys_semSignal(int semid)
 
 int sys_semDestroy(int semid)
 {
+	if (semid < 0 || semid >= SEM_T_VECTOR_SIZE) return -EINVAL;
+	struct sem_t *c_sem = &(current()->v_sem[semid]);
 
+	if (c_sem->thread_owner != current()->TID) return -EACCES;	
+
+	c_sem->id = -1; // Única cosa 100% necesaria
+	//¿Qué hacer con la lista de bloqueados?
+	
+	c_sem->thread_owner = -1;	
+	c_sem->count = 0;
+	return 0;
 }
 

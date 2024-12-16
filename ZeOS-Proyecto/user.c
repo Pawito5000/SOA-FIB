@@ -33,6 +33,16 @@ char loseScreen[NUM_ROWS][NUM_COLUMNS] =
   { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}
 };
 
+
+	/*`7MM"""Mq.   db       .g8"""bgd `7MMF' `YMM' `7MMM.     ,MMF'      db      `7MN.   `7MF'
+		MM   `MM. ;MM:    .dP'     `M   MM   .M'     MMMb    dPMM       ;MM:       MMN.    M  
+		MM   ,M9 ,V^MM.   dM'       `   MM .d"       M YM   ,M MM      ,V^MM.      M YMb   M  
+		MMmmdM9 ,M  `MM   MM            MMMMM.       M  Mb  M' MM     ,M  `MM      M  `MN. M  
+		MM      AbmmmqMA  MM.           MM  VMA      M  YM.P'  MM     AbmmmqMA     M   `MM.M  
+		MM     A'     VML `Mb.     ,'   MM   `MM.    M  `YM'   MM    A'     VML    M     YMM  
+      .JMML. .AMA.   .AMMA. `"bmmmd'  .JMML.   MMb..JML. `'  .JMML..AMA.   .AMMA..JML.    YM */ 
+
+
 char coin[3][3] = {
 	{'X','X','X'},
 	{'X',' ','X'},

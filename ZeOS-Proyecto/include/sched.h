@@ -22,6 +22,8 @@ struct sem_t {
   int id;
   int count;
   struct list_head blocked_queue;
+
+  int thread_owner;
 };
 
 struct task_struct {
