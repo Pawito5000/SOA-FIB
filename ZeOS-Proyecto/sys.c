@@ -56,8 +56,7 @@ int ret_from_fork()
   return 0;
 }
 
-//Avoid implicit declaration
-char *sys_sbrk(int size);
+int vec_index = 1;
 
 int sys_fork(void)
 {
@@ -169,8 +168,21 @@ int sys_fork(void)
   *(DWord*)(uchild->task.register_esp)=temp_ebp;
 
   /* Reinitialize the sem_t vector*/
-  uchild->task.v_sem = (struct sem_t *)sys_sbrk(10*sizeof(struct sem_t));
-  for(int i = 0; i < SEM_T_VECTOR_SIZE; i++) uchild->task.v_sem[i].id = -1;
+  switch(vec_index){
+	case 1:
+		uchild->task.v_sem = &v_sem1[0];
+		break;
+	case 2:
+		uchild->task.v_sem = &v_sem2[0];
+		break;
+	case 3:
+		uchild->task.v_sem = &v_sem3[0];
+		break;
+	default:
+		return -ENOMEM;
+  }
+  ++vec_index;
+  
 
   /* Set stats to 0 */
   init_stats(&(uchild->task.p_stats));

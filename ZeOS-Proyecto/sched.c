@@ -203,14 +203,14 @@ struct list_head *l = list_first(&freequeue);
   remaining_quantum=c->total_quantum;
 
   init_stats(&c->p_stats);
+  
+  /*Init de semaforos*/
+  c->v_sem = &v_sem0[0];
+  for(int i = 0; i < SEM_T_VECTOR_SIZE; i++) c->v_sem[i].id = -1;
 
   /*Lista de threads*/
   INIT_LIST_HEAD(&(c->threads_list));
   list_add_tail(&(c->threads_list),c->thread_process);
-
-  /*Init de semaforos*/
-  c->v_sem = (struct sem_t *)sbrk(10*sizeof(struct sem_t));
-  for(int i = 0; i < SEM_T_VECTOR_SIZE; i++) c->v_sem[i].id = -1;
 
   allocate_DIR(c);
 
