@@ -307,7 +307,7 @@ int sys_SetColor(int color, int background)
 
 int global_TID=10000;
 
-int sys_threadCreate(void (*function_wrap), void (*function)(void* arg), void* parameter)
+int sys_threadCreate(void (*function_wrap)(void*, void*), void (*function)(void*), void* parameter)
 {
 	//Control de la rutina wrap
 	if (function_wrap == NULL) return -EFAULT;
@@ -380,8 +380,8 @@ int sys_threadCreate(void (*function_wrap), void (*function)(void* arg), void* p
 			param
 	USER_STACK_SIZE->	
 	 * */
-	new_user_stack[USER_STACK_SIZE-1] = (unsigned long) &parameter;
-	new_user_stack[USER_STACK_SIZE-2] = (unsigned long) &function;
+	new_user_stack[USER_STACK_SIZE-1] = (unsigned long) parameter;
+	new_user_stack[USER_STACK_SIZE-2] = (unsigned long) function;
 	new_user_stack[USER_STACK_SIZE-3] = 0;
 
 
@@ -423,9 +423,9 @@ void sys_threadExit(void)
 {
 	if((current()->PID == 1) && (current()->TID == 1)) sys_exit();
 	else {
-		int free = 1022 - (current()->user_stack >> 12);
-		free_frame(get_frame(get_PT(current()), (current()->user_stack >> 12)));
-		del_ss_pag(get_PT(current()), (current()->user_stack >> 12));
+		int free = 1022 - ((unsigned int)current()->user_stack >> 12);
+		free_frame(get_frame(get_PT(current()), ((unsigned int)current()->user_stack >> 12)));
+		del_ss_pag(get_PT(current()), ((unsigned int)current()->user_stack >> 12));
 		free_pages[free] = -1;
 		if(current()->heap_end_ptr == current()->user_stack){
 			//for per modificar tots els currents stacks a +1 page
