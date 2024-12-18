@@ -20,6 +20,10 @@
 #define LECTURA 0
 #define ESCRIPTURA 1
 
+#define THREAD_PAGES {1022, 1021, 1020, 1019, 1018, 1017, 1016, 1015, 1014, 1013}
+
+int free_pages[10] = THREAD_PAGES;
+
 void * get_ebp();
 
 int check_fd(int fd, int permissions)
@@ -167,20 +171,8 @@ int sys_fork(void)
   uchild->task.register_esp-=sizeof(DWord);
   *(DWord*)(uchild->task.register_esp)=temp_ebp;
 
-  /* Reinitialize the sem_t vector*/
-  switch(vec_index){
-	case 1:
-		uchild->task.v_sem = &v_sem1[0];
-		break;
-	case 2:
-		uchild->task.v_sem = &v_sem2[0];
-		break;
-	case 3:
-		uchild->task.v_sem = &v_sem3[0];
-		break;
-	default:
-		return -ENOMEM;
-  }
+  /* Set the sem_t vector*/
+  uchild->task.v_sem_t = &(v_sem[vec_index][0]);
   ++vec_index;
   
 
@@ -265,7 +257,12 @@ char *sys_sbrk(int size)
             	
 			}
         	}
-		
+		//Actualitzar el punter per totesels threads del process
+		struct list_head *pos;
+		list_for_each(pos, &(current()->threads_list)){
+                        struct task_struct *ts = list_head_to_task_struct(pos);
+                        ts->heap_pointer = current()->heap_pointer;
+                }	
 		return old_pointer;
 	} else if (size == 0) {
 		return current()->heap_pointer;
@@ -283,7 +280,12 @@ char *sys_sbrk(int size)
             		free_frame(get_frame(get_PT(current()), (unsigned int)(current()->heap_pointer)/PAGE_SIZE));
 			del_ss_pag(get_PT(current()), (unsigned int)(current()->heap_pointer)/PAGE_SIZE);
 		}
-
+		//Actualitzar el punter per totesels threads del process
+                struct list_head *pos;                        
+                list_for_each(pos, &(current()->threads_list)){
+                        struct task_struct *ts = list_head_to_task_struct(pos);
+                        ts->heap_pointer = current()->heap_pointer;
+                } 
 		return old_pointer;
 	}
 }
@@ -336,9 +338,29 @@ int sys_threadCreate(void (*function_wrap), void (*function)(void* arg), void* p
 		list_add_tail(&(new_task->list), &freequeue);
 	}
 	
-	page_table_entry * sh_PT = get_PT(current());
-	//set_ss_pag(sh_PT, PAGINA LOGICA, new_php_pag);
-	//unsigned long *user_stack = @pagina logica
+	int free = -1;
+	for(int i = 0; i < 10 && free == -1; ++i) {
+		if(free_pages[i] != -1) free = i;
+	}	
+	unsigned long *new_user_stack;
+	if(free != -1){
+		//comprovar que no superisbrk
+		if(current()->heap_pointer >= (char *)(free_pages[free] << 12)) return -ENOMEM;
+		page_table_entry * sh_PT = get_PT(current());
+        	set_ss_pag(sh_PT, free_pages[free], new_ph_pag);
+		if(current()->heap_end_ptr > (char *)(free_pages[free] << 12)) {
+			current()->heap_end_ptr = (char *)(free_pages[free] << 12);
+			//for per tots els threads del process per actualitzar
+			struct list_head *pos;
+                        list_for_each(pos, &(current()->threads_list)){
+                                struct task_struct *ts = list_head_to_task_struct(pos);
+                                ts->heap_end_ptr = (char *)(free_pages[free] << 12);
+                        }
+		}
+		new_user_stack = (unsigned long *)(free_pages[free] <<12);
+		new_task->user_stack = new_user_stack;
+		free_pages[free] = -1;	
+	} else return -ENOMEM;
 
 	/*Asignar TID*/
 	new_task->TID = ++global_TID;
@@ -358,10 +380,10 @@ int sys_threadCreate(void (*function_wrap), void (*function)(void* arg), void* p
 			param
 	USER_STACK_SIZE->	
 	 * */
-	/*user_stack[USER_STACK_SIZE-1] = (unsigned long) &parameter;
-	user_stack[USER_STACK_SIZE-2] = (unsigned long) &function;
-	user_stack[USER_STACK_SIZE-3] = 0;
-	*/
+	new_user_stack[USER_STACK_SIZE-1] = (unsigned long) &parameter;
+	new_user_stack[USER_STACK_SIZE-2] = (unsigned long) &function;
+	new_user_stack[USER_STACK_SIZE-3] = 0;
+
 
 	/*Preparar en el System Stack, el contexto de ejecucion
 	 *Estado de la pila sys:
@@ -380,7 +402,7 @@ KERNEL STACK SIZE ->
 	 */
 
 	//ESP(user)
-	//new_task_union->stack[KERNEL_STACK_SIZE-2] = (unsigned long)&user_stack[USER_STACK_SIZE -3];
+	new_task_union->stack[KERNEL_STACK_SIZE-2] = (unsigned long)&(new_user_stack[USER_STACK_SIZE -3]);
 	
 	//EIP
 	new_task_union->stack[KERNEL_STACK_SIZE-5] = (unsigned long)function_wrap;
@@ -401,6 +423,19 @@ void sys_threadExit(void)
 {
 	if((current()->PID == 1) && (current()->TID == 1)) sys_exit();
 	else {
+		int free = 1022 - (current()->user_stack >> 12);
+		free_frame(get_frame(get_PT(current()), (current()->user_stack >> 12)));
+		del_ss_pag(get_PT(current()), (current()->user_stack >> 12));
+		free_pages[free] = -1;
+		if(current()->heap_end_ptr == current()->user_stack){
+			//for per modificar tots els currents stacks a +1 page
+			struct list_head *pos;
+			list_for_each(pos, &(current()->threads_list)){
+				struct task_struct *ts = list_head_to_task_struct(pos);
+				ts->heap_end_ptr += PAGE_SIZE;
+			}
+		}
+		
 		struct list_head *head;
 		struct task_struct *thread_ts;
 		struct list_head *n;
@@ -489,13 +524,13 @@ int sys_get_stats(int pid, struct stats *st)
 
 int sys_semCreate(int initial_value)
 {
-	if (current()->v_sem == NULL) {
+	if (current()->v_sem_t == NULL) {
 		return -ENOMEM;
 	}
 
 	int i;
 	for (i = 0; i > SEM_T_VECTOR_SIZE; i++){
-		struct sem_t *c_sem = &(current()->v_sem[i]);
+		struct sem_t *c_sem = (current()->v_sem_t);
                 if(c_sem->id == -1){
                         c_sem->thread_owner = current()->TID;
                         c_sem->count = initial_value;
@@ -510,7 +545,7 @@ int sys_semCreate(int initial_value)
 int sys_semWait(int semid)
 {	
 	if (semid < 0 || semid >= SEM_T_VECTOR_SIZE) return -EINVAL;
-	struct sem_t *c_sem = &(current()->v_sem[semid]);
+	struct sem_t *c_sem = (current()->v_sem_t);
 
 	c_sem->count--;
 	if (c_sem->count < 0) {
@@ -524,7 +559,7 @@ int sys_semWait(int semid)
 int sys_semSignal(int semid)
 {
         if (semid < 0 || semid >= SEM_T_VECTOR_SIZE) return -EINVAL;
-	struct sem_t *c_sem = &(current()->v_sem[semid]);
+	struct sem_t *c_sem = (current()->v_sem_t);
  
  	c_sem->count++;
         if (c_sem->count <= 0) {
@@ -541,7 +576,7 @@ int sys_semSignal(int semid)
 int sys_semDestroy(int semid)
 {
 	if (semid < 0 || semid >= SEM_T_VECTOR_SIZE) return -EINVAL;
-	struct sem_t *c_sem = &(current()->v_sem[semid]);
+	struct sem_t *c_sem = (current()->v_sem_t);
 
 	if (c_sem->thread_owner != current()->TID) return -EACCES;	
 

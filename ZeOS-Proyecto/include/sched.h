@@ -44,9 +44,10 @@ struct task_struct {
   
   int TID; 
   int thread_quantum;
+  unsigned long *user_stack;
   int errno;
   
-  struct sem_t *v_sem; 
+  struct sem_t *v_sem_t; 
 };
 
 union task_union {
@@ -55,10 +56,7 @@ union task_union {
 };
 
 
-struct sem_t v_sem0[SEM_T_VECTOR_SIZE];
-struct sem_t v_sem1[SEM_T_VECTOR_SIZE];
-struct sem_t v_sem2[SEM_T_VECTOR_SIZE];
-struct sem_t v_sem3[SEM_T_VECTOR_SIZE];
+struct sem_t v_sem[NR_TASKS][SEM_T_VECTOR_SIZE];
 
 extern union task_union protected_tasks[NR_TASKS+2];
 extern union task_union *task; /* Vector de tasques */

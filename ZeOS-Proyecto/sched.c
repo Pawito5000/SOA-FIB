@@ -205,8 +205,12 @@ struct list_head *l = list_first(&freequeue);
   init_stats(&c->p_stats);
   
   /*Init de semaforos*/
-  c->v_sem = &v_sem0[0];
-  for(int i = 0; i < SEM_T_VECTOR_SIZE; i++) c->v_sem[i].id = -1;
+  for(int i = 0; i < NR_TASKS; i++){
+	 for(int j = 0; j < SEM_T_VECTOR_SIZE; j++){
+		 v_sem[i][j].id = -1;
+	 }
+  }
+  c->v_sem_t = &v_sem[0][0];
 
   /*Lista de threads*/
   INIT_LIST_HEAD(&(c->threads_list));
