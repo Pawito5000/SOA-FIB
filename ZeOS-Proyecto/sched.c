@@ -194,8 +194,8 @@ struct list_head *l = list_first(&freequeue);
   c->TID=1;
   
   c->total_quantum=DEFAULT_QUANTUM;
-  c->heap_srt_ptr = PAG_LOG_INIT_DATA * PAGE_SIZE + NUM_PAG_DATA * PAGE_SIZE;
-  c->heap_end_ptr = END_PT;
+  c->heap_srt_ptr = (char *)(PAG_LOG_INIT_DATA * PAGE_SIZE + NUM_PAG_DATA * PAGE_SIZE);
+  c->heap_end_ptr = (char *)END_PT;
   c->heap_pointer = c->heap_srt_ptr;
  
   c->state=ST_RUN;
@@ -220,6 +220,11 @@ struct list_head *l = list_first(&freequeue);
 
   set_user_pages(c);
 
+  int new_ph_pag=alloc_frame();
+  page_table_entry * sh_PT = get_PT(c);
+  set_ss_pag(sh_PT, 1023, new_ph_pag);
+  c->heap_end_ptr = (char *)(1023 << 12);
+  
   tss.esp0=(DWord)&(uc->stack[KERNEL_STACK_SIZE]);
   setMSR(0x175, 0, (unsigned long)&(uc->stack[KERNEL_STACK_SIZE]));
 
