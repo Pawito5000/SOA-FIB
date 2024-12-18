@@ -373,8 +373,8 @@ int sys_threadCreate(void (*function_wrap), void (*function)(void* arg), void* p
 			param
 	USER_STACK_SIZE->	
 	 * */
-	new_user_stack[USER_STACK_SIZE-1] = (unsigned long) &parameter;
-	new_user_stack[USER_STACK_SIZE-2] = (unsigned long) &function;
+	new_user_stack[USER_STACK_SIZE-1] = (unsigned long) parameter;
+	new_user_stack[USER_STACK_SIZE-2] = (unsigned long) function;
 	new_user_stack[USER_STACK_SIZE-3] = 0;
 
 
