@@ -60,6 +60,8 @@ int ret_from_fork()
   return 0;
 }
 
+int vec_index = 1;
+
 int sys_fork(void)
 {
   struct list_head *lhcurrent = NULL;
@@ -168,6 +170,11 @@ int sys_fork(void)
   *(DWord*)(uchild->task.register_esp)=(DWord)&ret_from_fork;
   uchild->task.register_esp-=sizeof(DWord);
   *(DWord*)(uchild->task.register_esp)=temp_ebp;
+
+  /* Set the sem_t vector*/
+  uchild->task.v_sem_t = &(v_sem[vec_index][0]);
+  ++vec_index;
+  
 
   /* Set stats to 0 */
   init_stats(&(uchild->task.p_stats));
@@ -300,7 +307,7 @@ int sys_SetColor(int color, int background)
 
 int global_TID=10000;
 
-int sys_threadCreate(void (*function_wrap), void (*function)(void* arg), void* parameter)
+int sys_threadCreate(void (*function_wrap)(void*, void*), void (*function)(void*), void* parameter)
 {
 	//Control de la rutina wrap
 	if (function_wrap == NULL) return -EFAULT;
@@ -409,15 +416,16 @@ KERNEL STACK SIZE ->
 	return 0;
 }
 
+//Avoid implicit declaration
 void sys_exit();
 
 void sys_threadExit(void)
 {
 	if((current()->PID == 1) && (current()->TID == 1)) sys_exit();
 	else {
-		int free = 1022 - (current()->user_stack >> 12);
-		free_frame(get_frame(get_PT(current()), (current()->user_stack >> 12)));
-		del_ss_pag(get_PT(current()), (current()->user_stack >> 12));
+		int free = 1022 - ((unsigned int)current()->user_stack >> 12);
+		free_frame(get_frame(get_PT(current()), ((unsigned int)current()->user_stack >> 12)));
+		del_ss_pag(get_PT(current()), ((unsigned int)current()->user_stack >> 12));
 		free_pages[free] = -1;
 		if(current()->heap_end_ptr == current()->user_stack){
 			//for per modificar tots els currents stacks a +1 page
@@ -516,21 +524,67 @@ int sys_get_stats(int pid, struct stats *st)
 
 int sys_semCreate(int initial_value)
 {
+	if (current()->v_sem_t == NULL) {
+		return -ENOMEM;
+	}
 
+	int i;
+	for (i = 0; i > SEM_T_VECTOR_SIZE; i++){
+		struct sem_t *c_sem = (current()->v_sem_t);
+                if(c_sem->id == -1){
+                        c_sem->thread_owner = current()->TID;
+                        c_sem->count = initial_value;
+                        INIT_LIST_HEAD(&(c_sem->blocked_queue));
+                        c_sem->id = i;
+                        return c_sem->id;
+		}
+	}
+	return -ENOSPC;
 }
 
 int sys_semWait(int semid)
-{
+{	
+	if (semid < 0 || semid >= SEM_T_VECTOR_SIZE) return -EINVAL;
+	struct sem_t *c_sem = (current()->v_sem_t);
 
+	c_sem->count--;
+	if (c_sem->count < 0) {
+		current()->state = ST_BLOCKED;
+		list_add_tail(&(current()->list),&(c_sem->blocked_queue));
+		sched_next_rr();	
+	}
+	return 0;
 }
 
 int sys_semSignal(int semid)
 {
+        if (semid < 0 || semid >= SEM_T_VECTOR_SIZE) return -EINVAL;
+	struct sem_t *c_sem = (current()->v_sem_t);
+ 
+ 	c_sem->count++;
+        if (c_sem->count <= 0) {
+		struct list_head *aux = list_first(&(c_sem->blocked_queue));
+		struct task_struct *ready_th = list_head_to_task_struct(aux);
+		list_del(&(ready_th->list));
 
+		current()->state = ST_READY;
+		list_add_tail(&(current()->list),&readyqueue);
+	}
+	return 0;
 }
 
 int sys_semDestroy(int semid)
 {
+	if (semid < 0 || semid >= SEM_T_VECTOR_SIZE) return -EINVAL;
+	struct sem_t *c_sem = (current()->v_sem_t);
 
+	if (c_sem->thread_owner != current()->TID) return -EACCES;	
+
+	c_sem->id = -1; // Única cosa 100% necesaria
+	//¿Qué hacer con la lista de bloqueados?
+	
+	c_sem->thread_owner = -1;	
+	c_sem->count = 0;
+	return 0;
 }
 

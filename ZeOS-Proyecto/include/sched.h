@@ -21,7 +21,9 @@ enum state_t { ST_RUN, ST_READY, ST_BLOCKED };
 struct sem_t {
   int id;
   int count;
-  struct list_head bloqued_queue;
+  struct list_head blocked_queue;
+
+  int thread_owner;
 };
 
 struct task_struct {
@@ -45,7 +47,7 @@ struct task_struct {
   unsigned long *user_stack;
   int errno;
   
-  struct sem_t v_sem[SEM_T_VECTOR_SIZE]; 
+  struct sem_t *v_sem_t; 
 };
 
 union task_union {
@@ -53,6 +55,8 @@ union task_union {
   unsigned long stack[KERNEL_STACK_SIZE];    /* pila de sistema, per procés */
 };
 
+
+struct sem_t v_sem[NR_TASKS][SEM_T_VECTOR_SIZE];
 
 extern union task_union protected_tasks[NR_TASKS+2];
 extern union task_union *task; /* Vector de tasques */
