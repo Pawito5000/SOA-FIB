@@ -117,6 +117,9 @@ char map[NUM_ROWS][NUM_COLUMNS] =
   { 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'},
 };
 
+int rand[2][100] = 
+{};
+
 char phantom[5][5] = {
 	{' ', 'O', 'O', 'O', ' '}, 
   {'O', ' ', ' ', ' ', 'O'}, 
@@ -145,8 +148,11 @@ typedef struct {
   int y;
 } pos;
 
+extern int gettime();
+
 int lose = 0;
 int num_coins = 0;
+int rand_index = 0;
 
 // left | right | up | down
 pos directions[] = {{-1,0},{1,0},{0,-1},{0,1}};
@@ -162,13 +168,24 @@ void print(char *msg)
 	if(msg != (void *) 0) write(1,msg,strlen(msg));
 }
 
+void wait(int ms)
+{
+  int init_time = gettime();
+  int curr_time = gettime();
+
+  while(1){
+    if (curr_time >= init_time+ms) return;
+    curr_time = gettime();
+  }
+}
+
 void clear_screen()
 {
 	gotoXY(0,0);
 	SetColor(2,0);
 	int i, j;
-	for (i = 0; i < 25; i++){	
-		for (j = 0; j < 80; j ++) { 
+	for (i = 0; i < NUM_ROWS; i++){	
+		for (j = 0; j < NUM_COLUMNS; j ++) { 
 			print(" ");
 		}		
 		print("\n");
@@ -180,8 +197,8 @@ void print_Screens(int opt) { /*1-SplashScreen // 2-Map // 3-LoseScreen*/
   gotoXY(0,0);
   char ch[2];
   int i, j;
-  for (i = 0; i < 25; i++){	
-		for (j = 0; j < 80; j ++) { 
+  for (i = 0; i < NUM_ROWS; i++){	
+		for (j = 0; j < NUM_COLUMNS; j ++) { 
       switch(opt){
         case 1:
           //SetColor();
@@ -210,7 +227,8 @@ void print_Screens(int opt) { /*1-SplashScreen // 2-Map // 3-LoseScreen*/
 	}
 }
 
-void init_pcm(){
+void init_pcm()
+{
   pcm = (Sprite *)sbrk(sizeof(Sprite));
 	pcm->x = 5;
 	pcm->y = 5;
@@ -220,7 +238,8 @@ void init_pcm(){
   pos_pcm.y = 2;
 }
 
-void init_phantoms(){
+void init_phantoms()
+{
   ph1 = (Sprite *)sbrk(sizeof(Sprite));
 	ph1->x = 5;
 	ph1->y = 5;
@@ -238,7 +257,8 @@ void init_phantoms(){
   pos_ph2.y = 3;
 }
 
-void init_coins(){
+void init_coins()
+{
   //SetColor(,0); Color amarillo
   //First coin
   c1 = (Sprite *)sbrk(sizeof(Sprite));
@@ -262,23 +282,105 @@ void init_coins(){
 	spritePut(3,70,c3);
 }
 
-int check_next_pos(int n_dir, int x, int y){
-  //Calculo nueva pos
-  n_x += directions[n_dir].x; 
-  n_y += directions[n_dir].y; 
-  //check_borders() 
-  if (check_borders()) return 0;
+void coin_clean(Sprite *coin)
+{
+  for(int i = coin->x; i < (coin->x + 3); i++){
+    for(int j = coin->y; j < (coin->y + 3); j++){
+      print(" ");
+    }
+    print("\n");
+  }
+
+}
+
+int check_ph_contact(Sprite *ph, int n_x, int n_y)
+{
+  for(int i = 0; i < 5; i++){
+    for(int j = 0; j < 5; j++){
+      if(n_x + i >= ph->x && n_x + i <= ph->x + 4 &&
+        n_y + i >= ph->x && n_y + i <= ph->y + 4) return 1;
+    }
+  }
+  return 0;
+}
+
+int check_coin_contact(Sprite *coin, int n_x, int n_y)
+{
+  if (n_x <= coin->x + 2 && n_x + 4 >= coin->x &&
+      n_y <= coin->y + 2 && n_y + 4 >= coin->y) {
+      //clear de la moneda
+      coin_clean(coin);
+      return 1;
+  }
+  return 0;  
+}
+
+int check_borders(int n_x, int n_y)
+{
+  //No pasarà nunca 
+  if (n_x < 0 || n_y < 0 || n_x + 4 >= NUM_ROWS || n_y + 4 >= NUM_ROWS) return 1;
+
+  for (int i = 0; i < 5; i++) {
+    if (map[n_x][n_y + i] == 'X' || map[n_x + 5][n_y + i] == 'X') return 1;
+    if (map[n_x + i][n_y] == 'X' || map[n_x + i][n_y + 5] == 'X') return 1;
+  }
+  return 0;
+}
+
+int check_next_pos(int n_dir, int x, int y)
+{
+  //Calculo nueva pos 
+  int n_x = x + directions[n_dir].x; 
+  int n_y = y + directions[n_dir].y; 
+  
+  if (check_borders(n_x, n_y)) return 0;
+
   //check phantom contact
-  if (check_ph1_contact() || check_ph2_contact()) {
+  if (check_ph_contact(ph1, n_x, n_y) || check_ph_contact(ph2, n_x, n_y)) {
     lose = 1;
     return 0;
   }
-  //check_c1_contact() { clear_coin(19,7); ++num_coins;
-  //check_c2_contact() clear_coin(19,47); ++num_coins;
-  //check_c3_contact() clear_coin(3,70); ++num_coins;
-  
-  //Si es correcto
+
+  //Check obtencion monedas
+  if(check_coin_contact(c1, n_x, n_y) || check_coin_contact(c2, n_x, n_y) || check_coin_contact(c3, n_x, n_y)) ++num_coins;  
+
+  //El movimiento es correcto
+  pos_pcm.x = n_x;
+  pos_pcm.y = n_y;
   return 1;
+}
+
+void ph_auto_move()
+{
+  //Habria que poner un wait aqui()
+
+  for (int i = 0; i < 2; i++){
+    int dir = rand[i][rand_index];
+    rand_index = (rand_index+1)%500;
+    
+    int n_x;
+    int n_y;
+
+    if(i == 0) {
+      n_x = pos_ph1.x + directions[dir].x; 
+      n_y = pos_ph1.y + directions[dir].y; 
+    }
+    else {
+      n_x = pos_ph2.x + directions[dir].x; 
+      n_y = pos_ph2.y + directions[dir].y; 
+    }
+     
+
+    if(!check_borders()){
+      if (i == 0) {
+        pos_ph1.x = n_x;
+        pos_ph1.y = n_y;
+      } else {
+        pos_ph2.x = n_x;
+        pos_ph2.y = n_y;
+      }
+    }
+  }
 }
 
 void init_game()
@@ -304,11 +406,38 @@ void init_game()
 int __attribute__ ((__section__(".text.main")))
   main(void)
 {
+  char key;
 	init_game();
 	
 	while(1) {
-		
+		if (getKey(&key) > 0){
+      switch (key){
+        case 'w':
+          check_next_pos(2,pos_pcm.x,pos_pcm.y);
+          break;
+        case 'a':
+          check_next_pos(0,pos_pcm.x,pos_pcm.y);
+          break;
+        case 's':
+          check_next_pos(3,pos_pcm.x,pos_pcm.y);
+          break;
+        case 'd':
+          check_next_pos(1,pos_pcm.x,pos_pcm.y);
+          break;
+        default:
+          break;
+      }
+    }
+
+    spritePut(pos_pcm.x,pos_pcm.y,pcm);
     
+    //Esto lo tendria que hacer un thread
+    ph_auto_move();
+
+    spritePut(pos_ph1.x,pos_ph1.y,ph1);
+    spritePut(pos_ph2.x,pos_ph2.y,ph1);
+
+    if (lose || num_coins == 3) break;
 	}
   if (lose) print_Screens(3);
   else print_Screens(4);
