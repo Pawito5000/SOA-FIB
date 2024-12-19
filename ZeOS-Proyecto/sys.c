@@ -363,7 +363,7 @@ int sys_threadCreate(void (*function_wrap)(void*, void*), void (*function)(void*
                         }
 		}
 		new_user_stack = (unsigned long *)logical_address;
-		new_task->user_stack = new_user_stack;
+		new_task->user_stack = &new_user_stack;
 		free_pages[free] = -1;	
 	} else return -ENOMEM;
 
@@ -418,7 +418,7 @@ KERNEL STACK SIZE ->
 	new_task_union->stack[KERNEL_STACK_SIZE-5] = (unsigned long)function_wrap;
 
 	//ESP(sys)
-	new_task->register_esp = (int) &new_task_union->stack[KERNEL_STACK_SIZE-18];
+	new_task->register_esp = (int) &(new_task_union->stack[KERNEL_STACK_SIZE-18]);
 	
 	/*Encolar el thread en la readyqueue*/
 	list_add_tail(&(new_task->list), &readyqueue);

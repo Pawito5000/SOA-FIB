@@ -137,15 +137,22 @@ ENTRY(thread_create_wrap)
 	
 	pushl %ebx
 	//habria que considerar si guardar %esi i %edi (pero nosotros no los modificamos)	
+	pushl %esi
+	pushl %edi
 
 	movl 0x8(%ebp), %ebx //void (*function)(void* arg)
 	movl 0xC(%ebp), %esi //void* parameter
-	
+
+	pushl %esi		
 	call *%ebx
+	popl %esi
 
 	//Terminar el thread llamando al exit
 	call threadExit
 	
+	popl %edi
+	popl %esi
+	popl %ebx
 	popl %ebp
 	ret
 

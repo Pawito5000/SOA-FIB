@@ -164,6 +164,7 @@ void print(char *msg)
 
 void clear_screen()
 {
+	print("aaaaaaa");
 	gotoXY(0,0);
 	SetColor(2,0);
 	int i, j;
