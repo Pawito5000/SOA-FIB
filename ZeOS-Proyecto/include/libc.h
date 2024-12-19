@@ -37,7 +37,7 @@ int gotoXY(int posX, int posY);
 
 int SetColor(int color, int background);
 
-int threadCreate(void (*function)(void* arg), void* parameter);
+int threadCreate(void (*function)(void*), void* parameter);
 
 void threadExit(void);
 

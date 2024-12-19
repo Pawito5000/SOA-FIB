@@ -40,7 +40,7 @@ struct task_struct {
   char *heap_pointer;
   
   struct list_head threads_list;
-  struct list_head *thread_process; //Puntero a list_head
+  struct list_head *threads_process; 
   
   int TID; 
   int thread_quantum;
@@ -56,7 +56,7 @@ union task_union {
 };
 
 
-struct sem_t v_sem[NR_TASKS][SEM_T_VECTOR_SIZE];
+extern struct sem_t v_sem[NR_TASKS][SEM_T_VECTOR_SIZE];
 
 extern union task_union protected_tasks[NR_TASKS+2];
 extern union task_union *task; /* Vector de tasques */

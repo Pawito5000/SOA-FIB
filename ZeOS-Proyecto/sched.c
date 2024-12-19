@@ -29,10 +29,13 @@ struct task_struct *list_head_to_task_struct(struct list_head *l)
 
 extern struct list_head blocked;
 
+struct sem_t v_sem[NR_TASKS][SEM_T_VECTOR_SIZE];
 // Free task structs
 struct list_head freequeue;
 // Ready queue
 struct list_head readyqueue;
+
+struct list_head threads_processes[NR_TASKS];
 
 void init_stats(struct stats *s)
 {
@@ -211,10 +214,13 @@ struct list_head *l = list_first(&freequeue);
 	 }
   }
   c->v_sem_t = &v_sem[0][0];
-
+  c->threads_process = &(threads_processes[0]);	
+  
+  
   /*Lista de threads*/
-  INIT_LIST_HEAD(&(c->threads_list));
-  list_add_tail(&(c->threads_list),c->thread_process);
+  INIT_LIST_HEAD(c->threads_process);
+  
+  list_add_tail(&(c->threads_list), c->threads_process);
 
   allocate_DIR(c);
 
@@ -223,6 +229,7 @@ struct list_head *l = list_first(&freequeue);
   int new_ph_pag=alloc_frame();
   page_table_entry * sh_PT = get_PT(c);
   set_ss_pag(sh_PT, 1023, new_ph_pag);
+  c->user_stack = (unsigned long *)(1023 << 12);
   c->heap_end_ptr = (char *)(1023 << 12);
   
   tss.esp0=(DWord)&(uc->stack[KERNEL_STACK_SIZE]);

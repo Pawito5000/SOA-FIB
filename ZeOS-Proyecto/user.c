@@ -263,7 +263,7 @@ void init_coins(){
 }
 
 int check_next_pos(int n_dir, int x, int y){
-  //Calculo nueva pos
+ /* //Calculo nueva pos
   n_x += directions[n_dir].x; 
   n_y += directions[n_dir].y; 
   //check_borders() 
@@ -276,7 +276,7 @@ int check_next_pos(int n_dir, int x, int y){
   //check_c1_contact() { clear_coin(19,7); ++num_coins;
   //check_c2_contact() clear_coin(19,47); ++num_coins;
   //check_c3_contact() clear_coin(3,70); ++num_coins;
-  
+  */
   //Si es correcto
   return 1;
 }
@@ -301,15 +301,17 @@ void init_game()
 }
 
 
+
+
 int __attribute__ ((__section__(".text.main")))
   main(void)
 {
-	init_game();
-	
+//	init_game();
+	threadCreate(clear_screen, NULL );	
 	while(1) {
 		
     
 	}
-  if (lose) print_Screens(3);
-  else print_Screens(4);
+//  if (lose) print_Screens(3);
+  //else print_Screens(4);
 }

@@ -351,7 +351,7 @@ int sys_threadCreate(void (*function_wrap)(void*, void*), void (*function)(void*
         	set_ss_pag(sh_PT, free_pages[free], new_ph_pag);
 		int logical_page = free_pages[free];  // Pàgina logica
 		char *logical_address = (char *)(logical_page << 12); 
-		
+	
 		if(current()->heap_end_ptr > logical_address) {
 			current()->heap_end_ptr = logical_address;
 			printk("\ns\n");
