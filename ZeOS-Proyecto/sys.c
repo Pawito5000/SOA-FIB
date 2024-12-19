@@ -363,7 +363,7 @@ int sys_threadCreate(void (*function_wrap)(void*, void*), void (*function)(void*
                         }
 		}
 		new_user_stack = (unsigned long *)logical_address;
-		new_task->user_stack = &new_user_stack;
+		new_task->user_stack = new_user_stack;
 		free_pages[free] = -1;	
 	} else return -ENOMEM;
 
@@ -390,9 +390,9 @@ int sys_threadCreate(void (*function_wrap)(void*, void*), void (*function)(void*
 			param
 	USER_STACK_SIZE->	
 	 * */
-	new_task->user_stack[USER_STACK_SIZE-1] = (unsigned long) parameter;
-	new_task->user_stack[USER_STACK_SIZE-2] = (unsigned long) function;
-	new_task->user_stack[USER_STACK_SIZE-3] = 0;
+	new_task->user_stack[1023] = (unsigned long) parameter;
+	new_task->user_stack[1022] = (unsigned long) function;
+	new_task->user_stack[1021] = 0;
 
 printk("chau");
 	/*Preparar en el System Stack, el contexto de ejecucion
@@ -412,18 +412,19 @@ KERNEL STACK SIZE ->
 	 */
 	
 	//ESP(user)
-	new_task_union->stack[KERNEL_STACK_SIZE-2] = (unsigned long)&(new_user_stack[USER_STACK_SIZE -3]);
+	new_task_union->stack[KERNEL_STACK_SIZE-2] = (unsigned long)&new_task->user_stack[1021];
 	
 	//EIP
 	new_task_union->stack[KERNEL_STACK_SIZE-5] = (unsigned long)function_wrap;
 
 	//ESP(sys)
-	new_task->register_esp = (int) &(new_task_union->stack[KERNEL_STACK_SIZE-18]);
+	new_task->register_esp = &new_task_union->stack[KERNEL_STACK_SIZE-18];
 	
 	/*Encolar el thread en la readyqueue*/
 	list_add_tail(&(new_task->list), &readyqueue);
 	printk("\nfi create");
 	return 0;
+
 }
 
 //Avoid implicit declaration
