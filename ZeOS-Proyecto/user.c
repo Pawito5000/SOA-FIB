@@ -181,6 +181,7 @@ void wait(int ms)
 
 void clear_screen()
 {
+	print("aaaaaaa");
 	gotoXY(0,0);
 	SetColor(2,0);
 	int i, j;
@@ -403,6 +404,8 @@ void init_game()
 }
 
 
+
+
 int __attribute__ ((__section__(".text.main")))
   main(void)
 {
@@ -439,6 +442,6 @@ int __attribute__ ((__section__(".text.main")))
 
     if (lose || num_coins == 3) break;
 	}
-  if (lose) print_Screens(3);
-  else print_Screens(4);
+//  if (lose) print_Screens(3);
+  //else print_Screens(4);
 }

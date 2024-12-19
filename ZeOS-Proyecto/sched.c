@@ -29,10 +29,13 @@ struct task_struct *list_head_to_task_struct(struct list_head *l)
 
 extern struct list_head blocked;
 
+struct sem_t v_sem[NR_TASKS][SEM_T_VECTOR_SIZE];
 // Free task structs
 struct list_head freequeue;
 // Ready queue
 struct list_head readyqueue;
+
+struct list_head threads_processes[NR_TASKS];
 
 void init_stats(struct stats *s)
 {
@@ -194,8 +197,8 @@ struct list_head *l = list_first(&freequeue);
   c->TID=1;
   
   c->total_quantum=DEFAULT_QUANTUM;
-  c->heap_srt_ptr = PAG_LOG_INIT_DATA * PAGE_SIZE + NUM_PAG_DATA * PAGE_SIZE;
-  c->heap_end_ptr = END_PT;
+  c->heap_srt_ptr = (char *)(PAG_LOG_INIT_DATA * PAGE_SIZE + NUM_PAG_DATA * PAGE_SIZE);
+  c->heap_end_ptr = (char *)END_PT;
   c->heap_pointer = c->heap_srt_ptr;
  
   c->state=ST_RUN;
@@ -211,15 +214,24 @@ struct list_head *l = list_first(&freequeue);
 	 }
   }
   c->v_sem_t = &v_sem[0][0];
-
+  c->threads_process = &(threads_processes[0]);	
+  
+  
   /*Lista de threads*/
-  INIT_LIST_HEAD(&(c->threads_list));
-  list_add_tail(&(c->threads_list),c->thread_process);
+  INIT_LIST_HEAD(c->threads_process);
+  
+  list_add_tail(&(c->threads_list), c->threads_process);
 
   allocate_DIR(c);
 
   set_user_pages(c);
 
+  int new_ph_pag=alloc_frame();
+  page_table_entry * sh_PT = get_PT(c);
+  set_ss_pag(sh_PT, 1023, new_ph_pag);
+  c->user_stack = (unsigned long *)(1023 << 12);
+  c->heap_end_ptr = (char *)(1023 << 12);
+  
   tss.esp0=(DWord)&(uc->stack[KERNEL_STACK_SIZE]);
   setMSR(0x175, 0, (unsigned long)&(uc->stack[KERNEL_STACK_SIZE]));
 
@@ -266,12 +278,12 @@ void inner_task_switch(union task_union *new)
   /* Update TSS and MSR to make it point to the new stack */
   tss.esp0=(int)&(new->stack[KERNEL_STACK_SIZE]);
   setMSR(0x175, 0, (unsigned long)&(new->stack[KERNEL_STACK_SIZE]));
-
+printk("\nhola");
   /* TLB flush. New address space */
   if (get_DIR(current()) != new_DIR) {
   	set_cr3(new_DIR);
   }
-
+printk("\nok");
   switch_stack(&current()->register_esp, new->task.register_esp);
 }
 
