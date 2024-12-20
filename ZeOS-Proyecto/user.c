@@ -236,7 +236,20 @@ void init_pcm()
 
 void init_phantoms()
 {
+  char buff[100];
+
   ph1 = (Sprite *)sbrk(sizeof(Sprite));
+  itoa(sizeof(Sprite), buff);
+  write(1, buff, strlen(buff));
+  write(1, ", ", 2);
+  itoa(ph1, buff);
+  write(1, buff, strlen(buff));
+
+  write(1, ", ", 2);
+
+  ph1 = (Sprite *)sbrk(0);
+  itoa(ph1, buff);
+  write(1, buff, strlen(buff));
 	ph1->x = 5;
 	ph1->y = 5;
 	ph1->content = (char *) phantom;

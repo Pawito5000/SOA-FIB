@@ -227,7 +227,7 @@ char *sys_sbrk(int size)
 	char *old_pointer = current()->heap_pointer;
 	if(size > 0) {
 		
-		char *new_heap_end = current()->heap_pointer + size;
+		char *new_heap_end = current()->heap_pointer + PAGE_SIZE;
 
         	// Comprovar si el nou final del heap excedeix el límit
         	if (new_heap_end > current()->heap_end_ptr) {
