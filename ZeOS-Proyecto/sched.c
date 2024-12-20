@@ -278,12 +278,10 @@ void inner_task_switch(union task_union *new)
   /* Update TSS and MSR to make it point to the new stack */
   tss.esp0=(int)&(new->stack[KERNEL_STACK_SIZE]);
   setMSR(0x175, 0, (unsigned long)&(new->stack[KERNEL_STACK_SIZE]));
-printk("\nhola");
   /* TLB flush. New address space */
   if (get_DIR(current()) != new_DIR) {
   	set_cr3(new_DIR);
   }
-printk("\nok");
   switch_stack(&current()->register_esp, new->task.register_esp);
 }
 
