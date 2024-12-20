@@ -372,7 +372,7 @@ void ph_auto_move()
     }
      
 
-    if(!check_borders()){
+    if(!check_borders(n_x,n_y)){
       if (i == 0) {
         pos_ph1.x = n_x;
         pos_ph1.y = n_y;
