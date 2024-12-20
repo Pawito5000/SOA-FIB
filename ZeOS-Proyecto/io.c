@@ -58,23 +58,13 @@ int read_circular_buff(char *b){
 }
 
 int draw_sprite(int posX, int posY, Sprite *sp){
-	if ((posX < 0) && (posX > NUM_COLUMNS) || (posY < 0) && (posY > NUM_ROWS)) {
-		printk("a");
-		return -EINVAL;
-	}
-	if ((posX + sp->x) > NUM_COLUMNS || (posY + sp->y) > NUM_ROWS) {
-		printk("b");
-		return -EINVAL;
-	}
-	/*if (!access_ok(VERIFY_READ, sp, sizeof(Sprite))) {
-		printk("c");
-		return -EINVAL;
-	}*/
+	if ((posX < 0) && (posX > NUM_COLUMNS) || (posY < 0) && (posY > NUM_ROWS)) return -EINVAL;
+	
+	if ((posX + sp->x) > NUM_COLUMNS || (posY + sp->y) > NUM_ROWS) return -EINVAL;
+	/*if (!access_ok(VERIFY_READ, sp, sizeof(Sprite))) return -EINVAL;*/
 
-	if (!access_ok(VERIFY_READ, sp->content, sizeof(sp->y * sp->x))) {
-		printk("d");
+	if (!access_ok(VERIFY_READ, sp->content, sizeof(sp->y * sp->x))) 
 		return -EINVAL;
-	}
 	for(int i = 0; i < sp->x; i++){
 		for(int j = 0; j < sp->y; j++){
 			printc_xy(posX+i, posY+j,sp->content[i*sp->y+j]);

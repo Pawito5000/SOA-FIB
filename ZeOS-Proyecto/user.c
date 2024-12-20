@@ -359,36 +359,63 @@ void init_game()
   //Init pcm
   init_pcm();
 }
+#include <libc.h>
 
+// ID del semáforo global
+int map_semaphore;
+
+// Función que maneja el movimiento de Pac-Man
+void pacman_thread(void* arg) {
+    char key;
+
+    while (!lose && num_coins != 3) {
+        if (getKey(&key) > 0) {
+            semWait(map_semaphore); // Bloquea el semáforo para sincronizar el acceso al mapa
+            switch (key) {
+                case 'w': check_next_pos(2, pos_pcm.x, pos_pcm.y); break; // Arriba
+                case 'a': check_next_pos(0, pos_pcm.x, pos_pcm.y); break; // Izquierda
+                case 's': check_next_pos(3, pos_pcm.x, pos_pcm.y); break; // Abajo
+                case 'd': check_next_pos(1, pos_pcm.x, pos_pcm.y); break; // Derecha
+                default: break;
+            }
+            semSignal(map_semaphore); // Libera el semáforo
+        }
+    }
+
+    threadExit(); // Finaliza el thread cuando termine la ejecución
+}
+
+// Función principal
 int __attribute__ ((__section__(".text.main")))
-  main(void)
-{
-  char key;
-	init_game();
+main(void) {
+    // Crear semáforo
+    map_semaphore = semCreate(1); // Inicializa el semáforo con valor 1
 
+    // Inicializar el juego
+    init_game();
 
-	while(!lose && num_coins!=3) {
-	if (getKey(&key) > 0){
-    		switch (key){
-        		case 'w': check_next_pos(2,pos_pcm.x,pos_pcm.y); break;
-        		case 'a': check_next_pos(0,pos_pcm.x,pos_pcm.y); break;
-        		case 's': check_next_pos(3,pos_pcm.x,pos_pcm.y); break;
-        		case 'd': check_next_pos(1,pos_pcm.x,pos_pcm.y); break;
-        		default: break;
-      		}
-    	}
-      SetColor(7,0);
-    	spritePut(pos_pcm.x,pos_pcm.y,pcm);    
-      SetColor(3,0);
-    	}
-  	if (lose) {
-      SetColor(4,0); 
-      print_Screens(3);
-    }
-  	else {
-      SetColor(2,0); 
-      print_Screens(4);
+    // Crear un thread para manejar Pac-Man
+    if (threadCreate(pacman_thread, NULL) < 0) {
+        perror(); // Imprimir error si la creación del thread falla
+        return -1;
     }
 
-  	return 0;
+    // Esperar a que el juego termine
+    while (!lose && num_coins != 3) {
+        yield(); // Permite que otros threads se ejecuten
+    }
+
+    // Mostrar el resultado
+    if (lose) {
+        SetColor(4, 0);
+        print_Screens(3); // Pantalla de derrota
+    } else {
+        SetColor(2, 0);
+        print_Screens(4); // Pantalla de victoria
+    }
+
+    // Destruir semáforo
+    semDestroy(map_semaphore);
+
+    return 0;
 }

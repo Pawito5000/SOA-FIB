@@ -226,24 +226,24 @@ char *sys_sbrk(int size)
 {
 	char *old_pointer = current()->heap_pointer;
 	if(size > 0) {
-	//	printk("\nini sbrk");	
+
 		char *new_heap_end = current()->heap_pointer + PAGE_SIZE;
 
         	// Comprovar si el nou final del heap excedeix el límit
         	if (new_heap_end > current()->heap_end_ptr) {
-          //  		printk("\nno mem");
+          
 				// No podem assignar més memòria del límit
             		return NULL;
         	}	
 		
 		int pages_needed = (size + PAGE_SIZE - 1) / PAGE_SIZE;
-	//	printk("\nini for");  
+
 		// Assignar les pàgines
         	for (int i = 0; i < pages_needed; ++i) {
-          //  		printk("\nalloc");  
+          
 			int new_ph_pag = alloc_frame();
             		if (new_ph_pag != -1) {
-	//		printk("\nspace");
+	
                 	// Mapejar la pàgina al heap
                 		set_ss_pag(get_PT(current()), (unsigned int)(current()->heap_pointer)/PAGE_SIZE, new_ph_pag);
                 		current()->heap_pointer += PAGE_SIZE;
@@ -260,12 +260,12 @@ char *sys_sbrk(int size)
         	}
 		//Actualitzar el punter per totesels threads del process
 		struct list_head *pos;
-	//	printk("hi");
+
 		list_for_each(pos, current()->threads_process){
                         struct task_struct *ts = list_head_to_task_struct(pos);
                         ts->heap_pointer = current()->heap_pointer;
                 }
-	//	printk("hi");	
+
 		return old_pointer;
 	} else if (size == 0) {
 		return current()->heap_pointer;
@@ -313,7 +313,6 @@ int global_TID=10000;
 int sys_threadCreate(void (*function_wrap)(void*, void*), void (*function)(void*), void* parameter)
 {
 	//Control de la rutina wrap
-	printk("create");
 	if (function_wrap == NULL) return -EFAULT;
 
 	//Control de la funcion a ejecutar
@@ -344,10 +343,8 @@ int sys_threadCreate(void (*function_wrap)(void*, void*), void (*function)(void*
 	for(int i = 0; i < 10 && free == -1; ++i) {
 		if(free_pages[i] != -1) free = i;
 	}	
-	printk("\nini task");
 	unsigned long *new_user_stack;
 	if(free != -1){
-		printk("\ns");
 		//comprovar que no superisbrk
 		if(current()->heap_pointer >= (char *)(free_pages[free] << 12)) return -ENOMEM;
 		page_table_entry * sh_PT = get_PT(current());
@@ -357,7 +354,6 @@ int sys_threadCreate(void (*function_wrap)(void*, void*), void (*function)(void*
 		
 		if(current()->heap_end_ptr > logical_address) {
 			current()->heap_end_ptr = logical_address;
-			printk("\ns\n");
 			//for per tots els threads del process per actualitzar
 			struct list_head *pos;
                         list_for_each(pos, current()->threads_process){
@@ -378,12 +374,9 @@ int sys_threadCreate(void (*function_wrap)(void*, void*), void (*function)(void*
 	new_task->errno = 0;
 	
 	
-	printk("hi");
 	list_add_tail(&(new_task->threads_list), new_task->threads_process);
-	printk("\nencolat");
 	/* Set stats to 0 */
   	init_stats(&(new_task->p_stats));
-	printk("chau");	
 	/*Preparar User Stack
 	 *Estado de la pila usr:
 			@ret = 0
@@ -396,8 +389,6 @@ int sys_threadCreate(void (*function_wrap)(void*, void*), void (*function)(void*
 	new_task->user_stack[1023] = (unsigned long) parameter;
 	new_task->user_stack[1022] = (unsigned long) function;
 	new_task->user_stack[1021] = 0;
-
-printk("chau");
 	/*Preparar en el System Stack, el contexto de ejecucion
 	 *Estado de la pila sys:
 	 		%ebp
@@ -425,7 +416,6 @@ KERNEL STACK SIZE ->
 	
 	/*Encolar el thread en la readyqueue*/
 	list_add_tail(&(new_task->list), &readyqueue);
-	printk("\nfi create");
 	return 0;
 
 }
