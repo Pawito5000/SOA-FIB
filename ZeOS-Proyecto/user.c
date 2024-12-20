@@ -105,15 +105,15 @@ char map[NUM_ROWS][NUM_COLUMNS] =
   { 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', ' ', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X', ' ', 'X', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},
   { 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},
   { 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', ' ', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X', 'X', 'X', ' ', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},
-  { 'X', ' ', ' ', ' ', ' ', ' ', ' ', 'x', 'x', 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', ' ', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},
+  { 'X', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', ' ', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},
   { 'X', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', ' ', ' ', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},
   { 'X', 'L', ' ', ' ', ' ', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},
-  { 'X', ' ', ' ', ' ', ' ', ' ', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', 'X', 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},
-  { 'X', ' ', ' ', ' ', ' ', ' ', 'X', ' ', 'o', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'o', ' ', ' ', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', 'X', 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X'},
-  { 'X', ' ', ' ', ' ', ' ', ' ', 'X', 'o', ' ', 'o', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'o', ' ', 'o', ' ', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', 'X', 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X'},
-  { 'X', ' ', ' ', ' ', ' ', ' ', 'X', ' ', 'o', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'o', ' ', ' ', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', 'X', 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X'},
-  { 'X', 'X', ' ', ' ', ' ', ' ', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X', ' ', ' ', 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', 'X', 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X', 'X'},
-  { 'X', 'X', 'X', ' ', ' ', ' ', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X', ' ', 'x', 'x', 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X', ' ', ' ', ' ', 'X', 'X', 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X', 'X', 'X'},
+  { 'X', ' ', ' ', ' ', ' ', ' ', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},
+  { 'X', ' ', ' ', ' ', ' ', ' ', 'X', ' ', 'o', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'o', ' ', ' ', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X'},
+  { 'X', ' ', ' ', ' ', ' ', ' ', 'X', 'o', ' ', 'o', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'o', ' ', 'o', ' ', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X'},
+  { 'X', ' ', ' ', ' ', ' ', ' ', 'X', ' ', 'o', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'o', ' ', ' ', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X'},
+  { 'X', 'X', ' ', ' ', ' ', ' ', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X', ' ', ' ', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X', 'X'},
+  { 'X', 'X', 'X', ' ', ' ', ' ', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X', ' ', 'X', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X', ' ', ' ', ' ', 'X', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X', 'X', 'X'},
   { 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'},
 };
 
@@ -121,11 +121,11 @@ int rand[2][100] =
 {};
 
 char phantom[5][5] = {
-  {' ', 'O', 'O', 'O', 'O'}, 
-  {'O', '.', ' ', 'O', ' '}, 
-  {'O', '.', ' ', 'O', 'O'}, 
-  {'O', ' ', ' ', 'O', ' '}, 
-  {' ', 'O', 'O', 'O', 'O'},
+  {' ', '0', '0', '0', ' '}, 
+  {'0', ' ', ' ', ' ', '0'}, 
+  {'0', ' ', ' ', ' ', '0'}, 
+  {'0', '0', '0', '0', '0'}, 
+  {'0', ' ', '0', ' ', '0'},
 };
 
 char pacman[5][5] = { 
@@ -153,17 +153,22 @@ extern int gettime();
 int lose = 0;
 int num_coins = 0;
 int rand_index = 0;
+char key;
 
 // left | right | up | down
 pos directions[] = {{-1,0},{1,0},{0,-1},{0,1}};
 
 pos pos_pcm;
 
-pos pos_ph1, pos_ph2;
+pos pos_ph2;
+
+pos pos_ph1 = { .x = 2, .y = 3 };
 
 pos coin1, coin2, coin3;
 
 Sprite *pcm;
+
+int mapSemaphore;    // Protege el acceso al mapa
 
 void print(char *msg)
 {
@@ -199,6 +204,7 @@ void print_Screens(int opt) { /*1-SplashScreen // 2-Map // 3-LoseScreen*/
   gotoXY(0,0);
   char ch;
   int i, j;
+  semWait(mapSemaphore);
   for (i = 0; i < NUM_ROWS; i++){	
 		for (j = 0; j < NUM_COLUMNS-1; j ++) { 
       switch(opt){
@@ -223,6 +229,7 @@ void print_Screens(int opt) { /*1-SplashScreen // 2-Map // 3-LoseScreen*/
 		}		
 		write(1,"\n",1);
 	}
+  semSignal(mapSemaphore);
 }
 
 void init_pcm()
@@ -239,11 +246,13 @@ void init_pcm()
 
 void pacman_clean(int x, int y)
 {
+	semWait(mapSemaphore);
   for(int i = x; i < x+4; i++){
     for(int j = y; j < y+4; j++){
       map[j][i] = " ";
     }
   }
+  semSignal(mapSemaphore);
   print_Screens(2);
 }
 
@@ -260,46 +269,57 @@ void coin_clean(int c)
                 x = coin3.x;
                 y = coin3.y;
         }
-
+semWait(mapSemaphore);
   for(int i = x; i < x+3; i++){
     for(int j = y; j < y+3; j++){
       map[j][i] = " ";
     }
   }
+  semSignal(mapSemaphore);
   print_Screens(2);
 }
 
 int check_ph_contact(int n_x, int n_y)
 {
+	semWait(mapSemaphore);
+	int result = 0;
   for (int i = 0; i < 5; i++) {
-	  if (map[n_y + i][n_x] == '0' || map[n_y + i][n_x + 4] == '0') return 1;    
-    if (map[n_y][n_x + i] == '0' || map[n_y + 4][n_x + i] == '0') return 1;
+	  if (map[n_y + i][n_x] == '0' || map[n_y + i][n_x + 4] == '0') result = 1; break;    
+    if (map[n_y][n_x + i] == '0' || map[n_y + 4][n_x + i] == '0') result = 1; break;
   }
-  return 0;
+  semSignal(mapSemaphore);
+  return result;
 }
 
 int check_coin_contact(int n_x, int n_y)
 {
+	semWait(mapSemaphore);
+	int result = 0;
   for (int i = 0; i < 5; i++) {
-	 if (map[n_y + i][n_x] == 'o') return n_x;
-	 if (map[n_y + i][n_x + 4] == 'o') return n_x+4;
-	 if (map[n_y][n_x + i] == 'o') return n_x+i;
-	 if (map[n_y + 4][n_x + i] == 'o') return n_x+i;
+	 if (map[n_y + i][n_x] == 'o') result = n_x; break;
+	 if (map[n_y + i][n_x + 4] == 'o') result = n_x+4; break;
+	 if (map[n_y][n_x + i] == 'o') result = n_x+i; break;
+	 if (map[n_y + 4][n_x + i] == 'o') result = n_x+i; break;
   }
- 
-  return 0; 
+ semSignal(mapSemaphore);
+  return result; 
 }
 
 int check_borders(int n_x, int n_y)
 {
+
   //No pasarà nunca 
+  int result = 0;
   if (n_x < 0 || n_y < 0 || n_x + 4 >= NUM_COLUMNS || n_y + 4 >= NUM_ROWS) return 1;
+  semWait(mapSemaphore);
+
   
   for (int i = 0; i < 5; i++) {
-	  if (map[n_y + i][n_x] == 'X' || map[n_y + i][n_x + 4] == 'X') return 1;
-    if (map[n_y][n_x + i] == 'X' || map[n_y + 4][n_x + i] == 'X') return 1;
+	  if (map[n_y + i][n_x] == 'X' || map[n_y + i][n_x + 4] == 'X') result = 1; break;
+    if (map[n_y][n_x + i] == 'X' || map[n_y + 4][n_x + i] == 'X') result = 1; break;
   }
-  return 0;
+  semSignal(mapSemaphore);
+  return result;
 }
 
 int check_next_pos(int n_dir, int x, int y)
@@ -341,6 +361,7 @@ void init_game()
   //Clear screen
   clear_screen();
   wait(10);
+	mapSemaphore = semCreate(1);
 
   //Print splash screen
   print_Screens(1);
@@ -355,12 +376,14 @@ void init_game()
   coin3.y = 3;
   //Print map
   print_Screens(2);
-  
+  write(1, "hey", 3);
+  init_phantoms();
   //Init pcm
   init_pcm();
 }
-/*
+
 void playing(){
+//	init_game();
 	while(!lose && num_coins!=3) {
         if (getKey(&key) > 0){
                 switch (key){
@@ -373,13 +396,75 @@ void playing(){
         }
 	spritePut(pos_pcm.x,pos_pcm.y,pcm);
 	}
-}*/
+	/*if (lose) print_Screens(3);
+        else print_Screens(4);
+            semDestroy(mapSemaphore);
+*/
+}
 
+void phantomMove() {
+    /*pos* phantomPos = (pos*) phantomData;
+    if (!phantomData) {
+	   write(1,"Error", 5);
+
+    }*/
+	
+    pos phantomPos;
+    phantomPos.x = 2;
+    phantomPos.y = 3;
+    while (!lose) {
+        semWait(mapSemaphore);
+
+        int direction = 1 % 4;  // Dirección aleatoria.
+        int old_x = phantomPos.x;
+	int old_y = phantomPos.y;
+	int new_x = phantomPos.x + directions[direction].x;
+        int new_y = phantomPos.y + directions[direction].y;
+
+	char df[4];
+                                itoa(new_x, df);
+                                write(1, &df, strlen(df));
+        if (!check_borders(new_x, new_y)) {
+		for(int i = 0; i < 5; i++){
+           		for(int j = 0; j < 5; j++){
+				map[old_x+i][old_y+j] == ' ';
+				char d[4];
+				itoa(old_x+i,d);
+				write(1, &d, strlen(d));
+				write(1, "hi", 2);
+			}
+		}
+		print_Screens(2);
+		for(int i = 0; i < 5; i++){
+		    for(int j = 0; j < 5; j++){
+			if(phantom[i][j] == '0') map[new_x+i][new_y+j] = '0'; 
+		    }
+		}
+		print_Screens(2);
+
+
+	    
+		phantomPos.x = new_x;
+	    phantomPos.y = new_y;
+        }
+
+        semSignal(mapSemaphore);
+
+        wait(100);  // Espera antes del siguiente movimiento.
+    }
+}
+
+void init_phantoms() {
+	//pos_ph1.x = 2;
+	//pos_ph1.y = 3;
+    threadCreate(phantomMove, NULL);
+   // threadCreate(phantomMove, &pos_ph2);
+}
 
 int __attribute__ ((__section__(".text.main")))
   main(void)
 {
-  char key;
+  //char key;
 	init_game();
 
 //	threadCreate(playing, NULL);	
@@ -397,16 +482,18 @@ int __attribute__ ((__section__(".text.main")))
     	spritePut(pos_pcm.x,pos_pcm.y,pcm);    
 
     	}
+	while(1){
   	if (lose) print_Screens(3);
-  	else print_Screens(4);
-	/*while(1){
-		if (getKey(&key) > 0){
+  	else if(num_coins == 3)print_Screens(4);
+	    semDestroy(mapSemaphore);
+	}while(1){
+		if (lose && getKey(&key) > 0){
                 switch (key){
                         case 'r': check_next_pos(2,pos_pcm.x,pos_pcm.y); break;
                         default: break;
                 }
         	}
-	}*/
+	}
 
   	return 0;
 }

@@ -313,7 +313,7 @@ int global_TID=10000;
 int sys_threadCreate(void (*function_wrap)(void*, void*), void (*function)(void*), void* parameter)
 {
 	//Control de la rutina wrap
-	printk("create");
+	//printk("create");
 	if (function_wrap == NULL) return -EFAULT;
 
 	//Control de la funcion a ejecutar
@@ -344,10 +344,10 @@ int sys_threadCreate(void (*function_wrap)(void*, void*), void (*function)(void*
 	for(int i = 0; i < 10 && free == -1; ++i) {
 		if(free_pages[i] != -1) free = i;
 	}	
-	printk("\nini task");
+	//printk("\nini task");
 	unsigned long *new_user_stack;
 	if(free != -1){
-		printk("\ns");
+		//printk("\ns");
 		//comprovar que no superisbrk
 		if(current()->heap_pointer >= (char *)(free_pages[free] << 12)) return -ENOMEM;
 		page_table_entry * sh_PT = get_PT(current());
@@ -357,7 +357,7 @@ int sys_threadCreate(void (*function_wrap)(void*, void*), void (*function)(void*
 		
 		if(current()->heap_end_ptr > logical_address) {
 			current()->heap_end_ptr = logical_address;
-			printk("\ns\n");
+			//printk("\ns\n");
 			//for per tots els threads del process per actualitzar
 			struct list_head *pos;
                         list_for_each(pos, current()->threads_process){
@@ -378,12 +378,12 @@ int sys_threadCreate(void (*function_wrap)(void*, void*), void (*function)(void*
 	new_task->errno = 0;
 	
 	
-	printk("hi");
+	//printk("hi");
 	list_add_tail(&(new_task->threads_list), new_task->threads_process);
-	printk("\nencolat");
+	//printk("\nencolat");
 	/* Set stats to 0 */
   	init_stats(&(new_task->p_stats));
-	printk("chau");	
+	//printk("chau");	
 	/*Preparar User Stack
 	 *Estado de la pila usr:
 			@ret = 0
@@ -397,7 +397,7 @@ int sys_threadCreate(void (*function_wrap)(void*, void*), void (*function)(void*
 	new_task->user_stack[1022] = (unsigned long) function;
 	new_task->user_stack[1021] = 0;
 
-printk("chau");
+//printk("chau");
 	/*Preparar en el System Stack, el contexto de ejecucion
 	 *Estado de la pila sys:
 	 		%ebp
@@ -425,7 +425,7 @@ KERNEL STACK SIZE ->
 	
 	/*Encolar el thread en la readyqueue*/
 	list_add_tail(&(new_task->list), &readyqueue);
-	printk("\nfi create");
+	//printk("\nfi create");
 	return 0;
 
 }
