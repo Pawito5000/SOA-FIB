@@ -121,19 +121,19 @@ int rand[2][100] =
 {};
 
 char phantom[5][5] = {
-	{' ', 'O', 'O', 'O', ' '}, 
-  {'O', ' ', ' ', ' ', 'O'}, 
-  {'O', ' ', 'O', ' ', 'O'}, 
-  {'O', 'O', 'O', 'O', 'O'}, 
-  {'O', ' ', 'O', ' ', 'O'},
+  {' ', 'O', 'O', 'O', 'O'}, 
+  {'O', '.', ' ', 'O', ' '}, 
+  {'O', '.', ' ', 'O', 'O'}, 
+  {'O', ' ', ' ', 'O', ' '}, 
+  {' ', 'O', 'O', 'O', 'O'},
 };
 
 char pacman[5][5] = { 
-  {' ', 'O', 'O', 'O', '0'}, 
-  {'O', ' ', ' ', 'O', ' '}, 
-  {'O', ' ', '0', ' ', ' '}, 
-  {'O', ' ', ' ', 'O', ' '}, 
-  {' ', 'O', 'O', 'O', '0'} 
+  {' ', 'O', ' ', ' ', 'O'}, 
+  {' ', 'O', ' ', 'O', ' '}, 
+  {'0', 'O', 'O', ' ', ' '}, 
+  {' ', 'O', ' ', 'O', ' '}, 
+  {' ', 'O', ' ', ' ', 'O'} 
 }; 
 
 char coin[3][3] = {
@@ -162,7 +162,7 @@ pos pos_pcm;
 pos pos_ph1, pos_ph2;
  
 Sprite *pcm, *ph1, *ph2, *c1, *c2, *c3;
-
+//char *ph1, *ph2;
 void print(char *msg)
 {
 	if(msg != (void *) 0) write(1,msg,strlen(msg));
@@ -238,29 +238,46 @@ void init_phantoms()
 {
   char buff[100];
 
-  ph1 = (Sprite *)sbrk(sizeof(Sprite));
-  itoa(sizeof(Sprite), buff);
-  write(1, buff, strlen(buff));
-  write(1, ", ", 2);
-  itoa(ph1, buff);
-  write(1, buff, strlen(buff));
+  ph1 = (char *)sbrk(sizeof(Sprite));
+  //itoa(sizeof(Sprite), buff);
+ // write(1, buff, strlen(buff));
+ // write(1, ", ", 2);
+//  itoa(ph1, buff);
+ // write(1, buff, strlen(buff));
 
-  write(1, ", ", 2);
-
-  ph1 = (Sprite *)sbrk(0);
-  itoa(ph1, buff);
-  write(1, buff, strlen(buff));
-	ph1->x = 5;
-	ph1->y = 5;
-	ph1->content = (char *) phantom;
+  //write(1, ", ", 2);
+ph1->x = 5;
+        ph1->y = 5;
+        ph1->content = (char *) phantom;
+  //ph1 = (Sprite *)sbrk(0);
+  //itoa(ph1, buff);
+  //write(1, buff, strlen(buff));
+	//ph1->x = 5;
+	//ph1->y = 5;
+	//ph1->content = (char *) phantom;
 
   pos_ph1.x = 2;
   pos_ph1.y = 3;
+//	write(1, "xd", 2);
+  ph2 = (char *)sbrk(sizeof(Sprite));
+ // itoa(sizeof(Sprite), buff);
+ // write(1, buff, strlen(buff));
+ // write(1, ", ", 2);
+  //itoa(ph2, buff);
+  //write(1, buff, strlen(buff));
 
-  ph2 = (Sprite *)sbrk(sizeof(Sprite));
-	ph2->x = 5;
-	ph2->y = 5;
-	ph2->content = (char *) phantom;
+  //write(1, ", ", 2);
+ph2->x = 5;
+        ph2->y = 5;
+        ph2->content = (char *) phantom;
+
+  //ph2 = (Sprite *)sbrk(0);
+ // itoa(ph2, buff);
+ // write(1, buff, strlen(buff));
+
+//  ph2->x = 5;
+//	ph2->y = 5;
+//	ph2->content = (char *) phantom;
 
   pos_ph2.x = 62;
   pos_ph2.y = 3;
@@ -282,15 +299,6 @@ void init_coins()
   //Third coin
 	spritePut(70,3,c1);
 
-  pcm = (Sprite *)sbrk(sizeof(Sprite));
-	pcm->x = 5;
-	pcm->y = 5;
-	pcm->content = (char *) pacman;
-
-  pos_pcm.x = 17;
-  pos_pcm.y = 2;
-
-  spritePut(2,17,pcm);
 }
 
 void coin_clean(Sprite *coin)
@@ -469,10 +477,10 @@ int __attribute__ ((__section__(".text.main")))
     }
 
     //debug_positions();
-    spritePut(2,17,pcm);
+    spritePut(1,17,pcm);
 
     spritePut(pos_ph1.y,pos_ph1.x,ph1);
-    spritePut(pos_ph2.y,pos_ph2.x,ph2);
+    spritePut(pos_ph2.x,pos_ph2.y,ph2);
     
     //Esto lo tendria que hacer un thread
     //ph_auto_move();

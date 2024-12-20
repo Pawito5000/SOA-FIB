@@ -226,23 +226,24 @@ char *sys_sbrk(int size)
 {
 	char *old_pointer = current()->heap_pointer;
 	if(size > 0) {
-		
+	//	printk("\nini sbrk");	
 		char *new_heap_end = current()->heap_pointer + PAGE_SIZE;
 
         	// Comprovar si el nou final del heap excedeix el límit
         	if (new_heap_end > current()->heap_end_ptr) {
-            		// No podem assignar més memòria del límit
+          //  		printk("\nno mem");
+				// No podem assignar més memòria del límit
             		return NULL;
         	}	
 		
 		int pages_needed = (size + PAGE_SIZE - 1) / PAGE_SIZE;
-		
+	//	printk("\nini for");  
 		// Assignar les pàgines
         	for (int i = 0; i < pages_needed; ++i) {
-            		
+          //  		printk("\nalloc");  
 			int new_ph_pag = alloc_frame();
             		if (new_ph_pag != -1) {
-			
+	//		printk("\nspace");
                 	// Mapejar la pàgina al heap
                 		set_ss_pag(get_PT(current()), (unsigned int)(current()->heap_pointer)/PAGE_SIZE, new_ph_pag);
                 		current()->heap_pointer += PAGE_SIZE;
@@ -259,10 +260,12 @@ char *sys_sbrk(int size)
         	}
 		//Actualitzar el punter per totesels threads del process
 		struct list_head *pos;
+	//	printk("hi");
 		list_for_each(pos, current()->threads_process){
                         struct task_struct *ts = list_head_to_task_struct(pos);
                         ts->heap_pointer = current()->heap_pointer;
-                }	
+                }
+	//	printk("hi");	
 		return old_pointer;
 	} else if (size == 0) {
 		return current()->heap_pointer;
