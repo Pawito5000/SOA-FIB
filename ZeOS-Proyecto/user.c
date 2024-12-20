@@ -136,6 +136,14 @@ char pacman[5][5] = {
   {' ', 'O', ' ', ' ', 'O'} 
 }; 
 
+char clean[5][5] = { 
+  {' ', ' ', ' ', ' ', ' '}, 
+  {' ', ' ', ' ', ' ', ' '}, 
+  {' ', ' ', ' ', ' ', ' '}, 
+  {' ', ' ', ' ', ' ', ' '}, 
+  {' ', ' ', ' ', ' ', ' '} 
+}; 
+
 char coin[3][3] = {
   {' ', 'O', ' '}, 
   {'O', ' ', '0'}, 
@@ -163,7 +171,7 @@ pos pos_ph1, pos_ph2;
 
 pos coin1, coin2, coin3;
 
-Sprite *pcm;
+Sprite *pcm, *cln;
 
 void print(char *msg)
 {
@@ -232,19 +240,22 @@ void init_pcm()
 	pcm->y = 5;
 	pcm->content = (char *) pacman;
 
+  cln = (Sprite *)sbrk(sizeof(Sprite));
+	cln->x = 5;
+	cln->y = 5;
+	cln->content = (char *) clean;
+
   pos_pcm.x = 1;
   pos_pcm.y = 17;
+  SetColor(7, 0);
+  spritePut(pos_pcm.x, pos_pcm.y, pcm);
 }
 
 
 void pacman_clean(int x, int y)
 {
-  for(int i = x; i < x+4; i++){
-    for(int j = y; j < y+4; j++){
-      map[j][i] = " ";
-    }
-  }
-  print_Screens(2);
+  spritePut(x,y,cln);
+   
 }
 
 void coin_clean(int c)
@@ -359,50 +370,54 @@ void init_game()
   //Init pcm
   init_pcm();
 }
-#include <libc.h>
 
 // ID del semáforo global
 int map_semaphore;
+char key;
 
-// Función que maneja el movimiento de Pac-Man
 void pacman_thread(void* arg) {
-    char key;
-
     while (!lose && num_coins != 3) {
         if (getKey(&key) > 0) {
-            semWait(map_semaphore); // Bloquea el semáforo para sincronizar el acceso al mapa
+            semWait(map_semaphore); // Bloquea el acceso al mapa
+            int moved = 0;
             switch (key) {
-                case 'w': check_next_pos(2, pos_pcm.x, pos_pcm.y); break; // Arriba
-                case 'a': check_next_pos(0, pos_pcm.x, pos_pcm.y); break; // Izquierda
-                case 's': check_next_pos(3, pos_pcm.x, pos_pcm.y); break; // Abajo
-                case 'd': check_next_pos(1, pos_pcm.x, pos_pcm.y); break; // Derecha
+                case 'w': moved = check_next_pos(2, pos_pcm.x, pos_pcm.y); break; // Arriba
+                case 'a': moved = check_next_pos(0, pos_pcm.x, pos_pcm.y); break; // Izquierda
+                case 's': moved = check_next_pos(3, pos_pcm.x, pos_pcm.y); break; // Abajo
+                case 'd': moved = check_next_pos(1, pos_pcm.x, pos_pcm.y); break; // Derecha
                 default: break;
             }
-            semSignal(map_semaphore); // Libera el semáforo
+
+            if (moved) {
+                SetColor(7, 0);
+                spritePut(pos_pcm.x, pos_pcm.y, pcm);
+            }
+
+            semSignal(map_semaphore); // Libera el acceso al mapa
         }
+        yield(); // Permite que otros threads se ejecuten
     }
 
-    threadExit(); // Finaliza el thread cuando termine la ejecución
 }
 
 // Función principal
 int __attribute__ ((__section__(".text.main")))
 main(void) {
     // Crear semáforo
-    map_semaphore = semCreate(1); // Inicializa el semáforo con valor 1
+    map_semaphore = semCreate(1);
 
     // Inicializar el juego
     init_game();
 
-    // Crear un thread para manejar Pac-Man
+    // Crear thread para Pac-Man
     if (threadCreate(pacman_thread, NULL) < 0) {
-        perror(); // Imprimir error si la creación del thread falla
+        perror();
         return -1;
     }
 
     // Esperar a que el juego termine
     while (!lose && num_coins != 3) {
-        yield(); // Permite que otros threads se ejecuten
+        yield(); // Da control a otros threads
     }
 
     // Mostrar el resultado
@@ -419,3 +434,4 @@ main(void) {
 
     return 0;
 }
+
