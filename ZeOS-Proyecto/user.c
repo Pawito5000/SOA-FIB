@@ -168,20 +168,19 @@ void print(char *msg)
 	if(msg != (void *) 0) write(1,msg,strlen(msg));
 }
 
-void wait(int ms)
+void wait(int sec)
 {
   int init_time = gettime();
   int curr_time = gettime();
 
   while(1){
-    if (curr_time >= init_time+ms) return;
+    if (curr_time >= init_time+sec*18) return;
     curr_time = gettime();
   }
 }
 
 void clear_screen()
 {
-	print("aaaaaaa");
 	gotoXY(0,0);
 	SetColor(2,0);
 	int i, j;
@@ -196,35 +195,31 @@ void clear_screen()
 
 void print_Screens(int opt) { /*1-SplashScreen // 2-Map // 3-LoseScreen*/
   gotoXY(0,0);
-  char ch[2];
+  char ch;
   int i, j;
   for (i = 0; i < NUM_ROWS; i++){	
-		for (j = 0; j < NUM_COLUMNS; j ++) { 
+		for (j = 0; j < NUM_COLUMNS-1; j ++) { 
       switch(opt){
         case 1:
           //SetColor();
-          ch[0] = splashScreen[i][j];
-          ch[1] = '\0';
+          ch = splashScreen[i][j];
           break;
         case 2:
           //SetColor();
-          ch[0] = map[i][j];
-          ch[1] = '\0';
+          ch = map[i][j];
           break;
         case 3:
           //SetColor();
-          ch[0] = loseScreen[i][j];
-          ch[1] = '\0';
+          ch = loseScreen[i][j];
           break;
         case 4:
           //SetColor();
-          ch[0] = winScreen[i][j];
-          ch[1] = '\0';
+          ch = winScreen[i][j];
           break;  
       }
-			print(ch);
+			write(1,&ch,1);
 		}		
-		print("\n");
+		write(1,"\n",1);
 	}
 }
 
@@ -244,7 +239,7 @@ void init_phantoms()
   ph1 = (Sprite *)sbrk(sizeof(Sprite));
 	ph1->x = 5;
 	ph1->y = 5;
-	ph1->content = (char *) ph1;
+	ph1->content = (char *) phantom;
 
   pos_ph1.x = 2;
   pos_ph1.y = 3;
@@ -252,7 +247,7 @@ void init_phantoms()
   ph2 = (Sprite *)sbrk(sizeof(Sprite));
 	ph2->x = 5;
 	ph2->y = 5;
-	ph2->content = (char *) ph2;
+	ph2->content = (char *) phantom;
 
   pos_ph2.x = 62;
   pos_ph2.y = 3;
@@ -266,21 +261,23 @@ void init_coins()
 	c1->x = 3;
 	c1->y = 3;
 	c1->content = (char *) coin;
-	spritePut(19,7,c1);
+	spritePut(7,19,c1);
   
   //Second coin
-  Sprite *c2 = (Sprite *)sbrk(sizeof(Sprite));
-	c1->x = 3;
-	c1->y = 3;
-	c1->content = (char *) coin;
-	spritePut(19,47,c2);
+	spritePut(47,19,c1);
   
   //Third coin
-  Sprite *c3 = (Sprite *)sbrk(sizeof(Sprite));
-	c1->x = 3;
-	c1->y = 3;
-	c1->content = (char *) coin;
-	spritePut(3,70,c3);
+	spritePut(70,3,c1);
+
+  pcm = (Sprite *)sbrk(sizeof(Sprite));
+	pcm->x = 5;
+	pcm->y = 5;
+	pcm->content = (char *) pacman;
+
+  pos_pcm.x = 17;
+  pos_pcm.y = 2;
+
+  spritePut(2,17,pcm);
 }
 
 void coin_clean(Sprite *coin)
@@ -345,6 +342,8 @@ int check_next_pos(int n_dir, int x, int y)
   //Check obtencion monedas
   if(check_coin_contact(c1, n_x, n_y) || check_coin_contact(c2, n_x, n_y) || check_coin_contact(c3, n_x, n_y)) ++num_coins;  
 
+  //Habria que borrar el sprite ante de cambiar la pos
+
   //El movimiento es correcto
   pos_pcm.x = n_x;
   pos_pcm.y = n_y;
@@ -388,9 +387,12 @@ void init_game()
 {
   //Clear screen
   clear_screen();
+  wait(10);
 
   //Print splash screen
   print_Screens(1);
+  wait(20);
+  clear_screen();
 
   //Print map
   print_Screens(2);
@@ -404,6 +406,36 @@ void init_game()
 }
 
 
+void debug_positions() {
+    char buffer[100]; // Buffer para las salidas
+
+    // Depura la posición de Pacman
+    write(1, "Pacman: (", 9);
+    itoa(pos_pcm.x, buffer); // Convierte `pos_pcm.x` a cadena
+    write(1, buffer, strlen(buffer));
+    write(1, ", ", 2);
+    itoa(pos_pcm.y, buffer); // Convierte `pos_pcm.y` a cadena
+    write(1, buffer, strlen(buffer));
+    write(1, ")\n", 2);
+
+    // Depura la posición del fantasma 1
+    write(1, "Phantom1: (", 11);
+    itoa(pos_ph1.x, buffer); // Convierte `pos_ph1.x` a cadena
+    write(1, buffer, strlen(buffer));
+    write(1, ", ", 2);
+    itoa(pos_ph1.y, buffer); // Convierte `pos_ph1.y` a cadena
+    write(1, buffer, strlen(buffer));
+    write(1, ")\n", 2);
+
+    // Depura la posición del fantasma 2
+    write(1, "Phantom2: (", 11);
+    itoa(pos_ph2.x, buffer); // Convierte `pos_ph2.x` a cadena
+    write(1, buffer, strlen(buffer));
+    write(1, ", ", 2);
+    itoa(pos_ph2.y, buffer); // Convierte `pos_ph2.y` a cadena
+    write(1, buffer, strlen(buffer));
+    write(1, ")\n", 2);
+}
 
 
 int __attribute__ ((__section__(".text.main")))
@@ -415,33 +447,26 @@ int __attribute__ ((__section__(".text.main")))
 	while(1) {
 		if (getKey(&key) > 0){
       switch (key){
-        case 'w':
-          check_next_pos(2,pos_pcm.x,pos_pcm.y);
-          break;
-        case 'a':
-          check_next_pos(0,pos_pcm.x,pos_pcm.y);
-          break;
-        case 's':
-          check_next_pos(3,pos_pcm.x,pos_pcm.y);
-          break;
-        case 'd':
-          check_next_pos(1,pos_pcm.x,pos_pcm.y);
-          break;
-        default:
-          break;
+        case 'w': check_next_pos(2,pos_pcm.x,pos_pcm.y); break;
+        case 'a': check_next_pos(0,pos_pcm.x,pos_pcm.y); break;
+        case 's': check_next_pos(3,pos_pcm.x,pos_pcm.y); break;
+        case 'd': check_next_pos(1,pos_pcm.x,pos_pcm.y); break;
+        default: break;
       }
     }
 
-    spritePut(pos_pcm.x,pos_pcm.y,pcm);
+    //debug_positions();
+    spritePut(2,17,pcm);
+
+    spritePut(pos_ph1.y,pos_ph1.x,ph1);
+    spritePut(pos_ph2.y,pos_ph2.x,ph2);
     
     //Esto lo tendria que hacer un thread
-    ph_auto_move();
-
-    spritePut(pos_ph1.x,pos_ph1.y,ph1);
-    spritePut(pos_ph2.x,pos_ph2.y,ph1);
+    //ph_auto_move();
 
     if (lose || num_coins == 3) break;
 	}
-//  if (lose) print_Screens(3);
-  //else print_Screens(4);
+  if (lose) print_Screens(3);
+  else print_Screens(4);
+  return 0;
 }
