@@ -230,8 +230,8 @@ void init_pcm()
 	pcm->y = 5;
 	pcm->content = (char *) pacman;
 
-  pos_pcm.x = 17;
-  pos_pcm.y = 2;
+  pos_pcm.x = 1;
+  pos_pcm.y = 17;
 }
 
 void init_phantoms()
@@ -256,8 +256,8 @@ ph1->x = 5;
 	//ph1->y = 5;
 	//ph1->content = (char *) phantom;
 
-  pos_ph1.x = 2;
-  pos_ph1.y = 3;
+  pos_ph1.x = 3;
+  pos_ph1.y = 2;
 //	write(1, "xd", 2);
   ph2 = (char *)sbrk(sizeof(Sprite));
  // itoa(sizeof(Sprite), buff);
@@ -315,10 +315,12 @@ void coin_clean(Sprite *coin)
 int check_ph_contact(Sprite *ph, int n_x, int n_y)
 {
   for(int i = 0; i < 5; i++){
-    for(int j = 0; j < 5; j++){
-      if(n_x + i >= ph->x && n_x + i <= ph->x + 4 &&
-        n_y + i >= ph->x && n_y + i <= ph->y + 4) return 1;
-    }
+
+
+      if(n_x + i >= pos_ph1.x && n_x + i <= pos_ph1.x + 4 &&
+        n_y + i >= pos_ph1.y && n_y + i <= pos_ph1.y + 4) return 1;
+      if(n_x + i >= pos_ph2.x && n_x + i <= pos_ph2.x + 4 &&
+        n_y + i >= pos_ph2.y && n_y + i <= pos_ph2.y + 4) return 1;
   }
   return 0;
 }
@@ -337,12 +339,28 @@ int check_coin_contact(Sprite *coin, int n_x, int n_y)
 int check_borders(int n_x, int n_y)
 {
   //No pasarà nunca 
-  if (n_x < 0 || n_y < 0 || n_x + 4 >= NUM_ROWS || n_y + 4 >= NUM_ROWS) return 1;
-
-  for (int i = 0; i < 5; i++) {
-    if (map[n_x][n_y + i] == 'X' || map[n_x + 5][n_y + i] == 'X') return 1;
-    if (map[n_x + i][n_y] == 'X' || map[n_x + i][n_y + 5] == 'X') return 1;
+  if (n_x < 0 || n_y < 0 || n_x + 4 >= NUM_COLUMNS || n_y + 4 >= NUM_ROWS) {
+	  write(1, "aqui", 4);
+	  return 1;
   }
+  for (int i = 0; i < 5; i++) {
+    char b[4];
+	  itoa(i, b);
+    write(1, b, strlen(b));
+	  if (map[n_y + i][n_x] == 'X' || map[n_y + i][n_x + 4] == 'X') {
+	    //char b[4];
+	    itoa(i, b); 
+	    write(1, b, strlen(b)); 
+	    itoa(n_y, b);
+            write(1, b, strlen(b));
+	    itoa(n_x, b);
+            write(1, b, strlen(b));
+
+	    return 1;
+    }
+    if (map[n_y][n_x + i] == 'X' || map[n_y + 4][n_x + i] == 'X') return 1;
+  }
+  write(1, "yeah", 4);
   return 0;
 }
 
@@ -350,24 +368,36 @@ int check_next_pos(int n_dir, int x, int y)
 {
   //Calculo nueva pos 
   int n_x = x + directions[n_dir].x; 
+  char bf[4];
+  itoa(n_x, bf);
+  write(1, bf, strlen(bf));
   int n_y = y + directions[n_dir].y; 
   
-  if (check_borders(n_x, n_y)) return 0;
+  itoa(n_y, bf);
+  write(1, bf, strlen(bf));
 
+  if (check_borders(n_x, n_y)) {
+	  write(1, "mal", 3);
+	  return 0;
+  }
   //check phantom contact
   if (check_ph_contact(ph1, n_x, n_y) || check_ph_contact(ph2, n_x, n_y)) {
     lose = 1;
+    write(1, "no:(", 4);
     return 0;
   }
 
   //Check obtencion monedas
-  if(check_coin_contact(c1, n_x, n_y) || check_coin_contact(c2, n_x, n_y) || check_coin_contact(c3, n_x, n_y)) ++num_coins;  
-
+  if(check_coin_contact(c1, n_x, n_y) || check_coin_contact(c2, n_x, n_y) || check_coin_contact(c3, n_x, n_y)) {
+	  ++num_coins;  
+	  write(1, "what", 4);
+  }
   //Habria que borrar el sprite ante de cambiar la pos
 
   //El movimiento es correcto
   pos_pcm.x = n_x;
   pos_pcm.y = n_y;
+  write(1, "e", 1);
   return 1;
 }
 
@@ -466,28 +496,27 @@ int __attribute__ ((__section__(".text.main")))
 	init_game();
 	
 	while(1) {
-		if (getKey(&key) > 0){
-      switch (key){
-        case 'w': check_next_pos(2,pos_pcm.x,pos_pcm.y); break;
-        case 'a': check_next_pos(0,pos_pcm.x,pos_pcm.y); break;
-        case 's': check_next_pos(3,pos_pcm.x,pos_pcm.y); break;
-        case 'd': check_next_pos(1,pos_pcm.x,pos_pcm.y); break;
-        default: break;
-      }
-    }
+	if (getKey(&key) > 0){
+		write(1, &key, 1);
+    		switch (key){
+        		case 'w': check_next_pos(2,pos_pcm.x,pos_pcm.y); break;
+        		case 'a': check_next_pos(0,pos_pcm.x,pos_pcm.y); break;
+        		case 's': check_next_pos(3,pos_pcm.x,pos_pcm.y); break;
+        		case 'd': check_next_pos(1,pos_pcm.x,pos_pcm.y); break;
+        		default: break;
+      		}
+    	}
 
-    //debug_positions();
-    spritePut(1,17,pcm);
+    	//debug_positions();
+    	spritePut(pos_pcm.x,pos_pcm.y,pcm);
 
-    spritePut(pos_ph1.y,pos_ph1.x,ph1);
-    spritePut(pos_ph2.x,pos_ph2.y,ph2);
+    	spritePut(pos_ph1.x,pos_ph1.y,ph1);
+    	spritePut(pos_ph2.x,pos_ph2.y,ph2);
     
-    //Esto lo tendria que hacer un thread
-    //ph_auto_move();
 
-    if (lose || num_coins == 3) break;
+    	if (lose || num_coins == 3) break;
 	}
-  if (lose) print_Screens(3);
-  else print_Screens(4);
-  return 0;
+  	if (lose) print_Screens(3);
+  	else print_Screens(4);
+  	return 0;
 }
